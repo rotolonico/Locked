@@ -7,6 +7,20 @@ TagManager:
   - key
   - block
   - redKey
+  - Hole
+  - Wall
+  - Lock
+  - Unlocked
+  - LockOpen
+  - HoleFilled
+  - BlockStuck
+  - Canvas
+  - KeyImage
+  - RedKeyImage
+  - DownOnly
+  - UpOnly
+  - LeftOnly
+  - RightOnly
   layers:
   - Default
   - TransparentFX

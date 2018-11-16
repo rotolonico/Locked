@@ -5,16 +5,10 @@ using UnityEngine;
 public class LockController : MonoBehaviour
 {
 	public Sprite LockKey;
-	public Sprite PlayerNormal;
-	public Sprite PlayerLock;
-
 	public AudioSource UnlockSound;
 	
 	private GameObject player;
-	private BoxCollider2D upCollider;
-	private BoxCollider2D downCollider;
-	private BoxCollider2D leftCollider;
-	private BoxCollider2D rightCollider;
+	private PlayerController playerController;
 	private BoxCollider2D centerCollider;
 	private SpriteRenderer sr;
 	private SpriteRenderer pSr;
@@ -24,74 +18,33 @@ public class LockController : MonoBehaviour
 	{
 		sr = gameObject.transform.GetComponent<SpriteRenderer>();
 		player = GameObject.FindGameObjectWithTag("Player");
-		pSr = player.transform.GetComponent<SpriteRenderer>();
+		playerController = player.GetComponent<PlayerController>(); 
 		centerCollider = player.GetComponent<BoxCollider2D>();
-		upCollider = player.transform.GetChild(0).GetComponent<BoxCollider2D>();
-		downCollider = player.transform.GetChild(0).GetChild(0).GetComponent<BoxCollider2D>();
-		leftCollider = player.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<BoxCollider2D>();
-		rightCollider = player.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<BoxCollider2D>();
+		pSr = GameObject.FindGameObjectWithTag("Player").transform.GetChild(5).GetComponent<SpriteRenderer>();
 	}
 
 	private void OnTriggerStay2D(Collider2D other)
 	{
 		if (!hasKey)
 		{
-			if (other == upCollider)
-			{
-				PlayerController.Up = false;
-			}
-
-			if (other == downCollider)
-			{
-				PlayerController.Down = false;
-			}
-
-			if (other == leftCollider)
-			{
-				PlayerController.Left = false;
-			}
-
-			if (other == rightCollider)
-			{
-				PlayerController.Right = false;
-			}
-
-			if (PlayerController.HasKey)
+			if (playerController.HasKey > 0)
 			{
 				sr.sprite = LockKey;
+				
 				UnlockSound.Play();
-				if (other == upCollider)
-				{
-					PlayerController.Up = true;
-				}
-
-				if (other == downCollider)
-				{
-					PlayerController.Down = true;
-				}
-
-				if (other == leftCollider)
-				{
-					PlayerController.Left = true;
-				}
-
-				if (other == rightCollider)
-				{
-					PlayerController.Right = true;
-				}
 				hasKey = true;
-				PlayerController.HasKey = false;
-			}
-
-			if (other != centerCollider)
-			{
-				pSr.sprite = PlayerNormal;
-			}
-
-			if (other == centerCollider)
-			{
-				pSr.sprite = PlayerLock;
+				playerController.HasKey -= 1;
+				transform.tag = "LockOpen";
+				playerController.RemoveKey();
 			}
 		}
+		if (other != centerCollider)
+			{
+				pSr.enabled = false;
+			}
+		if (other == centerCollider)
+			{
+				pSr.enabled = true;
+			}
 	}
 }

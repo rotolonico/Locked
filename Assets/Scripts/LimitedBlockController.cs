@@ -18,7 +18,7 @@ public class LimitedBlockController : MonoBehaviour
 
 	private void OnTriggerExit2D(Collider2D other)
 	{
-		if (other.gameObject.name == "player")
+		if (other.gameObject.name == "Player")
 		{
 			limit -= 1;
 			if (limit == 0)
@@ -28,10 +28,5 @@ public class LimitedBlockController : MonoBehaviour
 			}
 			sr.sprite = limitedSprites[limit];
 		}
-	}
-
-	private void Update()
-	{
-		
 	}
 }

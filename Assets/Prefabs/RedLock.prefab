@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114340189930296416}
   m_Layer: 0
   m_Name: RedLock
-  m_TagString: Untagged
+  m_TagString: Lock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -175,9 +175,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LockKey: {fileID: 21300000, guid: 18771ddacb14c4c88a5817ea92ad8c0a, type: 3}
-  PlayerNormal: {fileID: 21300000, guid: 72429db95305744ffa7bc92a4949ca24, type: 3}
-  PlayerLock: {fileID: 21300000, guid: b27412e17b4e1424daa317237e1c41f2, type: 3}
   UnlockSound: {fileID: 82924672356155256}
+  KeyImage: {fileID: 0}
 --- !u!212 &212322373570890590
 SpriteRenderer:
   m_ObjectHideFlags: 1
