@@ -155,6 +155,8 @@ struct ApplicationIdentity_t1917735356;
 struct ArgumentException_t132251570;
 // System.ArgumentNullException
 struct ArgumentNullException_t1615371798;
+// System.ArgumentOutOfRangeException
+struct ArgumentOutOfRangeException_t777629997;
 // System.ArithmeticException
 struct ArithmeticException_t4283546778;
 // System.AssemblyLoadEventHandler
@@ -329,6 +331,8 @@ struct OverflowException_t2020128637;
 struct ParamArrayAttribute_t3664765590;
 // System.PlatformNotSupportedException
 struct PlatformNotSupportedException_t3572244504;
+// System.Random
+struct Random_t108471755;
 // System.RankException
 struct RankException_t3812021567;
 // System.Reflection.AmbiguousMatchException
@@ -571,6 +575,7 @@ struct Void_t1185182177;
 extern RuntimeClass* AmbiguousMatchException_t566690781_il2cpp_TypeInfo_var;
 extern RuntimeClass* ArgumentException_t132251570_il2cpp_TypeInfo_var;
 extern RuntimeClass* ArgumentNullException_t1615371798_il2cpp_TypeInfo_var;
+extern RuntimeClass* ArgumentOutOfRangeException_t777629997_il2cpp_TypeInfo_var;
 extern RuntimeClass* ArrayList_t2718874744_il2cpp_TypeInfo_var;
 extern RuntimeClass* AssemblyBuilderAccess_t2806254258_il2cpp_TypeInfo_var;
 extern RuntimeClass* AssemblyBuilder_t359885250_il2cpp_TypeInfo_var;
@@ -737,6 +742,7 @@ extern String_t* _stringLiteral2456128945;
 extern String_t* _stringLiteral2468987557;
 extern String_t* _stringLiteral248589368;
 extern String_t* _stringLiteral2563229060;
+extern String_t* _stringLiteral258141553;
 extern String_t* _stringLiteral2639328695;
 extern String_t* _stringLiteral2676776848;
 extern String_t* _stringLiteral2690023160;
@@ -920,6 +926,7 @@ extern const RuntimeMethod* NumberFormatter_IntegerToString_m1679294587_RuntimeM
 extern const RuntimeMethod* NumberFormatter_NumberToString_m827252518_RuntimeMethod_var;
 extern const RuntimeMethod* OperatingSystem__ctor_m1545635730_RuntimeMethod_var;
 extern const RuntimeMethod* OrdinalComparer_GetHashCode_m3219897106_RuntimeMethod_var;
+extern const RuntimeMethod* Random_Next_m622212209_RuntimeMethod_var;
 extern const RuntimeType* AssemblyBuilderAccess_t2806254258_0_0_0_var;
 extern const RuntimeType* AssemblyHashAlgorithm_t1216504064_0_0_0_var;
 extern const RuntimeType* AssemblyNameFlags_t3675421470_0_0_0_var;
@@ -1253,6 +1260,8 @@ extern const uint32_t OrdinalComparer__ctor_m1028789954_MetadataUsageId;
 extern const uint32_t OutOfMemoryException__ctor_m3893515912_MetadataUsageId;
 extern const uint32_t OverflowException__ctor_m4029085969_MetadataUsageId;
 extern const uint32_t PlatformNotSupportedException__ctor_m1787918017_MetadataUsageId;
+extern const uint32_t Random_Next_m622212209_MetadataUsageId;
+extern const uint32_t Random__ctor_m3209279193_MetadataUsageId;
 extern const uint32_t RankException__ctor_m4082747811_MetadataUsageId;
 extern const uint32_t SByteComparer_Compare_m3045065039_MetadataUsageId;
 extern const uint32_t ShortComparer_Compare_m1360829877_MetadataUsageId;
@@ -3578,6 +3587,56 @@ public:
 #pragma clang diagnostic pop
 #endif
 #endif // CUSTOMINFO_T435179798_H
+#ifndef RANDOM_T108471755_H
+#define RANDOM_T108471755_H
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+
+// System.Random
+struct  Random_t108471755  : public RuntimeObject
+{
+public:
+	// System.Int32 System.Random::inext
+	int32_t ___inext_3;
+	// System.Int32 System.Random::inextp
+	int32_t ___inextp_4;
+	// System.Int32[] System.Random::SeedArray
+	Int32U5BU5D_t385246372* ___SeedArray_5;
+
+public:
+	inline static int32_t get_offset_of_inext_3() { return static_cast<int32_t>(offsetof(Random_t108471755, ___inext_3)); }
+	inline int32_t get_inext_3() const { return ___inext_3; }
+	inline int32_t* get_address_of_inext_3() { return &___inext_3; }
+	inline void set_inext_3(int32_t value)
+	{
+		___inext_3 = value;
+	}
+
+	inline static int32_t get_offset_of_inextp_4() { return static_cast<int32_t>(offsetof(Random_t108471755, ___inextp_4)); }
+	inline int32_t get_inextp_4() const { return ___inextp_4; }
+	inline int32_t* get_address_of_inextp_4() { return &___inextp_4; }
+	inline void set_inextp_4(int32_t value)
+	{
+		___inextp_4 = value;
+	}
+
+	inline static int32_t get_offset_of_SeedArray_5() { return static_cast<int32_t>(offsetof(Random_t108471755, ___SeedArray_5)); }
+	inline Int32U5BU5D_t385246372* get_SeedArray_5() const { return ___SeedArray_5; }
+	inline Int32U5BU5D_t385246372** get_address_of_SeedArray_5() { return &___SeedArray_5; }
+	inline void set_SeedArray_5(Int32U5BU5D_t385246372* value)
+	{
+		___SeedArray_5 = value;
+		Il2CppCodeGenWriteBarrier((&___SeedArray_5), value);
+	}
+};
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#endif // RANDOM_T108471755_H
 #ifndef RESOLVEEVENTHOLDER_T2120639521_H
 #define RESOLVEEVENTHOLDER_T2120639521_H
 #ifdef __clang__
@@ -8830,6 +8889,36 @@ public:
 #pragma clang diagnostic pop
 #endif
 #endif // ARGUMENTNULLEXCEPTION_T1615371798_H
+#ifndef ARGUMENTOUTOFRANGEEXCEPTION_T777629997_H
+#define ARGUMENTOUTOFRANGEEXCEPTION_T777629997_H
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+
+// System.ArgumentOutOfRangeException
+struct  ArgumentOutOfRangeException_t777629997  : public ArgumentException_t132251570
+{
+public:
+	// System.Object System.ArgumentOutOfRangeException::actual_value
+	RuntimeObject * ___actual_value_13;
+
+public:
+	inline static int32_t get_offset_of_actual_value_13() { return static_cast<int32_t>(offsetof(ArgumentOutOfRangeException_t777629997, ___actual_value_13)); }
+	inline RuntimeObject * get_actual_value_13() const { return ___actual_value_13; }
+	inline RuntimeObject ** get_address_of_actual_value_13() { return &___actual_value_13; }
+	inline void set_actual_value_13(RuntimeObject * value)
+	{
+		___actual_value_13 = value;
+		Il2CppCodeGenWriteBarrier((&___actual_value_13), value);
+	}
+};
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#endif // ARGUMENTOUTOFRANGEEXCEPTION_T777629997_H
 #ifndef ATTRIBUTEUSAGEATTRIBUTE_T290877318_H
 #define ATTRIBUTEUSAGEATTRIBUTE_T290877318_H
 #ifdef __clang__
@@ -14311,6 +14400,12 @@ extern "C" IL2CPP_METHOD_ATTR void ArithmeticException__ctor_m1658426420 (Arithm
 extern "C" IL2CPP_METHOD_ATTR void NotSupportedException__ctor_m2494070935 (NotSupportedException_t1314879016 * __this, String_t* ___message0, const RuntimeMethod* method);
 // System.Void System.NotSupportedException::.ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
 extern "C" IL2CPP_METHOD_ATTR void NotSupportedException__ctor_m922781896 (NotSupportedException_t1314879016 * __this, SerializationInfo_t950877179 * ___info0, StreamingContext_t3711869237  ___context1, const RuntimeMethod* method);
+// System.Int32 System.Environment::get_TickCount()
+extern "C" IL2CPP_METHOD_ATTR int32_t Environment_get_TickCount_m2088073110 (RuntimeObject * __this /* static, unused */, const RuntimeMethod* method);
+// System.Void System.Random::.ctor(System.Int32)
+extern "C" IL2CPP_METHOD_ATTR void Random__ctor_m3209279193 (Random_t108471755 * __this, int32_t ___Seed0, const RuntimeMethod* method);
+// System.Void System.ArgumentOutOfRangeException::.ctor(System.String)
+extern "C" IL2CPP_METHOD_ATTR void ArgumentOutOfRangeException__ctor_m3628145864 (ArgumentOutOfRangeException_t777629997 * __this, String_t* ___paramName0, const RuntimeMethod* method);
 // System.Void System.Reflection.Assembly/ResolveEventHolder::.ctor()
 extern "C" IL2CPP_METHOD_ATTR void ResolveEventHolder__ctor_m1522332934 (ResolveEventHolder_t2120639521 * __this, const RuntimeMethod* method);
 // System.String System.Reflection.Assembly::get_code_base(System.Boolean)
@@ -38793,6 +38888,262 @@ extern "C" IL2CPP_METHOD_ATTR void PlatformNotSupportedException__ctor_m16930437
 		StreamingContext_t3711869237  L_1 = ___context1;
 		NotSupportedException__ctor_m922781896(__this, L_0, L_1, /*hidden argument*/NULL);
 		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+// System.Void System.Random::.ctor()
+extern "C" IL2CPP_METHOD_ATTR void Random__ctor_m4122933043 (Random_t108471755 * __this, const RuntimeMethod* method)
+{
+	{
+		int32_t L_0 = Environment_get_TickCount_m2088073110(NULL /*static, unused*/, /*hidden argument*/NULL);
+		Random__ctor_m3209279193(__this, L_0, /*hidden argument*/NULL);
+		return;
+	}
+}
+// System.Void System.Random::.ctor(System.Int32)
+extern "C" IL2CPP_METHOD_ATTR void Random__ctor_m3209279193 (Random_t108471755 * __this, int32_t ___Seed0, const RuntimeMethod* method)
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_method (Random__ctor_m3209279193_MetadataUsageId);
+		s_Il2CppMethodInitialized = true;
+	}
+	int32_t V_0 = 0;
+	int32_t V_1 = 0;
+	int32_t V_2 = 0;
+	int32_t V_3 = 0;
+	int32_t V_4 = 0;
+	int32_t V_5 = 0;
+	{
+		Int32U5BU5D_t385246372* L_0 = (Int32U5BU5D_t385246372*)SZArrayNew(Int32U5BU5D_t385246372_il2cpp_TypeInfo_var, (uint32_t)((int32_t)56));
+		__this->set_SeedArray_5(L_0);
+		Object__ctor_m297566312(__this, /*hidden argument*/NULL);
+		int32_t L_1 = ___Seed0;
+		int32_t L_2 = il2cpp_codegen_abs(L_1);
+		V_1 = ((int32_t)il2cpp_codegen_subtract((int32_t)((int32_t)161803398), (int32_t)L_2));
+		Int32U5BU5D_t385246372* L_3 = __this->get_SeedArray_5();
+		int32_t L_4 = V_1;
+		(L_3)->SetAtUnchecked(static_cast<il2cpp_array_size_t>(((int32_t)55)), (int32_t)L_4);
+		V_2 = 1;
+		V_3 = 1;
+		goto IL_0064;
+	}
+
+IL_0033:
+	{
+		int32_t L_5 = V_3;
+		V_0 = ((int32_t)((int32_t)((int32_t)il2cpp_codegen_multiply((int32_t)((int32_t)21), (int32_t)L_5))%(int32_t)((int32_t)55)));
+		Int32U5BU5D_t385246372* L_6 = __this->get_SeedArray_5();
+		int32_t L_7 = V_0;
+		int32_t L_8 = V_2;
+		(L_6)->SetAtUnchecked(static_cast<il2cpp_array_size_t>(L_7), (int32_t)L_8);
+		int32_t L_9 = V_1;
+		int32_t L_10 = V_2;
+		V_2 = ((int32_t)il2cpp_codegen_subtract((int32_t)L_9, (int32_t)L_10));
+		int32_t L_11 = V_2;
+		if ((((int32_t)L_11) >= ((int32_t)0)))
+		{
+			goto IL_0057;
+		}
+	}
+	{
+		int32_t L_12 = V_2;
+		V_2 = ((int32_t)il2cpp_codegen_add((int32_t)L_12, (int32_t)((int32_t)2147483647LL)));
+	}
+
+IL_0057:
+	{
+		Int32U5BU5D_t385246372* L_13 = __this->get_SeedArray_5();
+		int32_t L_14 = V_0;
+		int32_t L_15 = L_14;
+		int32_t L_16 = (L_13)->GetAtUnchecked(static_cast<il2cpp_array_size_t>(L_15));
+		V_1 = L_16;
+		int32_t L_17 = V_3;
+		V_3 = ((int32_t)il2cpp_codegen_add((int32_t)L_17, (int32_t)1));
+	}
+
+IL_0064:
+	{
+		int32_t L_18 = V_3;
+		if ((((int32_t)L_18) < ((int32_t)((int32_t)55))))
+		{
+			goto IL_0033;
+		}
+	}
+	{
+		V_4 = 1;
+		goto IL_00d8;
+	}
+
+IL_0074:
+	{
+		V_5 = 1;
+		goto IL_00c9;
+	}
+
+IL_007c:
+	{
+		Int32U5BU5D_t385246372* L_19 = __this->get_SeedArray_5();
+		int32_t L_20 = V_5;
+		int32_t* L_21 = ((L_19)->GetAddressAtUnchecked(static_cast<il2cpp_array_size_t>(L_20)));
+		Int32U5BU5D_t385246372* L_22 = __this->get_SeedArray_5();
+		int32_t L_23 = V_5;
+		int32_t L_24 = ((int32_t)il2cpp_codegen_add((int32_t)1, (int32_t)((int32_t)((int32_t)((int32_t)il2cpp_codegen_add((int32_t)L_23, (int32_t)((int32_t)30)))%(int32_t)((int32_t)55)))));
+		int32_t L_25 = (L_22)->GetAtUnchecked(static_cast<il2cpp_array_size_t>(L_24));
+		*((int32_t*)(L_21)) = (int32_t)((int32_t)il2cpp_codegen_subtract((int32_t)(*((int32_t*)L_21)), (int32_t)L_25));
+		Int32U5BU5D_t385246372* L_26 = __this->get_SeedArray_5();
+		int32_t L_27 = V_5;
+		int32_t L_28 = L_27;
+		int32_t L_29 = (L_26)->GetAtUnchecked(static_cast<il2cpp_array_size_t>(L_28));
+		if ((((int32_t)L_29) >= ((int32_t)0)))
+		{
+			goto IL_00c3;
+		}
+	}
+	{
+		Int32U5BU5D_t385246372* L_30 = __this->get_SeedArray_5();
+		int32_t L_31 = V_5;
+		int32_t* L_32 = ((L_30)->GetAddressAtUnchecked(static_cast<il2cpp_array_size_t>(L_31)));
+		*((int32_t*)(L_32)) = (int32_t)((int32_t)il2cpp_codegen_add((int32_t)(*((int32_t*)L_32)), (int32_t)((int32_t)2147483647LL)));
+	}
+
+IL_00c3:
+	{
+		int32_t L_33 = V_5;
+		V_5 = ((int32_t)il2cpp_codegen_add((int32_t)L_33, (int32_t)1));
+	}
+
+IL_00c9:
+	{
+		int32_t L_34 = V_5;
+		if ((((int32_t)L_34) < ((int32_t)((int32_t)56))))
+		{
+			goto IL_007c;
+		}
+	}
+	{
+		int32_t L_35 = V_4;
+		V_4 = ((int32_t)il2cpp_codegen_add((int32_t)L_35, (int32_t)1));
+	}
+
+IL_00d8:
+	{
+		int32_t L_36 = V_4;
+		if ((((int32_t)L_36) < ((int32_t)5)))
+		{
+			goto IL_0074;
+		}
+	}
+	{
+		__this->set_inext_3(0);
+		__this->set_inextp_4(((int32_t)31));
+		return;
+	}
+}
+// System.Double System.Random::Sample()
+extern "C" IL2CPP_METHOD_ATTR double Random_Sample_m2289397474 (Random_t108471755 * __this, const RuntimeMethod* method)
+{
+	int32_t V_0 = 0;
+	int32_t V_1 = 0;
+	{
+		int32_t L_0 = __this->get_inext_3();
+		int32_t L_1 = ((int32_t)il2cpp_codegen_add((int32_t)L_0, (int32_t)1));
+		V_1 = L_1;
+		__this->set_inext_3(L_1);
+		int32_t L_2 = V_1;
+		if ((((int32_t)L_2) < ((int32_t)((int32_t)56))))
+		{
+			goto IL_001f;
+		}
+	}
+	{
+		__this->set_inext_3(1);
+	}
+
+IL_001f:
+	{
+		int32_t L_3 = __this->get_inextp_4();
+		int32_t L_4 = ((int32_t)il2cpp_codegen_add((int32_t)L_3, (int32_t)1));
+		V_1 = L_4;
+		__this->set_inextp_4(L_4);
+		int32_t L_5 = V_1;
+		if ((((int32_t)L_5) < ((int32_t)((int32_t)56))))
+		{
+			goto IL_003e;
+		}
+	}
+	{
+		__this->set_inextp_4(1);
+	}
+
+IL_003e:
+	{
+		Int32U5BU5D_t385246372* L_6 = __this->get_SeedArray_5();
+		int32_t L_7 = __this->get_inext_3();
+		int32_t L_8 = L_7;
+		int32_t L_9 = (L_6)->GetAtUnchecked(static_cast<il2cpp_array_size_t>(L_8));
+		Int32U5BU5D_t385246372* L_10 = __this->get_SeedArray_5();
+		int32_t L_11 = __this->get_inextp_4();
+		int32_t L_12 = L_11;
+		int32_t L_13 = (L_10)->GetAtUnchecked(static_cast<il2cpp_array_size_t>(L_12));
+		V_0 = ((int32_t)il2cpp_codegen_subtract((int32_t)L_9, (int32_t)L_13));
+		int32_t L_14 = V_0;
+		if ((((int32_t)L_14) >= ((int32_t)0)))
+		{
+			goto IL_0069;
+		}
+	}
+	{
+		int32_t L_15 = V_0;
+		V_0 = ((int32_t)il2cpp_codegen_add((int32_t)L_15, (int32_t)((int32_t)2147483647LL)));
+	}
+
+IL_0069:
+	{
+		Int32U5BU5D_t385246372* L_16 = __this->get_SeedArray_5();
+		int32_t L_17 = __this->get_inext_3();
+		int32_t L_18 = V_0;
+		(L_16)->SetAtUnchecked(static_cast<il2cpp_array_size_t>(L_17), (int32_t)L_18);
+		int32_t L_19 = V_0;
+		return ((double)il2cpp_codegen_multiply((double)(((double)((double)L_19))), (double)(4.6566128752457969E-10)));
+	}
+}
+// System.Int32 System.Random::Next(System.Int32)
+extern "C" IL2CPP_METHOD_ATTR int32_t Random_Next_m622212209 (Random_t108471755 * __this, int32_t ___maxValue0, const RuntimeMethod* method)
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_method (Random_Next_m622212209_MetadataUsageId);
+		s_Il2CppMethodInitialized = true;
+	}
+	{
+		int32_t L_0 = ___maxValue0;
+		if ((((int32_t)L_0) >= ((int32_t)0)))
+		{
+			goto IL_0017;
+		}
+	}
+	{
+		String_t* L_1 = Locale_GetText_m3374010885(NULL /*static, unused*/, _stringLiteral258141553, /*hidden argument*/NULL);
+		ArgumentOutOfRangeException_t777629997 * L_2 = (ArgumentOutOfRangeException_t777629997 *)il2cpp_codegen_object_new(ArgumentOutOfRangeException_t777629997_il2cpp_TypeInfo_var);
+		ArgumentOutOfRangeException__ctor_m3628145864(L_2, L_1, /*hidden argument*/NULL);
+		IL2CPP_RAISE_MANAGED_EXCEPTION(L_2, NULL, Random_Next_m622212209_RuntimeMethod_var);
+	}
+
+IL_0017:
+	{
+		double L_3 = VirtFuncInvoker0< double >::Invoke(4 /* System.Double System.Random::Sample() */, __this);
+		int32_t L_4 = ___maxValue0;
+		return (((int32_t)((int32_t)((double)il2cpp_codegen_multiply((double)L_3, (double)(((double)((double)L_4))))))));
 	}
 }
 #ifdef __clang__

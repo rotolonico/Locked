@@ -21,6 +21,14 @@ TagManager:
   - UpOnly
   - LeftOnly
   - RightOnly
+  - BlueTp
+  - RedTp
+  - YellowTp
+  - GreenTp
+  - greenKey
+  - blueKey
+  - GreenKeyImage
+  - BlueKeyImage
   layers:
   - Default
   - TransparentFX

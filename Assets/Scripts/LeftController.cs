@@ -23,7 +23,6 @@ public class LeftController : MonoBehaviour
 
 	private void Update ()
 	{
-		Debug.Log(collider.Count);
 		blocked = false;
 		moveBlock = false;
 		if (collider != null)
@@ -36,6 +35,7 @@ public class LeftController : MonoBehaviour
 			MoveSound.Play();
 			blocked = false;
 			moveBlock = false;
+			Swipe.SwipeLeft = false;
 		}
 		else if (Swipe.SwipeLeft && !moveBlock)
 		{

@@ -22433,6 +22433,13 @@ void* RuntimeInvoker_PersistentListenerMode_t232255230 (Il2CppMethodPointer meth
 	return Box(il2cpp_codegen_class_from_type (il2cpp_codegen_method_return_type(methodMetadata)), &ret);
 }
 
+void* RuntimeInvoker_Vector2_t2156229523_Vector2_t2156229523_Vector2_t2156229523_Single_t1397266774 (Il2CppMethodPointer methodPointer, const RuntimeMethod* methodMetadata, void* obj, void** args)
+{
+	typedef Vector2_t2156229523  (*Func)(void* obj, Vector2_t2156229523  p1, Vector2_t2156229523  p2, float p3, const RuntimeMethod* method);
+	Vector2_t2156229523  ret = ((Func)methodPointer)(obj, *((Vector2_t2156229523 *)args[0]), *((Vector2_t2156229523 *)args[1]), *((float*)args[2]), methodMetadata);
+	return Box(il2cpp_codegen_class_from_type (il2cpp_codegen_method_return_type(methodMetadata)), &ret);
+}
+
 void* RuntimeInvoker_Vector2_t2156229523_Vector2_t2156229523_Vector2_t2156229523 (Il2CppMethodPointer methodPointer, const RuntimeMethod* methodMetadata, void* obj, void** args)
 {
 	typedef Vector2_t2156229523  (*Func)(void* obj, Vector2_t2156229523  p1, Vector2_t2156229523  p2, const RuntimeMethod* method);
@@ -27354,7 +27361,7 @@ void* RuntimeInvoker_RuntimeObject_FloatTween_t1274330004 (Il2CppMethodPointer m
 	return ret;
 }
 
-extern const InvokerMethod g_Il2CppInvokerPointers[1633] = 
+extern const InvokerMethod g_Il2CppInvokerPointers[1634] = 
 {
 	RuntimeInvoker_Void_t1185182177,
 	RuntimeInvoker_Boolean_t97287965_RuntimeObject,
@@ -28286,6 +28293,7 @@ extern const InvokerMethod g_Il2CppInvokerPointers[1633] =
 	RuntimeInvoker_RuntimeObject_RuntimeObject_Vector3_t3722313464_Quaternion_t2301928331,
 	RuntimeInvoker_RuntimeObject_RuntimeObject_Vector3U26_t3464235976_QuaternionU26_t651104941,
 	RuntimeInvoker_PersistentListenerMode_t232255230,
+	RuntimeInvoker_Vector2_t2156229523_Vector2_t2156229523_Vector2_t2156229523_Single_t1397266774,
 	RuntimeInvoker_Vector2_t2156229523_Vector2_t2156229523_Vector2_t2156229523,
 	RuntimeInvoker_Single_t1397266774_Vector2_t2156229523_Vector2_t2156229523,
 	RuntimeInvoker_Vector2_t2156229523_Vector2_t2156229523_Single_t1397266774,

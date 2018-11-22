@@ -25,26 +25,28 @@ public class LockController : MonoBehaviour
 
 	private void OnTriggerStay2D(Collider2D other)
 	{
-		if (!hasKey)
+		if (!hasKey && (other.transform.name == "rightCol" || other.transform.name == "leftCol" || other.transform.name == "topCol" || other.transform.name == "botCol"))
 		{
 			if (playerController.HasKey > 0)
 			{
 				sr.sprite = LockKey;
-				
 				UnlockSound.Play();
 				hasKey = true;
 				playerController.HasKey -= 1;
 				transform.tag = "LockOpen";
-				playerController.RemoveKey();
 			}
 		}
-		if (other != centerCollider)
-			{
-				pSr.enabled = false;
-			}
 		if (other == centerCollider)
 			{
 				pSr.enabled = true;
 			}
+	}
+	
+	private void OnTriggerExit2D(Collider2D other)
+	{
+		if (other == centerCollider)
+		{
+			pSr.enabled = false;
+		}
 	}
 }

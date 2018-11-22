@@ -21,6 +21,18 @@ public class CameraController : MonoBehaviour
     private Vector2 playerPositionY;
     private Vector2 cameraPositionY;
 
+    private readonly Vector3 right = new Vector3(7,0,0);
+    private readonly Vector3 up = new Vector3(0,7,0);
+    private readonly Vector3 left = new Vector3(-7,0,0);
+    private readonly Vector3 down = new Vector3(0,-7,0);
+
+    private bool moveUp;
+    private bool moveRight;
+    private bool moveDown;
+    private bool moveLeft;
+
+    private bool cameraMode;
+
     void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -31,41 +43,111 @@ public class CameraController : MonoBehaviour
     {
         playerPosition = playerTransform.position;
         cameraPosition = cameraTransform.position;
-        
+
         cameraPosition.z = -10;
-        
-        playerPositionX = new Vector2(playerPosition.x,0);
-        cameraPositionX = new Vector2(cameraPosition.x,0);
-        
-        playerPositionY = new Vector2(0,playerPosition.y);
-        cameraPositionY = new Vector2(0,cameraPosition.y);
+
+        playerPositionX = new Vector2(playerPosition.x, 0);
+        cameraPositionX = new Vector2(cameraPosition.x, 0);
+
+        playerPositionY = new Vector2(0, playerPosition.y);
+        cameraPositionY = new Vector2(0, cameraPosition.y);
 
         distanceX = Vector2.Distance(cameraPositionX, playerPositionX);
         distanceY = Vector2.Distance(cameraPositionY, playerPositionY);
-        
-        if (distanceX > 3)
+
+        if (Input.GetKeyDown(KeyCode.C))
         {
-            if (playerPosition.x > cameraPosition.x)
-            {
-                transform.position += new Vector3(7,0,0);
-            }
-            else
-            {
-                transform.position += new Vector3(-7,0,0);
-            }
-            CameraScroll.Play();
+            cameraMode = true;
         }
-        if (distanceY > 3)
+
+        if (!cameraMode)
         {
-            if (playerPosition.y > cameraPosition.y)
+            if (distanceX > 3)
             {
-                transform.position += new Vector3(0,7,0);
+                if (playerPosition.x > cameraPosition.x)
+                {
+                    transform.position = transform.position + right;
+                }
+                else
+                {
+                    transform.position = transform.position + left;
+                }
+
+                CameraScroll.Play();
             }
-            else
+
+            if (distanceY > 3)
             {
-                transform.position += new Vector3(0,-7,0);
+                if (playerPosition.y > cameraPosition.y)
+                {
+                    transform.position = transform.position + up;
+                }
+                else
+                {
+                    transform.position = transform.position + down;
+                }
+
+                CameraScroll.Play();
             }
-            CameraScroll.Play();
+        }
+
+        if (cameraMode)
+        {
+            if (distanceX > 3)
+            {
+                if (playerPosition.x > cameraPosition.x)
+                {
+                    moveRight = true;
+                }
+                else
+                {
+                    moveLeft = true;
+                }
+            }
+
+            if (distanceY > 3)
+            {
+                if (playerPosition.y > cameraPosition.y)
+                {
+                    moveUp = true;
+                }
+                else
+                {
+                    moveDown = true;
+                }
+            }
+
+            if (distanceX < 1)
+            {
+                moveRight = false;
+                moveLeft = false;
+            }
+
+            if (distanceY < 1)
+            {
+                moveUp = false;
+                moveDown = false;
+            }
+
+            if (moveRight)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, transform.position + right, 5 * Time.deltaTime);
+            }
+
+            if (moveLeft)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, transform.position + left, 5 * Time.deltaTime);
+            }
+
+            if (moveUp)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, transform.position + up, 5 * Time.deltaTime);
+            }
+
+            if (moveDown)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, transform.position + down, 5 * Time.deltaTime);
+            }
         }
     }
 }

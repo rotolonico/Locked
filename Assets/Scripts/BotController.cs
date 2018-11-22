@@ -35,6 +35,7 @@ public class BotController : MonoBehaviour
 			MoveSound.Play();
 			blocked = false;
 			moveBlock = false;
+			Swipe.SwipeDown = false;
 		}
 		else if (Swipe.SwipeDown && !moveBlock)
 		{

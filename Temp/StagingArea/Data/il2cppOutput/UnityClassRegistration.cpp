@@ -356,10 +356,10 @@ RegisterBuiltinTypes();
 	RegisterUnityClass<AudioSource>("Audio");
 	//37. Rigidbody2D
 	RegisterUnityClass<Rigidbody2D>("Physics2D");
-	//38. Collider2D
-	RegisterUnityClass<Collider2D>("Physics2D");
-	//39. BoxCollider2D
+	//38. BoxCollider2D
 	RegisterUnityClass<BoxCollider2D>("Physics2D");
+	//39. Collider2D
+	RegisterUnityClass<Collider2D>("Physics2D");
 	//40. TagManager
 	RegisterUnityClass<TagManager>("Core");
 	//41. GraphicsSettings

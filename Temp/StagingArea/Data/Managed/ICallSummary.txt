@@ -127,6 +127,7 @@ UnityEngine.GameObject::CompareTag
 UnityEngine.GameObject::get_activeInHierarchy
 UnityEngine.GameObject::get_activeSelf
 UnityEngine.GameObject::get_layer
+UnityEngine.GameObject::get_tag
 UnityEngine.GameObject::Internal_CreateGameObject
 UnityEngine.GameObject::SendMessage
 UnityEngine.GameObject::SetActive
@@ -285,7 +286,6 @@ UnityEngine.RenderTexture::set_height
 UnityEngine.RenderTexture::set_width
 UnityEngine.Resources::GetBuiltinResource
 UnityEngine.Rigidbody2D::MovePosition_Injected
-UnityEngine.Rigidbody2D::get_position_Injected
 UnityEngine.SceneManagement.Scene::GetBuildIndexInternal
 UnityEngine.SceneManagement.SceneManager::GetActiveScene_Injected
 UnityEngine.SceneManagement.SceneManager::LoadSceneAsyncNameIndexInternal

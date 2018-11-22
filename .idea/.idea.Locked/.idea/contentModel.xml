@@ -10,8 +10,10 @@
           <e p="BlockLeftController.cs" t="Include" />
           <e p="BlockRightController.cs" t="Include" />
           <e p="BlockTopController.cs" t="Include" />
+          <e p="BlueLockController.cs" t="Include" />
           <e p="BotController.cs" t="Include" />
           <e p="CameraController.cs" t="Include" />
+          <e p="GreenLockController.cs" t="Include" />
           <e p="LeftController.cs" t="Include" />
           <e p="LimitedBlockController.cs" t="Include" />
           <e p="LockController.cs" t="Include" />
@@ -19,6 +21,7 @@
           <e p="RedLockController.cs" t="Include" />
           <e p="RightController.cs" t="Include" />
           <e p="Swipe.cs" t="Include" />
+          <e p="TeleporterController.cs" t="Include" />
           <e p="TopController.cs" t="Include" />
           <e p="VoidController.cs" t="Include" />
         </e>

@@ -33,6 +33,7 @@ public class BlockBotController : MonoBehaviour
 			player.transform.position += Vector3.up;
 			MoveSound.Play();
 			blocked = false;
+			Swipe.SwipeUp = false;
 		}
 		else if (Swipe.SwipeUp && !movable && playerTouch)
 		{

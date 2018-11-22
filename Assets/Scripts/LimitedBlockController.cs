@@ -18,7 +18,7 @@ public class LimitedBlockController : MonoBehaviour
 
 	private void OnTriggerExit2D(Collider2D other)
 	{
-		if (other.gameObject.name == "Player")
+		if (other.CompareTag("Player"))
 		{
 			limit -= 1;
 			if (limit == 0)

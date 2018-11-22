@@ -33,6 +33,7 @@ public class BlockLeftController : MonoBehaviour
 			player.transform.position += Vector3.right;
 			MoveSound.Play();
 			blocked = false;
+			Swipe.SwipeRight = false;
 		}
 		else if (Swipe.SwipeRight && !movable && playerTouch)
 		{

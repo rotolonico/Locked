@@ -1,6 +1,6 @@
 WebGL
 PlayerPath?
-/home/nico/unityprojects/Locked/Locked_WebGL
+/home/nico/unityprojects/Locked/Locked TEST
 SceneListBegin?
 Assets/Scenes/SampleScene.unity
 SceneListEnd?
@@ -22,6 +22,7 @@ c7dd12c15208b0447e101f80038706df UnityEngine.Timeline.dll:UnityEngine.Timeline.A
 f6637497451c9a030c421de4a1ad5cdb Unity.TextMeshPro.dll:TMPro.TMP_ScrollbarEventHandler
 b14b4630cc47b6e9ea8a644551a6a8cc Unity.TextMeshPro.dll:TMPro.TMP_Text
 59ebc22aceaf29894158ec7063d606f0 Assembly-CSharp.dll:.RedLockController
+be3d1edfb6f4f58a696d43f464442aa1 Assembly-CSharp.dll:.TeleporterController
 53cefe5d98cadefbab750835e70b89c0 UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 486cd95c82d8305219c352c06b776e1f UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
 da2091a04d360891450faf16cdf621f1 UnityEngine.UI.dll:UnityEngine.UI.Button
@@ -129,8 +130,9 @@ dfd33ff9ae3ce8d7ca1f22b475ec2387 UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 59ebc22aceaf29894158ec7063d606f0 Assembly-CSharp.dll:.LockController
 f16835701e71dd5d6fb1fed4b7aff1d8 Unity.TextMeshPro.dll:TMPro.TMP_Asset
 486cd95c82d8305219c352c06b776e1f Unity.TextMeshPro.dll:TMPro.TMP_SpriteAnimator
-06e10cd33e91c63bd7a41219dcfa9eaa Assembly-CSharp.dll:.PlayerController
+f9ec9d76ddd9eae428324252ab9dc50e Assembly-CSharp.dll:.PlayerController
 eaf0bcdb10d442a4029d615f41d09957 Unity.TextMeshPro.dll:TMPro.TextContainer
+59ebc22aceaf29894158ec7063d606f0 Assembly-CSharp.dll:.BlueLockController
 201273fb4f889724fb090164b7d6c657 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 486cd95c82d8305219c352c06b776e1f UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
 0f27c39183b9eb95eba0a228bea28273 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkDiscovery
@@ -177,4 +179,5 @@ e04611b8715e6833d2bd7010fc6be10b Unity.TextMeshPro.dll:TMPro.TMP_StyleSheet
 9318334b30e9f195f573b2ce00154b95 Unity.TextMeshPro.dll:TMPro.TMP_ColorGradient
 94b8de559db1003a9e155c84abc9dd96 Assembly-CSharp.dll:.BotController
 93307bd34e39d73fd24e00ec39c25a91 Unity.TextMeshPro.dll:TMPro.TMP_SubMesh
+59ebc22aceaf29894158ec7063d606f0 Assembly-CSharp.dll:.GreenLockController
 94b8de559db1003a9e155c84abc9dd96 Assembly-CSharp.dll:.RightController

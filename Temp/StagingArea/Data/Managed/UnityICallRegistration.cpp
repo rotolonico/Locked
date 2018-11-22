@@ -618,6 +618,10 @@ void RegisterAllStrippedInternalCalls()
 		void Register_UnityEngine_GameObject_get_layer();
 		Register_UnityEngine_GameObject_get_layer();
 
+		//System.String UnityEngine.GameObject::get_tag()
+		void Register_UnityEngine_GameObject_get_tag();
+		Register_UnityEngine_GameObject_get_tag();
+
 		//System.Void UnityEngine.GameObject::Internal_CreateGameObject(UnityEngine.GameObject,System.String)
 		void Register_UnityEngine_GameObject_Internal_CreateGameObject();
 		Register_UnityEngine_GameObject_Internal_CreateGameObject();
@@ -1361,10 +1365,6 @@ void RegisterAllStrippedInternalCalls()
 		//System.Void UnityEngine.Rigidbody2D::MovePosition_Injected(UnityEngine.Vector2&)
 		void Register_UnityEngine_Rigidbody2D_MovePosition_Injected();
 		Register_UnityEngine_Rigidbody2D_MovePosition_Injected();
-
-		//System.Void UnityEngine.Rigidbody2D::get_position_Injected(UnityEngine.Vector2&)
-		void Register_UnityEngine_Rigidbody2D_get_position_Injected();
-		Register_UnityEngine_Rigidbody2D_get_position_Injected();
 
 	//End Registrations for type : UnityEngine.Rigidbody2D
 

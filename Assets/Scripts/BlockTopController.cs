@@ -33,6 +33,7 @@ public class BlockTopController : MonoBehaviour
 			player.transform.position += Vector3.down;
 			MoveSound.Play();
 			blocked = false;
+			Swipe.SwipeDown = false;
 		}
 		else if (Swipe.SwipeDown && !movable && playerTouch)
 		{

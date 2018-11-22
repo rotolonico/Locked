@@ -59,8 +59,10 @@
     <Compile Include="Assets\Scripts\BlockLeftController.cs" />
     <Compile Include="Assets\Scripts\BlockRightController.cs" />
     <Compile Include="Assets\Scripts\BlockTopController.cs" />
+    <Compile Include="Assets\Scripts\BlueLockController.cs" />
     <Compile Include="Assets\Scripts\BotController.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\GreenLockController.cs" />
     <Compile Include="Assets\Scripts\LeftController.cs" />
     <Compile Include="Assets\Scripts\LimitedBlockController.cs" />
     <Compile Include="Assets\Scripts\LockController.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="Assets\Scripts\RedLockController.cs" />
     <Compile Include="Assets\Scripts\RightController.cs" />
     <Compile Include="Assets\Scripts\Swipe.cs" />
+    <Compile Include="Assets\Scripts\TeleporterController.cs" />
     <Compile Include="Assets\Scripts\TopController.cs" />
     <Compile Include="Assets\Scripts\VoidController.cs" />
     <Reference Include="UnityEditor.StandardEvents">

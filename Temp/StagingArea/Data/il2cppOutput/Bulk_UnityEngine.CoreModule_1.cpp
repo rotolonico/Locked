@@ -151,6 +151,7 @@ extern const uint32_t UnitySynchronizationContext_InitializeSynchronizationConte
 extern const uint32_t UnitySynchronizationContext__ctor_m1707488257_MetadataUsageId;
 extern const uint32_t Vector2_Distance_m3048868881_MetadataUsageId;
 extern const uint32_t Vector2_Equals_m832062989_MetadataUsageId;
+extern const uint32_t Vector2_MoveTowards_m456668783_MetadataUsageId;
 extern const uint32_t Vector2_ToString_m1205609053_MetadataUsageId;
 extern const uint32_t Vector2__cctor_m2108982652_MetadataUsageId;
 extern const uint32_t Vector2_get_Item_m3559215723_MetadataUsageId;
@@ -3094,6 +3095,16 @@ extern "C" IL2CPP_METHOD_ATTR void IndexOutOfRangeException__ctor_m3408750441 (I
 extern "C" IL2CPP_METHOD_ATTR float Vector2_get_Item_m3559215723 (Vector2_t2156229523 * __this, int32_t ___index0, const RuntimeMethod* method);
 // System.Void UnityEngine.Vector2::set_Item(System.Int32,System.Single)
 extern "C" IL2CPP_METHOD_ATTR void Vector2_set_Item_m3557490725 (Vector2_t2156229523 * __this, int32_t ___index0, float ___value1, const RuntimeMethod* method);
+// UnityEngine.Vector2 UnityEngine.Vector2::op_Subtraction(UnityEngine.Vector2,UnityEngine.Vector2)
+extern "C" IL2CPP_METHOD_ATTR Vector2_t2156229523  Vector2_op_Subtraction_m73004381 (RuntimeObject * __this /* static, unused */, Vector2_t2156229523  ___a0, Vector2_t2156229523  ___b1, const RuntimeMethod* method);
+// System.Single UnityEngine.Vector2::get_magnitude()
+extern "C" IL2CPP_METHOD_ATTR float Vector2_get_magnitude_m2752892833 (Vector2_t2156229523 * __this, const RuntimeMethod* method);
+// UnityEngine.Vector2 UnityEngine.Vector2::op_Division(UnityEngine.Vector2,System.Single)
+extern "C" IL2CPP_METHOD_ATTR Vector2_t2156229523  Vector2_op_Division_m132623573 (RuntimeObject * __this /* static, unused */, Vector2_t2156229523  ___a0, float ___d1, const RuntimeMethod* method);
+// UnityEngine.Vector2 UnityEngine.Vector2::op_Multiply(UnityEngine.Vector2,System.Single)
+extern "C" IL2CPP_METHOD_ATTR Vector2_t2156229523  Vector2_op_Multiply_m2347887432 (RuntimeObject * __this /* static, unused */, Vector2_t2156229523  ___a0, float ___d1, const RuntimeMethod* method);
+// UnityEngine.Vector2 UnityEngine.Vector2::op_Addition(UnityEngine.Vector2,UnityEngine.Vector2)
+extern "C" IL2CPP_METHOD_ATTR Vector2_t2156229523  Vector2_op_Addition_m800700293 (RuntimeObject * __this /* static, unused */, Vector2_t2156229523  ___a0, Vector2_t2156229523  ___b1, const RuntimeMethod* method);
 // System.String UnityEngine.UnityString::Format(System.String,System.Object[])
 extern "C" IL2CPP_METHOD_ATTR String_t* UnityString_Format_m261690510 (RuntimeObject * __this /* static, unused */, String_t* p0, ObjectU5BU5D_t2843939325* p1, const RuntimeMethod* method);
 // System.String UnityEngine.Vector2::ToString()
@@ -3108,12 +3119,8 @@ extern "C" IL2CPP_METHOD_ATTR bool Vector2_Equals_m1313188271 (Vector2_t21562295
 extern "C" IL2CPP_METHOD_ATTR bool Vector2_Equals_m832062989 (Vector2_t2156229523 * __this, RuntimeObject * ___other0, const RuntimeMethod* method);
 // System.Boolean System.Single::Equals(System.Single)
 extern "C" IL2CPP_METHOD_ATTR bool Single_Equals_m1601893879 (float* __this, float p0, const RuntimeMethod* method);
-// System.Single UnityEngine.Vector2::get_magnitude()
-extern "C" IL2CPP_METHOD_ATTR float Vector2_get_magnitude_m2752892833 (Vector2_t2156229523 * __this, const RuntimeMethod* method);
 // System.Single UnityEngine.Vector2::get_sqrMagnitude()
 extern "C" IL2CPP_METHOD_ATTR float Vector2_get_sqrMagnitude_m837837635 (Vector2_t2156229523 * __this, const RuntimeMethod* method);
-// UnityEngine.Vector2 UnityEngine.Vector2::op_Subtraction(UnityEngine.Vector2,UnityEngine.Vector2)
-extern "C" IL2CPP_METHOD_ATTR Vector2_t2156229523  Vector2_op_Subtraction_m73004381 (RuntimeObject * __this /* static, unused */, Vector2_t2156229523  ___a0, Vector2_t2156229523  ___b1, const RuntimeMethod* method);
 // System.Boolean UnityEngine.Vector2::op_Equality(UnityEngine.Vector2,UnityEngine.Vector2)
 extern "C" IL2CPP_METHOD_ATTR bool Vector2_op_Equality_m2303255133 (RuntimeObject * __this /* static, unused */, Vector2_t2156229523  ___lhs0, Vector2_t2156229523  ___rhs1, const RuntimeMethod* method);
 // System.Void UnityEngine.Vector3::.ctor(System.Single,System.Single,System.Single)
@@ -3632,6 +3639,70 @@ extern "C"  void Vector2_set_Item_m3557490725_AdjustorThunk (RuntimeObject * __t
 {
 	Vector2_t2156229523 * _thisAdjusted = reinterpret_cast<Vector2_t2156229523 *>(__this + 1);
 	Vector2_set_Item_m3557490725(_thisAdjusted, ___index0, ___value1, method);
+}
+// UnityEngine.Vector2 UnityEngine.Vector2::MoveTowards(UnityEngine.Vector2,UnityEngine.Vector2,System.Single)
+extern "C" IL2CPP_METHOD_ATTR Vector2_t2156229523  Vector2_MoveTowards_m456668783 (RuntimeObject * __this /* static, unused */, Vector2_t2156229523  ___current0, Vector2_t2156229523  ___target1, float ___maxDistanceDelta2, const RuntimeMethod* method)
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_method (Vector2_MoveTowards_m456668783_MetadataUsageId);
+		s_Il2CppMethodInitialized = true;
+	}
+	Vector2_t2156229523  V_0;
+	memset(&V_0, 0, sizeof(V_0));
+	float V_1 = 0.0f;
+	Vector2_t2156229523  V_2;
+	memset(&V_2, 0, sizeof(V_2));
+	{
+		Vector2_t2156229523  L_0 = ___target1;
+		Vector2_t2156229523  L_1 = ___current0;
+		IL2CPP_RUNTIME_CLASS_INIT(Vector2_t2156229523_il2cpp_TypeInfo_var);
+		Vector2_t2156229523  L_2 = Vector2_op_Subtraction_m73004381(NULL /*static, unused*/, L_0, L_1, /*hidden argument*/NULL);
+		V_0 = L_2;
+		float L_3 = Vector2_get_magnitude_m2752892833((Vector2_t2156229523 *)(&V_0), /*hidden argument*/NULL);
+		V_1 = L_3;
+		float L_4 = V_1;
+		float L_5 = ___maxDistanceDelta2;
+		if ((((float)L_4) <= ((float)L_5)))
+		{
+			goto IL_0023;
+		}
+	}
+	{
+		float L_6 = V_1;
+		if ((!(((float)L_6) == ((float)(0.0f)))))
+		{
+			goto IL_002a;
+		}
+	}
+
+IL_0023:
+	{
+		Vector2_t2156229523  L_7 = ___target1;
+		V_2 = L_7;
+		goto IL_0043;
+	}
+
+IL_002a:
+	{
+		Vector2_t2156229523  L_8 = ___current0;
+		Vector2_t2156229523  L_9 = V_0;
+		float L_10 = V_1;
+		IL2CPP_RUNTIME_CLASS_INIT(Vector2_t2156229523_il2cpp_TypeInfo_var);
+		Vector2_t2156229523  L_11 = Vector2_op_Division_m132623573(NULL /*static, unused*/, L_9, L_10, /*hidden argument*/NULL);
+		float L_12 = ___maxDistanceDelta2;
+		Vector2_t2156229523  L_13 = Vector2_op_Multiply_m2347887432(NULL /*static, unused*/, L_11, L_12, /*hidden argument*/NULL);
+		Vector2_t2156229523  L_14 = Vector2_op_Addition_m800700293(NULL /*static, unused*/, L_8, L_13, /*hidden argument*/NULL);
+		V_2 = L_14;
+		goto IL_0043;
+	}
+
+IL_0043:
+	{
+		Vector2_t2156229523  L_15 = V_2;
+		return L_15;
+	}
 }
 // UnityEngine.Vector2 UnityEngine.Vector2::Scale(UnityEngine.Vector2,UnityEngine.Vector2)
 extern "C" IL2CPP_METHOD_ATTR Vector2_t2156229523  Vector2_Scale_m165605769 (RuntimeObject * __this /* static, unused */, Vector2_t2156229523  ___a0, Vector2_t2156229523  ___b1, const RuntimeMethod* method)

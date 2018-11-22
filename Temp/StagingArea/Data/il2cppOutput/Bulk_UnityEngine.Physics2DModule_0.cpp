@@ -1263,8 +1263,6 @@ extern "C" IL2CPP_METHOD_ATTR float RaycastHit2D_get_distance_m382898860 (Raycas
 extern "C" IL2CPP_METHOD_ATTR Object_t631007953 * Object_FindObjectFromInstanceID_m235838713 (RuntimeObject * __this /* static, unused */, int32_t p0, const RuntimeMethod* method);
 // UnityEngine.Collider2D UnityEngine.RaycastHit2D::get_collider()
 extern "C" IL2CPP_METHOD_ATTR Collider2D_t2806799626 * RaycastHit2D_get_collider_m1549426026 (RaycastHit2D_t2279581989 * __this, const RuntimeMethod* method);
-// System.Void UnityEngine.Rigidbody2D::get_position_Injected(UnityEngine.Vector2&)
-extern "C" IL2CPP_METHOD_ATTR void Rigidbody2D_get_position_Injected_m2554601898 (Rigidbody2D_t939494601 * __this, Vector2_t2156229523 * ___ret0, const RuntimeMethod* method);
 // System.Void UnityEngine.Rigidbody2D::MovePosition_Injected(UnityEngine.Vector2&)
 extern "C" IL2CPP_METHOD_ATTR void Rigidbody2D_MovePosition_Injected_m2788255147 (Rigidbody2D_t939494601 * __this, Vector2_t2156229523 * ___position0, const RuntimeMethod* method);
 #ifdef __clang__
@@ -2329,17 +2327,6 @@ extern "C"  Collider2D_t2806799626 * RaycastHit2D_get_collider_m1549426026_Adjus
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// UnityEngine.Vector2 UnityEngine.Rigidbody2D::get_position()
-extern "C" IL2CPP_METHOD_ATTR Vector2_t2156229523  Rigidbody2D_get_position_m2575647076 (Rigidbody2D_t939494601 * __this, const RuntimeMethod* method)
-{
-	Vector2_t2156229523  V_0;
-	memset(&V_0, 0, sizeof(V_0));
-	{
-		Rigidbody2D_get_position_Injected_m2554601898(__this, (Vector2_t2156229523 *)(&V_0), /*hidden argument*/NULL);
-		Vector2_t2156229523  L_0 = V_0;
-		return L_0;
-	}
-}
 // System.Void UnityEngine.Rigidbody2D::MovePosition(UnityEngine.Vector2)
 extern "C" IL2CPP_METHOD_ATTR void Rigidbody2D_MovePosition_m1934912072 (Rigidbody2D_t939494601 * __this, Vector2_t2156229523  ___position0, const RuntimeMethod* method)
 {
@@ -2347,15 +2334,6 @@ extern "C" IL2CPP_METHOD_ATTR void Rigidbody2D_MovePosition_m1934912072 (Rigidbo
 		Rigidbody2D_MovePosition_Injected_m2788255147(__this, (Vector2_t2156229523 *)(&___position0), /*hidden argument*/NULL);
 		return;
 	}
-}
-// System.Void UnityEngine.Rigidbody2D::get_position_Injected(UnityEngine.Vector2&)
-extern "C" IL2CPP_METHOD_ATTR void Rigidbody2D_get_position_Injected_m2554601898 (Rigidbody2D_t939494601 * __this, Vector2_t2156229523 * ___ret0, const RuntimeMethod* method)
-{
-	typedef void (*Rigidbody2D_get_position_Injected_m2554601898_ftn) (Rigidbody2D_t939494601 *, Vector2_t2156229523 *);
-	static Rigidbody2D_get_position_Injected_m2554601898_ftn _il2cpp_icall_func;
-	if (!_il2cpp_icall_func)
-	_il2cpp_icall_func = (Rigidbody2D_get_position_Injected_m2554601898_ftn)il2cpp_codegen_resolve_icall ("UnityEngine.Rigidbody2D::get_position_Injected(UnityEngine.Vector2&)");
-	_il2cpp_icall_func(__this, ___ret0);
 }
 // System.Void UnityEngine.Rigidbody2D::MovePosition_Injected(UnityEngine.Vector2&)
 extern "C" IL2CPP_METHOD_ATTR void Rigidbody2D_MovePosition_Injected_m2788255147 (Rigidbody2D_t939494601 * __this, Vector2_t2156229523 * ___position0, const RuntimeMethod* method)

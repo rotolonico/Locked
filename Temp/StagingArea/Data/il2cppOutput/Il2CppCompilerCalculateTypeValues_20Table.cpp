@@ -30,10 +30,16 @@ struct PlayerController_t2064355688;
 struct RightController_t480625974;
 // Swipe
 struct Swipe_t3731713951;
+// System.Char[]
+struct CharU5BU5D_t3528271667;
 // System.Collections.Generic.List`1<UnityEngine.Collider2D>
 struct List_1_t4278874368;
+// System.Collections.Generic.List`1<UnityEngine.GameObject>
+struct List_1_t2585711361;
 // System.Object[]
 struct ObjectU5BU5D_t2843939325;
+// System.Random
+struct Random_t108471755;
 // System.String
 struct String_t;
 // System.String[]
@@ -284,6 +290,51 @@ public:
 #pragma clang diagnostic pop
 #endif
 #endif // U24ARRAYTYPEU3D12_T2488454196_H
+#ifndef ENUM_T4135868527_H
+#define ENUM_T4135868527_H
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+
+// System.Enum
+struct  Enum_t4135868527  : public ValueType_t3640485471
+{
+public:
+
+public:
+};
+
+struct Enum_t4135868527_StaticFields
+{
+public:
+	// System.Char[] System.Enum::split_char
+	CharU5BU5D_t3528271667* ___split_char_0;
+
+public:
+	inline static int32_t get_offset_of_split_char_0() { return static_cast<int32_t>(offsetof(Enum_t4135868527_StaticFields, ___split_char_0)); }
+	inline CharU5BU5D_t3528271667* get_split_char_0() const { return ___split_char_0; }
+	inline CharU5BU5D_t3528271667** get_address_of_split_char_0() { return &___split_char_0; }
+	inline void set_split_char_0(CharU5BU5D_t3528271667* value)
+	{
+		___split_char_0 = value;
+		Il2CppCodeGenWriteBarrier((&___split_char_0), value);
+	}
+};
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+// Native definition for P/Invoke marshalling of System.Enum
+struct Enum_t4135868527_marshaled_pinvoke
+{
+};
+// Native definition for COM marshalling of System.Enum
+struct Enum_t4135868527_marshaled_com
+{
+};
+#endif // ENUM_T4135868527_H
 #ifndef INTPTR_T_H
 #define INTPTR_T_H
 #ifdef __clang__
@@ -868,6 +919,35 @@ public:
 #pragma clang diagnostic pop
 #endif
 #endif // COLORTWEENCALLBACK_T1121741130_H
+#ifndef COLORTWEENMODE_T1000778859_H
+#define COLORTWEENMODE_T1000778859_H
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+
+// UnityEngine.UI.CoroutineTween.ColorTween/ColorTweenMode
+struct  ColorTweenMode_t1000778859 
+{
+public:
+	// System.Int32 UnityEngine.UI.CoroutineTween.ColorTween/ColorTweenMode::value__
+	int32_t ___value___1;
+
+public:
+	inline static int32_t get_offset_of_value___1() { return static_cast<int32_t>(offsetof(ColorTweenMode_t1000778859, ___value___1)); }
+	inline int32_t get_value___1() const { return ___value___1; }
+	inline int32_t* get_address_of_value___1() { return &___value___1; }
+	inline void set_value___1(int32_t value)
+	{
+		___value___1 = value;
+	}
+};
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#endif // COLORTWEENMODE_T1000778859_H
 #ifndef FLOATTWEENCALLBACK_T1856710240_H
 #define FLOATTWEENCALLBACK_T1856710240_H
 #ifdef __clang__
@@ -1452,6 +1532,112 @@ public:
 #pragma clang diagnostic pop
 #endif
 #endif // BLOCKTOPCONTROLLER_T1818711515_H
+#ifndef BLUELOCKCONTROLLER_T3247560676_H
+#define BLUELOCKCONTROLLER_T3247560676_H
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+
+// BlueLockController
+struct  BlueLockController_t3247560676  : public MonoBehaviour_t3962482529
+{
+public:
+	// UnityEngine.Sprite BlueLockController::LockKey
+	Sprite_t280657092 * ___LockKey_4;
+	// UnityEngine.AudioSource BlueLockController::UnlockSound
+	AudioSource_t3935305588 * ___UnlockSound_5;
+	// UnityEngine.GameObject BlueLockController::player
+	GameObject_t1113636619 * ___player_6;
+	// PlayerController BlueLockController::playerController
+	PlayerController_t2064355688 * ___playerController_7;
+	// UnityEngine.BoxCollider2D BlueLockController::centerCollider
+	BoxCollider2D_t3581341831 * ___centerCollider_8;
+	// UnityEngine.SpriteRenderer BlueLockController::sr
+	SpriteRenderer_t3235626157 * ___sr_9;
+	// UnityEngine.SpriteRenderer BlueLockController::pSr
+	SpriteRenderer_t3235626157 * ___pSr_10;
+	// System.Boolean BlueLockController::hasKey
+	bool ___hasKey_11;
+
+public:
+	inline static int32_t get_offset_of_LockKey_4() { return static_cast<int32_t>(offsetof(BlueLockController_t3247560676, ___LockKey_4)); }
+	inline Sprite_t280657092 * get_LockKey_4() const { return ___LockKey_4; }
+	inline Sprite_t280657092 ** get_address_of_LockKey_4() { return &___LockKey_4; }
+	inline void set_LockKey_4(Sprite_t280657092 * value)
+	{
+		___LockKey_4 = value;
+		Il2CppCodeGenWriteBarrier((&___LockKey_4), value);
+	}
+
+	inline static int32_t get_offset_of_UnlockSound_5() { return static_cast<int32_t>(offsetof(BlueLockController_t3247560676, ___UnlockSound_5)); }
+	inline AudioSource_t3935305588 * get_UnlockSound_5() const { return ___UnlockSound_5; }
+	inline AudioSource_t3935305588 ** get_address_of_UnlockSound_5() { return &___UnlockSound_5; }
+	inline void set_UnlockSound_5(AudioSource_t3935305588 * value)
+	{
+		___UnlockSound_5 = value;
+		Il2CppCodeGenWriteBarrier((&___UnlockSound_5), value);
+	}
+
+	inline static int32_t get_offset_of_player_6() { return static_cast<int32_t>(offsetof(BlueLockController_t3247560676, ___player_6)); }
+	inline GameObject_t1113636619 * get_player_6() const { return ___player_6; }
+	inline GameObject_t1113636619 ** get_address_of_player_6() { return &___player_6; }
+	inline void set_player_6(GameObject_t1113636619 * value)
+	{
+		___player_6 = value;
+		Il2CppCodeGenWriteBarrier((&___player_6), value);
+	}
+
+	inline static int32_t get_offset_of_playerController_7() { return static_cast<int32_t>(offsetof(BlueLockController_t3247560676, ___playerController_7)); }
+	inline PlayerController_t2064355688 * get_playerController_7() const { return ___playerController_7; }
+	inline PlayerController_t2064355688 ** get_address_of_playerController_7() { return &___playerController_7; }
+	inline void set_playerController_7(PlayerController_t2064355688 * value)
+	{
+		___playerController_7 = value;
+		Il2CppCodeGenWriteBarrier((&___playerController_7), value);
+	}
+
+	inline static int32_t get_offset_of_centerCollider_8() { return static_cast<int32_t>(offsetof(BlueLockController_t3247560676, ___centerCollider_8)); }
+	inline BoxCollider2D_t3581341831 * get_centerCollider_8() const { return ___centerCollider_8; }
+	inline BoxCollider2D_t3581341831 ** get_address_of_centerCollider_8() { return &___centerCollider_8; }
+	inline void set_centerCollider_8(BoxCollider2D_t3581341831 * value)
+	{
+		___centerCollider_8 = value;
+		Il2CppCodeGenWriteBarrier((&___centerCollider_8), value);
+	}
+
+	inline static int32_t get_offset_of_sr_9() { return static_cast<int32_t>(offsetof(BlueLockController_t3247560676, ___sr_9)); }
+	inline SpriteRenderer_t3235626157 * get_sr_9() const { return ___sr_9; }
+	inline SpriteRenderer_t3235626157 ** get_address_of_sr_9() { return &___sr_9; }
+	inline void set_sr_9(SpriteRenderer_t3235626157 * value)
+	{
+		___sr_9 = value;
+		Il2CppCodeGenWriteBarrier((&___sr_9), value);
+	}
+
+	inline static int32_t get_offset_of_pSr_10() { return static_cast<int32_t>(offsetof(BlueLockController_t3247560676, ___pSr_10)); }
+	inline SpriteRenderer_t3235626157 * get_pSr_10() const { return ___pSr_10; }
+	inline SpriteRenderer_t3235626157 ** get_address_of_pSr_10() { return &___pSr_10; }
+	inline void set_pSr_10(SpriteRenderer_t3235626157 * value)
+	{
+		___pSr_10 = value;
+		Il2CppCodeGenWriteBarrier((&___pSr_10), value);
+	}
+
+	inline static int32_t get_offset_of_hasKey_11() { return static_cast<int32_t>(offsetof(BlueLockController_t3247560676, ___hasKey_11)); }
+	inline bool get_hasKey_11() const { return ___hasKey_11; }
+	inline bool* get_address_of_hasKey_11() { return &___hasKey_11; }
+	inline void set_hasKey_11(bool value)
+	{
+		___hasKey_11 = value;
+	}
+};
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#endif // BLUELOCKCONTROLLER_T3247560676_H
 #ifndef BOTCONTROLLER_T3465394129_H
 #define BOTCONTROLLER_T3465394129_H
 #ifdef __clang__
@@ -1601,6 +1787,24 @@ public:
 	Vector2_t2156229523  ___playerPositionY_13;
 	// UnityEngine.Vector2 CameraController::cameraPositionY
 	Vector2_t2156229523  ___cameraPositionY_14;
+	// UnityEngine.Vector3 CameraController::right
+	Vector3_t3722313464  ___right_15;
+	// UnityEngine.Vector3 CameraController::up
+	Vector3_t3722313464  ___up_16;
+	// UnityEngine.Vector3 CameraController::left
+	Vector3_t3722313464  ___left_17;
+	// UnityEngine.Vector3 CameraController::down
+	Vector3_t3722313464  ___down_18;
+	// System.Boolean CameraController::moveUp
+	bool ___moveUp_19;
+	// System.Boolean CameraController::moveRight
+	bool ___moveRight_20;
+	// System.Boolean CameraController::moveDown
+	bool ___moveDown_21;
+	// System.Boolean CameraController::moveLeft
+	bool ___moveLeft_22;
+	// System.Boolean CameraController::cameraMode
+	bool ___cameraMode_23;
 
 public:
 	inline static int32_t get_offset_of_CameraScroll_4() { return static_cast<int32_t>(offsetof(CameraController_t3346819214, ___CameraScroll_4)); }
@@ -1693,12 +1897,190 @@ public:
 	{
 		___cameraPositionY_14 = value;
 	}
+
+	inline static int32_t get_offset_of_right_15() { return static_cast<int32_t>(offsetof(CameraController_t3346819214, ___right_15)); }
+	inline Vector3_t3722313464  get_right_15() const { return ___right_15; }
+	inline Vector3_t3722313464 * get_address_of_right_15() { return &___right_15; }
+	inline void set_right_15(Vector3_t3722313464  value)
+	{
+		___right_15 = value;
+	}
+
+	inline static int32_t get_offset_of_up_16() { return static_cast<int32_t>(offsetof(CameraController_t3346819214, ___up_16)); }
+	inline Vector3_t3722313464  get_up_16() const { return ___up_16; }
+	inline Vector3_t3722313464 * get_address_of_up_16() { return &___up_16; }
+	inline void set_up_16(Vector3_t3722313464  value)
+	{
+		___up_16 = value;
+	}
+
+	inline static int32_t get_offset_of_left_17() { return static_cast<int32_t>(offsetof(CameraController_t3346819214, ___left_17)); }
+	inline Vector3_t3722313464  get_left_17() const { return ___left_17; }
+	inline Vector3_t3722313464 * get_address_of_left_17() { return &___left_17; }
+	inline void set_left_17(Vector3_t3722313464  value)
+	{
+		___left_17 = value;
+	}
+
+	inline static int32_t get_offset_of_down_18() { return static_cast<int32_t>(offsetof(CameraController_t3346819214, ___down_18)); }
+	inline Vector3_t3722313464  get_down_18() const { return ___down_18; }
+	inline Vector3_t3722313464 * get_address_of_down_18() { return &___down_18; }
+	inline void set_down_18(Vector3_t3722313464  value)
+	{
+		___down_18 = value;
+	}
+
+	inline static int32_t get_offset_of_moveUp_19() { return static_cast<int32_t>(offsetof(CameraController_t3346819214, ___moveUp_19)); }
+	inline bool get_moveUp_19() const { return ___moveUp_19; }
+	inline bool* get_address_of_moveUp_19() { return &___moveUp_19; }
+	inline void set_moveUp_19(bool value)
+	{
+		___moveUp_19 = value;
+	}
+
+	inline static int32_t get_offset_of_moveRight_20() { return static_cast<int32_t>(offsetof(CameraController_t3346819214, ___moveRight_20)); }
+	inline bool get_moveRight_20() const { return ___moveRight_20; }
+	inline bool* get_address_of_moveRight_20() { return &___moveRight_20; }
+	inline void set_moveRight_20(bool value)
+	{
+		___moveRight_20 = value;
+	}
+
+	inline static int32_t get_offset_of_moveDown_21() { return static_cast<int32_t>(offsetof(CameraController_t3346819214, ___moveDown_21)); }
+	inline bool get_moveDown_21() const { return ___moveDown_21; }
+	inline bool* get_address_of_moveDown_21() { return &___moveDown_21; }
+	inline void set_moveDown_21(bool value)
+	{
+		___moveDown_21 = value;
+	}
+
+	inline static int32_t get_offset_of_moveLeft_22() { return static_cast<int32_t>(offsetof(CameraController_t3346819214, ___moveLeft_22)); }
+	inline bool get_moveLeft_22() const { return ___moveLeft_22; }
+	inline bool* get_address_of_moveLeft_22() { return &___moveLeft_22; }
+	inline void set_moveLeft_22(bool value)
+	{
+		___moveLeft_22 = value;
+	}
+
+	inline static int32_t get_offset_of_cameraMode_23() { return static_cast<int32_t>(offsetof(CameraController_t3346819214, ___cameraMode_23)); }
+	inline bool get_cameraMode_23() const { return ___cameraMode_23; }
+	inline bool* get_address_of_cameraMode_23() { return &___cameraMode_23; }
+	inline void set_cameraMode_23(bool value)
+	{
+		___cameraMode_23 = value;
+	}
 };
 
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
 #endif // CAMERACONTROLLER_T3346819214_H
+#ifndef GREENLOCKCONTROLLER_T1535438088_H
+#define GREENLOCKCONTROLLER_T1535438088_H
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+
+// GreenLockController
+struct  GreenLockController_t1535438088  : public MonoBehaviour_t3962482529
+{
+public:
+	// UnityEngine.Sprite GreenLockController::LockKey
+	Sprite_t280657092 * ___LockKey_4;
+	// UnityEngine.AudioSource GreenLockController::UnlockSound
+	AudioSource_t3935305588 * ___UnlockSound_5;
+	// UnityEngine.GameObject GreenLockController::player
+	GameObject_t1113636619 * ___player_6;
+	// PlayerController GreenLockController::playerController
+	PlayerController_t2064355688 * ___playerController_7;
+	// UnityEngine.BoxCollider2D GreenLockController::centerCollider
+	BoxCollider2D_t3581341831 * ___centerCollider_8;
+	// UnityEngine.SpriteRenderer GreenLockController::sr
+	SpriteRenderer_t3235626157 * ___sr_9;
+	// UnityEngine.SpriteRenderer GreenLockController::pSr
+	SpriteRenderer_t3235626157 * ___pSr_10;
+	// System.Boolean GreenLockController::hasKey
+	bool ___hasKey_11;
+
+public:
+	inline static int32_t get_offset_of_LockKey_4() { return static_cast<int32_t>(offsetof(GreenLockController_t1535438088, ___LockKey_4)); }
+	inline Sprite_t280657092 * get_LockKey_4() const { return ___LockKey_4; }
+	inline Sprite_t280657092 ** get_address_of_LockKey_4() { return &___LockKey_4; }
+	inline void set_LockKey_4(Sprite_t280657092 * value)
+	{
+		___LockKey_4 = value;
+		Il2CppCodeGenWriteBarrier((&___LockKey_4), value);
+	}
+
+	inline static int32_t get_offset_of_UnlockSound_5() { return static_cast<int32_t>(offsetof(GreenLockController_t1535438088, ___UnlockSound_5)); }
+	inline AudioSource_t3935305588 * get_UnlockSound_5() const { return ___UnlockSound_5; }
+	inline AudioSource_t3935305588 ** get_address_of_UnlockSound_5() { return &___UnlockSound_5; }
+	inline void set_UnlockSound_5(AudioSource_t3935305588 * value)
+	{
+		___UnlockSound_5 = value;
+		Il2CppCodeGenWriteBarrier((&___UnlockSound_5), value);
+	}
+
+	inline static int32_t get_offset_of_player_6() { return static_cast<int32_t>(offsetof(GreenLockController_t1535438088, ___player_6)); }
+	inline GameObject_t1113636619 * get_player_6() const { return ___player_6; }
+	inline GameObject_t1113636619 ** get_address_of_player_6() { return &___player_6; }
+	inline void set_player_6(GameObject_t1113636619 * value)
+	{
+		___player_6 = value;
+		Il2CppCodeGenWriteBarrier((&___player_6), value);
+	}
+
+	inline static int32_t get_offset_of_playerController_7() { return static_cast<int32_t>(offsetof(GreenLockController_t1535438088, ___playerController_7)); }
+	inline PlayerController_t2064355688 * get_playerController_7() const { return ___playerController_7; }
+	inline PlayerController_t2064355688 ** get_address_of_playerController_7() { return &___playerController_7; }
+	inline void set_playerController_7(PlayerController_t2064355688 * value)
+	{
+		___playerController_7 = value;
+		Il2CppCodeGenWriteBarrier((&___playerController_7), value);
+	}
+
+	inline static int32_t get_offset_of_centerCollider_8() { return static_cast<int32_t>(offsetof(GreenLockController_t1535438088, ___centerCollider_8)); }
+	inline BoxCollider2D_t3581341831 * get_centerCollider_8() const { return ___centerCollider_8; }
+	inline BoxCollider2D_t3581341831 ** get_address_of_centerCollider_8() { return &___centerCollider_8; }
+	inline void set_centerCollider_8(BoxCollider2D_t3581341831 * value)
+	{
+		___centerCollider_8 = value;
+		Il2CppCodeGenWriteBarrier((&___centerCollider_8), value);
+	}
+
+	inline static int32_t get_offset_of_sr_9() { return static_cast<int32_t>(offsetof(GreenLockController_t1535438088, ___sr_9)); }
+	inline SpriteRenderer_t3235626157 * get_sr_9() const { return ___sr_9; }
+	inline SpriteRenderer_t3235626157 ** get_address_of_sr_9() { return &___sr_9; }
+	inline void set_sr_9(SpriteRenderer_t3235626157 * value)
+	{
+		___sr_9 = value;
+		Il2CppCodeGenWriteBarrier((&___sr_9), value);
+	}
+
+	inline static int32_t get_offset_of_pSr_10() { return static_cast<int32_t>(offsetof(GreenLockController_t1535438088, ___pSr_10)); }
+	inline SpriteRenderer_t3235626157 * get_pSr_10() const { return ___pSr_10; }
+	inline SpriteRenderer_t3235626157 ** get_address_of_pSr_10() { return &___pSr_10; }
+	inline void set_pSr_10(SpriteRenderer_t3235626157 * value)
+	{
+		___pSr_10 = value;
+		Il2CppCodeGenWriteBarrier((&___pSr_10), value);
+	}
+
+	inline static int32_t get_offset_of_hasKey_11() { return static_cast<int32_t>(offsetof(GreenLockController_t1535438088, ___hasKey_11)); }
+	inline bool get_hasKey_11() const { return ___hasKey_11; }
+	inline bool* get_address_of_hasKey_11() { return &___hasKey_11; }
+	inline void set_hasKey_11(bool value)
+	{
+		___hasKey_11 = value;
+	}
+};
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#endif // GREENLOCKCONTROLLER_T1535438088_H
 #ifndef LEFTCONTROLLER_T3745940898_H
 #define LEFTCONTROLLER_T3745940898_H
 #ifdef __clang__
@@ -2000,34 +2382,56 @@ public:
 	SpriteRenderer_t3235626157 * ___KeySr_5;
 	// UnityEngine.SpriteRenderer PlayerController::RedKeySr
 	SpriteRenderer_t3235626157 * ___RedKeySr_6;
+	// UnityEngine.SpriteRenderer PlayerController::GreenKeySr
+	SpriteRenderer_t3235626157 * ___GreenKeySr_7;
+	// UnityEngine.SpriteRenderer PlayerController::BlueKeySr
+	SpriteRenderer_t3235626157 * ___BlueKeySr_8;
 	// UnityEngine.AudioSource PlayerController::GetKeySound
-	AudioSource_t3935305588 * ___GetKeySound_7;
+	AudioSource_t3935305588 * ___GetKeySound_9;
 	// UnityEngine.Transform PlayerController::KeyImage
-	Transform_t3600365921 * ___KeyImage_8;
+	Transform_t3600365921 * ___KeyImage_10;
 	// UnityEngine.Transform PlayerController::RedKeyImage
-	Transform_t3600365921 * ___RedKeyImage_9;
+	Transform_t3600365921 * ___RedKeyImage_11;
+	// UnityEngine.Transform PlayerController::GreenKeyImage
+	Transform_t3600365921 * ___GreenKeyImage_12;
+	// UnityEngine.Transform PlayerController::BlueKeyImage
+	Transform_t3600365921 * ___BlueKeyImage_13;
 	// UnityEngine.Vector3 PlayerController::screenSize
-	Vector3_t3722313464  ___screenSize_10;
+	Vector3_t3722313464  ___screenSize_14;
 	// UnityEngine.Vector2 PlayerController::transformedPosition
-	Vector2_t2156229523  ___transformedPosition_11;
+	Vector2_t2156229523  ___transformedPosition_15;
 	// UnityEngine.GameObject PlayerController::camera
-	GameObject_t1113636619 * ___camera_12;
+	GameObject_t1113636619 * ___camera_16;
 	// UnityEngine.GameObject[] PlayerController::keyImages
-	GameObjectU5BU5D_t3328599146* ___keyImages_13;
+	GameObjectU5BU5D_t3328599146* ___keyImages_17;
 	// UnityEngine.GameObject[] PlayerController::redKeyImages
-	GameObjectU5BU5D_t3328599146* ___redKeyImages_14;
+	GameObjectU5BU5D_t3328599146* ___redKeyImages_18;
+	// UnityEngine.GameObject[] PlayerController::greenKeyImages
+	GameObjectU5BU5D_t3328599146* ___greenKeyImages_19;
+	// UnityEngine.GameObject[] PlayerController::blueKeyImages
+	GameObjectU5BU5D_t3328599146* ___blueKeyImages_20;
 	// UnityEngine.Rigidbody2D[] PlayerController::keyImagesRb
-	Rigidbody2DU5BU5D_t385786356* ___keyImagesRb_15;
+	Rigidbody2DU5BU5D_t385786356* ___keyImagesRb_21;
 	// UnityEngine.Rigidbody2D[] PlayerController::redKeyImagesRb
-	Rigidbody2DU5BU5D_t385786356* ___redKeyImagesRb_16;
-	// System.Single PlayerController::screenWidth
-	float ___screenWidth_17;
+	Rigidbody2DU5BU5D_t385786356* ___redKeyImagesRb_22;
+	// UnityEngine.Rigidbody2D[] PlayerController::greenKeyImagesRb
+	Rigidbody2DU5BU5D_t385786356* ___greenKeyImagesRb_23;
+	// UnityEngine.Rigidbody2D[] PlayerController::blueKeyImagesRb
+	Rigidbody2DU5BU5D_t385786356* ___blueKeyImagesRb_24;
+	// UnityEngine.Transform PlayerController::KeySpawn
+	Transform_t3600365921 * ___KeySpawn_25;
 	// UnityEngine.Vector2 PlayerController::keyShift
-	Vector2_t2156229523  ___keyShift_18;
+	Vector2_t2156229523  ___keyShift_26;
 	// System.Int32 PlayerController::HasKey
-	int32_t ___HasKey_19;
+	int32_t ___HasKey_27;
 	// System.Int32 PlayerController::HasRedKey
-	int32_t ___HasRedKey_20;
+	int32_t ___HasRedKey_28;
+	// System.Int32 PlayerController::HasGreenKey
+	int32_t ___HasGreenKey_29;
+	// System.Int32 PlayerController::HasBlueKey
+	int32_t ___HasBlueKey_30;
+	// System.Boolean PlayerController::Teleporting
+	bool ___Teleporting_31;
 
 public:
 	inline static int32_t get_offset_of_Background_4() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___Background_4)); }
@@ -2057,124 +2461,221 @@ public:
 		Il2CppCodeGenWriteBarrier((&___RedKeySr_6), value);
 	}
 
-	inline static int32_t get_offset_of_GetKeySound_7() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___GetKeySound_7)); }
-	inline AudioSource_t3935305588 * get_GetKeySound_7() const { return ___GetKeySound_7; }
-	inline AudioSource_t3935305588 ** get_address_of_GetKeySound_7() { return &___GetKeySound_7; }
-	inline void set_GetKeySound_7(AudioSource_t3935305588 * value)
+	inline static int32_t get_offset_of_GreenKeySr_7() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___GreenKeySr_7)); }
+	inline SpriteRenderer_t3235626157 * get_GreenKeySr_7() const { return ___GreenKeySr_7; }
+	inline SpriteRenderer_t3235626157 ** get_address_of_GreenKeySr_7() { return &___GreenKeySr_7; }
+	inline void set_GreenKeySr_7(SpriteRenderer_t3235626157 * value)
 	{
-		___GetKeySound_7 = value;
-		Il2CppCodeGenWriteBarrier((&___GetKeySound_7), value);
+		___GreenKeySr_7 = value;
+		Il2CppCodeGenWriteBarrier((&___GreenKeySr_7), value);
 	}
 
-	inline static int32_t get_offset_of_KeyImage_8() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___KeyImage_8)); }
-	inline Transform_t3600365921 * get_KeyImage_8() const { return ___KeyImage_8; }
-	inline Transform_t3600365921 ** get_address_of_KeyImage_8() { return &___KeyImage_8; }
-	inline void set_KeyImage_8(Transform_t3600365921 * value)
+	inline static int32_t get_offset_of_BlueKeySr_8() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___BlueKeySr_8)); }
+	inline SpriteRenderer_t3235626157 * get_BlueKeySr_8() const { return ___BlueKeySr_8; }
+	inline SpriteRenderer_t3235626157 ** get_address_of_BlueKeySr_8() { return &___BlueKeySr_8; }
+	inline void set_BlueKeySr_8(SpriteRenderer_t3235626157 * value)
 	{
-		___KeyImage_8 = value;
-		Il2CppCodeGenWriteBarrier((&___KeyImage_8), value);
+		___BlueKeySr_8 = value;
+		Il2CppCodeGenWriteBarrier((&___BlueKeySr_8), value);
 	}
 
-	inline static int32_t get_offset_of_RedKeyImage_9() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___RedKeyImage_9)); }
-	inline Transform_t3600365921 * get_RedKeyImage_9() const { return ___RedKeyImage_9; }
-	inline Transform_t3600365921 ** get_address_of_RedKeyImage_9() { return &___RedKeyImage_9; }
-	inline void set_RedKeyImage_9(Transform_t3600365921 * value)
+	inline static int32_t get_offset_of_GetKeySound_9() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___GetKeySound_9)); }
+	inline AudioSource_t3935305588 * get_GetKeySound_9() const { return ___GetKeySound_9; }
+	inline AudioSource_t3935305588 ** get_address_of_GetKeySound_9() { return &___GetKeySound_9; }
+	inline void set_GetKeySound_9(AudioSource_t3935305588 * value)
 	{
-		___RedKeyImage_9 = value;
-		Il2CppCodeGenWriteBarrier((&___RedKeyImage_9), value);
+		___GetKeySound_9 = value;
+		Il2CppCodeGenWriteBarrier((&___GetKeySound_9), value);
 	}
 
-	inline static int32_t get_offset_of_screenSize_10() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___screenSize_10)); }
-	inline Vector3_t3722313464  get_screenSize_10() const { return ___screenSize_10; }
-	inline Vector3_t3722313464 * get_address_of_screenSize_10() { return &___screenSize_10; }
-	inline void set_screenSize_10(Vector3_t3722313464  value)
+	inline static int32_t get_offset_of_KeyImage_10() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___KeyImage_10)); }
+	inline Transform_t3600365921 * get_KeyImage_10() const { return ___KeyImage_10; }
+	inline Transform_t3600365921 ** get_address_of_KeyImage_10() { return &___KeyImage_10; }
+	inline void set_KeyImage_10(Transform_t3600365921 * value)
 	{
-		___screenSize_10 = value;
+		___KeyImage_10 = value;
+		Il2CppCodeGenWriteBarrier((&___KeyImage_10), value);
 	}
 
-	inline static int32_t get_offset_of_transformedPosition_11() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___transformedPosition_11)); }
-	inline Vector2_t2156229523  get_transformedPosition_11() const { return ___transformedPosition_11; }
-	inline Vector2_t2156229523 * get_address_of_transformedPosition_11() { return &___transformedPosition_11; }
-	inline void set_transformedPosition_11(Vector2_t2156229523  value)
+	inline static int32_t get_offset_of_RedKeyImage_11() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___RedKeyImage_11)); }
+	inline Transform_t3600365921 * get_RedKeyImage_11() const { return ___RedKeyImage_11; }
+	inline Transform_t3600365921 ** get_address_of_RedKeyImage_11() { return &___RedKeyImage_11; }
+	inline void set_RedKeyImage_11(Transform_t3600365921 * value)
 	{
-		___transformedPosition_11 = value;
+		___RedKeyImage_11 = value;
+		Il2CppCodeGenWriteBarrier((&___RedKeyImage_11), value);
 	}
 
-	inline static int32_t get_offset_of_camera_12() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___camera_12)); }
-	inline GameObject_t1113636619 * get_camera_12() const { return ___camera_12; }
-	inline GameObject_t1113636619 ** get_address_of_camera_12() { return &___camera_12; }
-	inline void set_camera_12(GameObject_t1113636619 * value)
+	inline static int32_t get_offset_of_GreenKeyImage_12() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___GreenKeyImage_12)); }
+	inline Transform_t3600365921 * get_GreenKeyImage_12() const { return ___GreenKeyImage_12; }
+	inline Transform_t3600365921 ** get_address_of_GreenKeyImage_12() { return &___GreenKeyImage_12; }
+	inline void set_GreenKeyImage_12(Transform_t3600365921 * value)
 	{
-		___camera_12 = value;
-		Il2CppCodeGenWriteBarrier((&___camera_12), value);
+		___GreenKeyImage_12 = value;
+		Il2CppCodeGenWriteBarrier((&___GreenKeyImage_12), value);
 	}
 
-	inline static int32_t get_offset_of_keyImages_13() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___keyImages_13)); }
-	inline GameObjectU5BU5D_t3328599146* get_keyImages_13() const { return ___keyImages_13; }
-	inline GameObjectU5BU5D_t3328599146** get_address_of_keyImages_13() { return &___keyImages_13; }
-	inline void set_keyImages_13(GameObjectU5BU5D_t3328599146* value)
+	inline static int32_t get_offset_of_BlueKeyImage_13() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___BlueKeyImage_13)); }
+	inline Transform_t3600365921 * get_BlueKeyImage_13() const { return ___BlueKeyImage_13; }
+	inline Transform_t3600365921 ** get_address_of_BlueKeyImage_13() { return &___BlueKeyImage_13; }
+	inline void set_BlueKeyImage_13(Transform_t3600365921 * value)
 	{
-		___keyImages_13 = value;
-		Il2CppCodeGenWriteBarrier((&___keyImages_13), value);
+		___BlueKeyImage_13 = value;
+		Il2CppCodeGenWriteBarrier((&___BlueKeyImage_13), value);
 	}
 
-	inline static int32_t get_offset_of_redKeyImages_14() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___redKeyImages_14)); }
-	inline GameObjectU5BU5D_t3328599146* get_redKeyImages_14() const { return ___redKeyImages_14; }
-	inline GameObjectU5BU5D_t3328599146** get_address_of_redKeyImages_14() { return &___redKeyImages_14; }
-	inline void set_redKeyImages_14(GameObjectU5BU5D_t3328599146* value)
+	inline static int32_t get_offset_of_screenSize_14() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___screenSize_14)); }
+	inline Vector3_t3722313464  get_screenSize_14() const { return ___screenSize_14; }
+	inline Vector3_t3722313464 * get_address_of_screenSize_14() { return &___screenSize_14; }
+	inline void set_screenSize_14(Vector3_t3722313464  value)
 	{
-		___redKeyImages_14 = value;
-		Il2CppCodeGenWriteBarrier((&___redKeyImages_14), value);
+		___screenSize_14 = value;
 	}
 
-	inline static int32_t get_offset_of_keyImagesRb_15() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___keyImagesRb_15)); }
-	inline Rigidbody2DU5BU5D_t385786356* get_keyImagesRb_15() const { return ___keyImagesRb_15; }
-	inline Rigidbody2DU5BU5D_t385786356** get_address_of_keyImagesRb_15() { return &___keyImagesRb_15; }
-	inline void set_keyImagesRb_15(Rigidbody2DU5BU5D_t385786356* value)
+	inline static int32_t get_offset_of_transformedPosition_15() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___transformedPosition_15)); }
+	inline Vector2_t2156229523  get_transformedPosition_15() const { return ___transformedPosition_15; }
+	inline Vector2_t2156229523 * get_address_of_transformedPosition_15() { return &___transformedPosition_15; }
+	inline void set_transformedPosition_15(Vector2_t2156229523  value)
 	{
-		___keyImagesRb_15 = value;
-		Il2CppCodeGenWriteBarrier((&___keyImagesRb_15), value);
+		___transformedPosition_15 = value;
 	}
 
-	inline static int32_t get_offset_of_redKeyImagesRb_16() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___redKeyImagesRb_16)); }
-	inline Rigidbody2DU5BU5D_t385786356* get_redKeyImagesRb_16() const { return ___redKeyImagesRb_16; }
-	inline Rigidbody2DU5BU5D_t385786356** get_address_of_redKeyImagesRb_16() { return &___redKeyImagesRb_16; }
-	inline void set_redKeyImagesRb_16(Rigidbody2DU5BU5D_t385786356* value)
+	inline static int32_t get_offset_of_camera_16() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___camera_16)); }
+	inline GameObject_t1113636619 * get_camera_16() const { return ___camera_16; }
+	inline GameObject_t1113636619 ** get_address_of_camera_16() { return &___camera_16; }
+	inline void set_camera_16(GameObject_t1113636619 * value)
 	{
-		___redKeyImagesRb_16 = value;
-		Il2CppCodeGenWriteBarrier((&___redKeyImagesRb_16), value);
+		___camera_16 = value;
+		Il2CppCodeGenWriteBarrier((&___camera_16), value);
 	}
 
-	inline static int32_t get_offset_of_screenWidth_17() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___screenWidth_17)); }
-	inline float get_screenWidth_17() const { return ___screenWidth_17; }
-	inline float* get_address_of_screenWidth_17() { return &___screenWidth_17; }
-	inline void set_screenWidth_17(float value)
+	inline static int32_t get_offset_of_keyImages_17() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___keyImages_17)); }
+	inline GameObjectU5BU5D_t3328599146* get_keyImages_17() const { return ___keyImages_17; }
+	inline GameObjectU5BU5D_t3328599146** get_address_of_keyImages_17() { return &___keyImages_17; }
+	inline void set_keyImages_17(GameObjectU5BU5D_t3328599146* value)
 	{
-		___screenWidth_17 = value;
+		___keyImages_17 = value;
+		Il2CppCodeGenWriteBarrier((&___keyImages_17), value);
 	}
 
-	inline static int32_t get_offset_of_keyShift_18() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___keyShift_18)); }
-	inline Vector2_t2156229523  get_keyShift_18() const { return ___keyShift_18; }
-	inline Vector2_t2156229523 * get_address_of_keyShift_18() { return &___keyShift_18; }
-	inline void set_keyShift_18(Vector2_t2156229523  value)
+	inline static int32_t get_offset_of_redKeyImages_18() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___redKeyImages_18)); }
+	inline GameObjectU5BU5D_t3328599146* get_redKeyImages_18() const { return ___redKeyImages_18; }
+	inline GameObjectU5BU5D_t3328599146** get_address_of_redKeyImages_18() { return &___redKeyImages_18; }
+	inline void set_redKeyImages_18(GameObjectU5BU5D_t3328599146* value)
 	{
-		___keyShift_18 = value;
+		___redKeyImages_18 = value;
+		Il2CppCodeGenWriteBarrier((&___redKeyImages_18), value);
 	}
 
-	inline static int32_t get_offset_of_HasKey_19() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___HasKey_19)); }
-	inline int32_t get_HasKey_19() const { return ___HasKey_19; }
-	inline int32_t* get_address_of_HasKey_19() { return &___HasKey_19; }
-	inline void set_HasKey_19(int32_t value)
+	inline static int32_t get_offset_of_greenKeyImages_19() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___greenKeyImages_19)); }
+	inline GameObjectU5BU5D_t3328599146* get_greenKeyImages_19() const { return ___greenKeyImages_19; }
+	inline GameObjectU5BU5D_t3328599146** get_address_of_greenKeyImages_19() { return &___greenKeyImages_19; }
+	inline void set_greenKeyImages_19(GameObjectU5BU5D_t3328599146* value)
 	{
-		___HasKey_19 = value;
+		___greenKeyImages_19 = value;
+		Il2CppCodeGenWriteBarrier((&___greenKeyImages_19), value);
 	}
 
-	inline static int32_t get_offset_of_HasRedKey_20() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___HasRedKey_20)); }
-	inline int32_t get_HasRedKey_20() const { return ___HasRedKey_20; }
-	inline int32_t* get_address_of_HasRedKey_20() { return &___HasRedKey_20; }
-	inline void set_HasRedKey_20(int32_t value)
+	inline static int32_t get_offset_of_blueKeyImages_20() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___blueKeyImages_20)); }
+	inline GameObjectU5BU5D_t3328599146* get_blueKeyImages_20() const { return ___blueKeyImages_20; }
+	inline GameObjectU5BU5D_t3328599146** get_address_of_blueKeyImages_20() { return &___blueKeyImages_20; }
+	inline void set_blueKeyImages_20(GameObjectU5BU5D_t3328599146* value)
 	{
-		___HasRedKey_20 = value;
+		___blueKeyImages_20 = value;
+		Il2CppCodeGenWriteBarrier((&___blueKeyImages_20), value);
+	}
+
+	inline static int32_t get_offset_of_keyImagesRb_21() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___keyImagesRb_21)); }
+	inline Rigidbody2DU5BU5D_t385786356* get_keyImagesRb_21() const { return ___keyImagesRb_21; }
+	inline Rigidbody2DU5BU5D_t385786356** get_address_of_keyImagesRb_21() { return &___keyImagesRb_21; }
+	inline void set_keyImagesRb_21(Rigidbody2DU5BU5D_t385786356* value)
+	{
+		___keyImagesRb_21 = value;
+		Il2CppCodeGenWriteBarrier((&___keyImagesRb_21), value);
+	}
+
+	inline static int32_t get_offset_of_redKeyImagesRb_22() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___redKeyImagesRb_22)); }
+	inline Rigidbody2DU5BU5D_t385786356* get_redKeyImagesRb_22() const { return ___redKeyImagesRb_22; }
+	inline Rigidbody2DU5BU5D_t385786356** get_address_of_redKeyImagesRb_22() { return &___redKeyImagesRb_22; }
+	inline void set_redKeyImagesRb_22(Rigidbody2DU5BU5D_t385786356* value)
+	{
+		___redKeyImagesRb_22 = value;
+		Il2CppCodeGenWriteBarrier((&___redKeyImagesRb_22), value);
+	}
+
+	inline static int32_t get_offset_of_greenKeyImagesRb_23() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___greenKeyImagesRb_23)); }
+	inline Rigidbody2DU5BU5D_t385786356* get_greenKeyImagesRb_23() const { return ___greenKeyImagesRb_23; }
+	inline Rigidbody2DU5BU5D_t385786356** get_address_of_greenKeyImagesRb_23() { return &___greenKeyImagesRb_23; }
+	inline void set_greenKeyImagesRb_23(Rigidbody2DU5BU5D_t385786356* value)
+	{
+		___greenKeyImagesRb_23 = value;
+		Il2CppCodeGenWriteBarrier((&___greenKeyImagesRb_23), value);
+	}
+
+	inline static int32_t get_offset_of_blueKeyImagesRb_24() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___blueKeyImagesRb_24)); }
+	inline Rigidbody2DU5BU5D_t385786356* get_blueKeyImagesRb_24() const { return ___blueKeyImagesRb_24; }
+	inline Rigidbody2DU5BU5D_t385786356** get_address_of_blueKeyImagesRb_24() { return &___blueKeyImagesRb_24; }
+	inline void set_blueKeyImagesRb_24(Rigidbody2DU5BU5D_t385786356* value)
+	{
+		___blueKeyImagesRb_24 = value;
+		Il2CppCodeGenWriteBarrier((&___blueKeyImagesRb_24), value);
+	}
+
+	inline static int32_t get_offset_of_KeySpawn_25() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___KeySpawn_25)); }
+	inline Transform_t3600365921 * get_KeySpawn_25() const { return ___KeySpawn_25; }
+	inline Transform_t3600365921 ** get_address_of_KeySpawn_25() { return &___KeySpawn_25; }
+	inline void set_KeySpawn_25(Transform_t3600365921 * value)
+	{
+		___KeySpawn_25 = value;
+		Il2CppCodeGenWriteBarrier((&___KeySpawn_25), value);
+	}
+
+	inline static int32_t get_offset_of_keyShift_26() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___keyShift_26)); }
+	inline Vector2_t2156229523  get_keyShift_26() const { return ___keyShift_26; }
+	inline Vector2_t2156229523 * get_address_of_keyShift_26() { return &___keyShift_26; }
+	inline void set_keyShift_26(Vector2_t2156229523  value)
+	{
+		___keyShift_26 = value;
+	}
+
+	inline static int32_t get_offset_of_HasKey_27() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___HasKey_27)); }
+	inline int32_t get_HasKey_27() const { return ___HasKey_27; }
+	inline int32_t* get_address_of_HasKey_27() { return &___HasKey_27; }
+	inline void set_HasKey_27(int32_t value)
+	{
+		___HasKey_27 = value;
+	}
+
+	inline static int32_t get_offset_of_HasRedKey_28() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___HasRedKey_28)); }
+	inline int32_t get_HasRedKey_28() const { return ___HasRedKey_28; }
+	inline int32_t* get_address_of_HasRedKey_28() { return &___HasRedKey_28; }
+	inline void set_HasRedKey_28(int32_t value)
+	{
+		___HasRedKey_28 = value;
+	}
+
+	inline static int32_t get_offset_of_HasGreenKey_29() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___HasGreenKey_29)); }
+	inline int32_t get_HasGreenKey_29() const { return ___HasGreenKey_29; }
+	inline int32_t* get_address_of_HasGreenKey_29() { return &___HasGreenKey_29; }
+	inline void set_HasGreenKey_29(int32_t value)
+	{
+		___HasGreenKey_29 = value;
+	}
+
+	inline static int32_t get_offset_of_HasBlueKey_30() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___HasBlueKey_30)); }
+	inline int32_t get_HasBlueKey_30() const { return ___HasBlueKey_30; }
+	inline int32_t* get_address_of_HasBlueKey_30() { return &___HasBlueKey_30; }
+	inline void set_HasBlueKey_30(int32_t value)
+	{
+		___HasBlueKey_30 = value;
+	}
+
+	inline static int32_t get_offset_of_Teleporting_31() { return static_cast<int32_t>(offsetof(PlayerController_t2064355688, ___Teleporting_31)); }
+	inline bool get_Teleporting_31() const { return ___Teleporting_31; }
+	inline bool* get_address_of_Teleporting_31() { return &___Teleporting_31; }
+	inline void set_Teleporting_31(bool value)
+	{
+		___Teleporting_31 = value;
 	}
 };
 
@@ -2518,6 +3019,101 @@ public:
 #pragma clang diagnostic pop
 #endif
 #endif // SWIPE_T3731713951_H
+#ifndef TELEPORTERCONTROLLER_T2611489658_H
+#define TELEPORTERCONTROLLER_T2611489658_H
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+
+// TeleporterController
+struct  TeleporterController_t2611489658  : public MonoBehaviour_t3962482529
+{
+public:
+	// UnityEngine.AudioSource TeleporterController::TeleportSound
+	AudioSource_t3935305588 * ___TeleportSound_4;
+	// PlayerController TeleporterController::playerController
+	PlayerController_t2064355688 * ___playerController_5;
+	// UnityEngine.GameObject TeleporterController::player
+	GameObject_t1113636619 * ___player_6;
+	// UnityEngine.GameObject[] TeleporterController::portalsArray
+	GameObjectU5BU5D_t3328599146* ___portalsArray_7;
+	// System.Collections.Generic.List`1<UnityEngine.GameObject> TeleporterController::portals
+	List_1_t2585711361 * ___portals_8;
+	// System.Random TeleporterController::rnd
+	Random_t108471755 * ___rnd_9;
+	// System.Boolean TeleporterController::teleported
+	bool ___teleported_10;
+
+public:
+	inline static int32_t get_offset_of_TeleportSound_4() { return static_cast<int32_t>(offsetof(TeleporterController_t2611489658, ___TeleportSound_4)); }
+	inline AudioSource_t3935305588 * get_TeleportSound_4() const { return ___TeleportSound_4; }
+	inline AudioSource_t3935305588 ** get_address_of_TeleportSound_4() { return &___TeleportSound_4; }
+	inline void set_TeleportSound_4(AudioSource_t3935305588 * value)
+	{
+		___TeleportSound_4 = value;
+		Il2CppCodeGenWriteBarrier((&___TeleportSound_4), value);
+	}
+
+	inline static int32_t get_offset_of_playerController_5() { return static_cast<int32_t>(offsetof(TeleporterController_t2611489658, ___playerController_5)); }
+	inline PlayerController_t2064355688 * get_playerController_5() const { return ___playerController_5; }
+	inline PlayerController_t2064355688 ** get_address_of_playerController_5() { return &___playerController_5; }
+	inline void set_playerController_5(PlayerController_t2064355688 * value)
+	{
+		___playerController_5 = value;
+		Il2CppCodeGenWriteBarrier((&___playerController_5), value);
+	}
+
+	inline static int32_t get_offset_of_player_6() { return static_cast<int32_t>(offsetof(TeleporterController_t2611489658, ___player_6)); }
+	inline GameObject_t1113636619 * get_player_6() const { return ___player_6; }
+	inline GameObject_t1113636619 ** get_address_of_player_6() { return &___player_6; }
+	inline void set_player_6(GameObject_t1113636619 * value)
+	{
+		___player_6 = value;
+		Il2CppCodeGenWriteBarrier((&___player_6), value);
+	}
+
+	inline static int32_t get_offset_of_portalsArray_7() { return static_cast<int32_t>(offsetof(TeleporterController_t2611489658, ___portalsArray_7)); }
+	inline GameObjectU5BU5D_t3328599146* get_portalsArray_7() const { return ___portalsArray_7; }
+	inline GameObjectU5BU5D_t3328599146** get_address_of_portalsArray_7() { return &___portalsArray_7; }
+	inline void set_portalsArray_7(GameObjectU5BU5D_t3328599146* value)
+	{
+		___portalsArray_7 = value;
+		Il2CppCodeGenWriteBarrier((&___portalsArray_7), value);
+	}
+
+	inline static int32_t get_offset_of_portals_8() { return static_cast<int32_t>(offsetof(TeleporterController_t2611489658, ___portals_8)); }
+	inline List_1_t2585711361 * get_portals_8() const { return ___portals_8; }
+	inline List_1_t2585711361 ** get_address_of_portals_8() { return &___portals_8; }
+	inline void set_portals_8(List_1_t2585711361 * value)
+	{
+		___portals_8 = value;
+		Il2CppCodeGenWriteBarrier((&___portals_8), value);
+	}
+
+	inline static int32_t get_offset_of_rnd_9() { return static_cast<int32_t>(offsetof(TeleporterController_t2611489658, ___rnd_9)); }
+	inline Random_t108471755 * get_rnd_9() const { return ___rnd_9; }
+	inline Random_t108471755 ** get_address_of_rnd_9() { return &___rnd_9; }
+	inline void set_rnd_9(Random_t108471755 * value)
+	{
+		___rnd_9 = value;
+		Il2CppCodeGenWriteBarrier((&___rnd_9), value);
+	}
+
+	inline static int32_t get_offset_of_teleported_10() { return static_cast<int32_t>(offsetof(TeleporterController_t2611489658, ___teleported_10)); }
+	inline bool get_teleported_10() const { return ___teleported_10; }
+	inline bool* get_address_of_teleported_10() { return &___teleported_10; }
+	inline void set_teleported_10(bool value)
+	{
+		___teleported_10 = value;
+	}
+};
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#endif // TELEPORTERCONTROLLER_T2611489658_H
 #ifndef TOPCONTROLLER_T3434017495_H
 #define TOPCONTROLLER_T3434017495_H
 #ifdef __clang__
@@ -2715,9 +3311,17 @@ public:
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2000 = { sizeof (ColorTweenCallback_t1121741130), -1, 0, 0 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2001 = { sizeof (FloatTween_t1274330004)+ sizeof (RuntimeObject), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2001[5] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2000 = { sizeof (ColorTweenMode_t1000778859)+ sizeof (RuntimeObject), sizeof(int32_t), 0, 0 };
+extern const int32_t g_FieldOffsetTable2000[4] = 
+{
+	ColorTweenMode_t1000778859::get_offset_of_value___1() + static_cast<int32_t>(sizeof(RuntimeObject)),
+	0,
+	0,
+	0,
+};
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2001 = { sizeof (ColorTweenCallback_t1121741130), -1, 0, 0 };
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2002 = { sizeof (FloatTween_t1274330004)+ sizeof (RuntimeObject), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2002[5] = 
 {
 	FloatTween_t1274330004::get_offset_of_m_Target_0() + static_cast<int32_t>(sizeof(RuntimeObject)),
 	FloatTween_t1274330004::get_offset_of_m_StartValue_1() + static_cast<int32_t>(sizeof(RuntimeObject)),
@@ -2725,15 +3329,15 @@ extern const int32_t g_FieldOffsetTable2001[5] =
 	FloatTween_t1274330004::get_offset_of_m_Duration_3() + static_cast<int32_t>(sizeof(RuntimeObject)),
 	FloatTween_t1274330004::get_offset_of_m_IgnoreTimeScale_4() + static_cast<int32_t>(sizeof(RuntimeObject)),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2002 = { sizeof (FloatTweenCallback_t1856710240), -1, 0, 0 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2003 = { 0, 0, 0, 0 };
-extern const int32_t g_FieldOffsetTable2003[2] = 
-{
-	0,
-	0,
-};
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2003 = { sizeof (FloatTweenCallback_t1856710240), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2004 = { 0, 0, 0, 0 };
-extern const int32_t g_FieldOffsetTable2004[6] = 
+extern const int32_t g_FieldOffsetTable2004[2] = 
+{
+	0,
+	0,
+};
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2005 = { 0, 0, 0, 0 };
+extern const int32_t g_FieldOffsetTable2005[6] = 
 {
 	0,
 	0,
@@ -2742,15 +3346,15 @@ extern const int32_t g_FieldOffsetTable2004[6] =
 	0,
 	0,
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2005 = { sizeof (U3CPrivateImplementationDetailsU3E_t3057255365), -1, sizeof(U3CPrivateImplementationDetailsU3E_t3057255365_StaticFields), 0 };
-extern const int32_t g_FieldOffsetTable2005[1] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2006 = { sizeof (U3CPrivateImplementationDetailsU3E_t3057255365), -1, sizeof(U3CPrivateImplementationDetailsU3E_t3057255365_StaticFields), 0 };
+extern const int32_t g_FieldOffsetTable2006[1] = 
 {
 	U3CPrivateImplementationDetailsU3E_t3057255365_StaticFields::get_offset_of_U24fieldU2D7BBE37982E6C057ED87163CAFC7FD6E5E42EEA46_0(),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2006 = { sizeof (U24ArrayTypeU3D12_t2488454196)+ sizeof (RuntimeObject), sizeof(U24ArrayTypeU3D12_t2488454196 ), 0, 0 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2007 = { sizeof (U3CModuleU3E_t692745542), -1, 0, 0 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2008 = { sizeof (BlockBotController_t3007403141), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2008[10] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2007 = { sizeof (U24ArrayTypeU3D12_t2488454196)+ sizeof (RuntimeObject), sizeof(U24ArrayTypeU3D12_t2488454196 ), 0, 0 };
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2008 = { sizeof (U3CModuleU3E_t692745542), -1, 0, 0 };
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2009 = { sizeof (BlockBotController_t3007403141), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2009[10] = 
 {
 	BlockBotController_t3007403141::get_offset_of_unpassableBlocksTags_4(),
 	BlockBotController_t3007403141::get_offset_of_movable_5(),
@@ -2763,8 +3367,8 @@ extern const int32_t g_FieldOffsetTable2008[10] =
 	BlockBotController_t3007403141::get_offset_of_HitWall_12(),
 	BlockBotController_t3007403141::get_offset_of_MoveSound_13(),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2009 = { sizeof (BlockLeftController_t300674597), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2009[10] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2010 = { sizeof (BlockLeftController_t300674597), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2010[10] = 
 {
 	BlockLeftController_t300674597::get_offset_of_unpassableBlocksTags_4(),
 	BlockLeftController_t300674597::get_offset_of_movable_5(),
@@ -2777,8 +3381,8 @@ extern const int32_t g_FieldOffsetTable2009[10] =
 	BlockLeftController_t300674597::get_offset_of_HitWall_12(),
 	BlockLeftController_t300674597::get_offset_of_MoveSound_13(),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2010 = { sizeof (BlockRightController_t1666513267), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2010[10] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2011 = { sizeof (BlockRightController_t1666513267), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2011[10] = 
 {
 	BlockRightController_t1666513267::get_offset_of_unpassableBlocksTags_4(),
 	BlockRightController_t1666513267::get_offset_of_movable_5(),
@@ -2791,8 +3395,8 @@ extern const int32_t g_FieldOffsetTable2010[10] =
 	BlockRightController_t1666513267::get_offset_of_HitWall_12(),
 	BlockRightController_t1666513267::get_offset_of_MoveSound_13(),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2011 = { sizeof (BlockTopController_t1818711515), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2011[10] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2012 = { sizeof (BlockTopController_t1818711515), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2012[10] = 
 {
 	BlockTopController_t1818711515::get_offset_of_unpassableBlocksTags_4(),
 	BlockTopController_t1818711515::get_offset_of_movable_5(),
@@ -2805,8 +3409,20 @@ extern const int32_t g_FieldOffsetTable2011[10] =
 	BlockTopController_t1818711515::get_offset_of_HitWall_12(),
 	BlockTopController_t1818711515::get_offset_of_MoveSound_13(),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2012 = { sizeof (BotController_t3465394129), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2012[9] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2013 = { sizeof (BlueLockController_t3247560676), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2013[8] = 
+{
+	BlueLockController_t3247560676::get_offset_of_LockKey_4(),
+	BlueLockController_t3247560676::get_offset_of_UnlockSound_5(),
+	BlueLockController_t3247560676::get_offset_of_player_6(),
+	BlueLockController_t3247560676::get_offset_of_playerController_7(),
+	BlueLockController_t3247560676::get_offset_of_centerCollider_8(),
+	BlueLockController_t3247560676::get_offset_of_sr_9(),
+	BlueLockController_t3247560676::get_offset_of_pSr_10(),
+	BlueLockController_t3247560676::get_offset_of_hasKey_11(),
+};
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2014 = { sizeof (BotController_t3465394129), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2014[9] = 
 {
 	BotController_t3465394129::get_offset_of_unpassableBlocksTags_4(),
 	BotController_t3465394129::get_offset_of_movableBlocksTags_5(),
@@ -2818,8 +3434,8 @@ extern const int32_t g_FieldOffsetTable2012[9] =
 	BotController_t3465394129::get_offset_of_HitWall_11(),
 	BotController_t3465394129::get_offset_of_MoveSound_12(),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2013 = { sizeof (CameraController_t3346819214), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2013[11] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2015 = { sizeof (CameraController_t3346819214), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2015[20] = 
 {
 	CameraController_t3346819214::get_offset_of_CameraScroll_4(),
 	CameraController_t3346819214::get_offset_of_distanceX_5(),
@@ -2832,9 +3448,30 @@ extern const int32_t g_FieldOffsetTable2013[11] =
 	CameraController_t3346819214::get_offset_of_cameraPositionX_12(),
 	CameraController_t3346819214::get_offset_of_playerPositionY_13(),
 	CameraController_t3346819214::get_offset_of_cameraPositionY_14(),
+	CameraController_t3346819214::get_offset_of_right_15(),
+	CameraController_t3346819214::get_offset_of_up_16(),
+	CameraController_t3346819214::get_offset_of_left_17(),
+	CameraController_t3346819214::get_offset_of_down_18(),
+	CameraController_t3346819214::get_offset_of_moveUp_19(),
+	CameraController_t3346819214::get_offset_of_moveRight_20(),
+	CameraController_t3346819214::get_offset_of_moveDown_21(),
+	CameraController_t3346819214::get_offset_of_moveLeft_22(),
+	CameraController_t3346819214::get_offset_of_cameraMode_23(),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2014 = { sizeof (LeftController_t3745940898), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2014[9] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2016 = { sizeof (GreenLockController_t1535438088), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2016[8] = 
+{
+	GreenLockController_t1535438088::get_offset_of_LockKey_4(),
+	GreenLockController_t1535438088::get_offset_of_UnlockSound_5(),
+	GreenLockController_t1535438088::get_offset_of_player_6(),
+	GreenLockController_t1535438088::get_offset_of_playerController_7(),
+	GreenLockController_t1535438088::get_offset_of_centerCollider_8(),
+	GreenLockController_t1535438088::get_offset_of_sr_9(),
+	GreenLockController_t1535438088::get_offset_of_pSr_10(),
+	GreenLockController_t1535438088::get_offset_of_hasKey_11(),
+};
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2017 = { sizeof (LeftController_t3745940898), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2017[9] = 
 {
 	LeftController_t3745940898::get_offset_of_unpassableBlocksTags_4(),
 	LeftController_t3745940898::get_offset_of_movableBlocksTags_5(),
@@ -2846,16 +3483,16 @@ extern const int32_t g_FieldOffsetTable2014[9] =
 	LeftController_t3745940898::get_offset_of_HitWall_11(),
 	LeftController_t3745940898::get_offset_of_MoveSound_12(),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2015 = { sizeof (LimitedBlockController_t1851208816), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2015[4] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2018 = { sizeof (LimitedBlockController_t1851208816), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2018[4] = 
 {
 	LimitedBlockController_t1851208816::get_offset_of_limit_4(),
 	LimitedBlockController_t1851208816::get_offset_of_Hole_5(),
 	LimitedBlockController_t1851208816::get_offset_of_limitedSprites_6(),
 	LimitedBlockController_t1851208816::get_offset_of_sr_7(),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2016 = { sizeof (LockController_t1779597419), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2016[8] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2019 = { sizeof (LockController_t1779597419), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2019[8] = 
 {
 	LockController_t1779597419::get_offset_of_LockKey_4(),
 	LockController_t1779597419::get_offset_of_UnlockSound_5(),
@@ -2866,29 +3503,40 @@ extern const int32_t g_FieldOffsetTable2016[8] =
 	LockController_t1779597419::get_offset_of_pSr_10(),
 	LockController_t1779597419::get_offset_of_hasKey_11(),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2017 = { sizeof (PlayerController_t2064355688), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2017[17] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2020 = { sizeof (PlayerController_t2064355688), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2020[28] = 
 {
 	PlayerController_t2064355688::get_offset_of_Background_4(),
 	PlayerController_t2064355688::get_offset_of_KeySr_5(),
 	PlayerController_t2064355688::get_offset_of_RedKeySr_6(),
-	PlayerController_t2064355688::get_offset_of_GetKeySound_7(),
-	PlayerController_t2064355688::get_offset_of_KeyImage_8(),
-	PlayerController_t2064355688::get_offset_of_RedKeyImage_9(),
-	PlayerController_t2064355688::get_offset_of_screenSize_10(),
-	PlayerController_t2064355688::get_offset_of_transformedPosition_11(),
-	PlayerController_t2064355688::get_offset_of_camera_12(),
-	PlayerController_t2064355688::get_offset_of_keyImages_13(),
-	PlayerController_t2064355688::get_offset_of_redKeyImages_14(),
-	PlayerController_t2064355688::get_offset_of_keyImagesRb_15(),
-	PlayerController_t2064355688::get_offset_of_redKeyImagesRb_16(),
-	PlayerController_t2064355688::get_offset_of_screenWidth_17(),
-	PlayerController_t2064355688::get_offset_of_keyShift_18(),
-	PlayerController_t2064355688::get_offset_of_HasKey_19(),
-	PlayerController_t2064355688::get_offset_of_HasRedKey_20(),
+	PlayerController_t2064355688::get_offset_of_GreenKeySr_7(),
+	PlayerController_t2064355688::get_offset_of_BlueKeySr_8(),
+	PlayerController_t2064355688::get_offset_of_GetKeySound_9(),
+	PlayerController_t2064355688::get_offset_of_KeyImage_10(),
+	PlayerController_t2064355688::get_offset_of_RedKeyImage_11(),
+	PlayerController_t2064355688::get_offset_of_GreenKeyImage_12(),
+	PlayerController_t2064355688::get_offset_of_BlueKeyImage_13(),
+	PlayerController_t2064355688::get_offset_of_screenSize_14(),
+	PlayerController_t2064355688::get_offset_of_transformedPosition_15(),
+	PlayerController_t2064355688::get_offset_of_camera_16(),
+	PlayerController_t2064355688::get_offset_of_keyImages_17(),
+	PlayerController_t2064355688::get_offset_of_redKeyImages_18(),
+	PlayerController_t2064355688::get_offset_of_greenKeyImages_19(),
+	PlayerController_t2064355688::get_offset_of_blueKeyImages_20(),
+	PlayerController_t2064355688::get_offset_of_keyImagesRb_21(),
+	PlayerController_t2064355688::get_offset_of_redKeyImagesRb_22(),
+	PlayerController_t2064355688::get_offset_of_greenKeyImagesRb_23(),
+	PlayerController_t2064355688::get_offset_of_blueKeyImagesRb_24(),
+	PlayerController_t2064355688::get_offset_of_KeySpawn_25(),
+	PlayerController_t2064355688::get_offset_of_keyShift_26(),
+	PlayerController_t2064355688::get_offset_of_HasKey_27(),
+	PlayerController_t2064355688::get_offset_of_HasRedKey_28(),
+	PlayerController_t2064355688::get_offset_of_HasGreenKey_29(),
+	PlayerController_t2064355688::get_offset_of_HasBlueKey_30(),
+	PlayerController_t2064355688::get_offset_of_Teleporting_31(),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2018 = { sizeof (RedLockController_t3406650382), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2018[8] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2021 = { sizeof (RedLockController_t3406650382), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2021[8] = 
 {
 	RedLockController_t3406650382::get_offset_of_LockKey_4(),
 	RedLockController_t3406650382::get_offset_of_UnlockSound_5(),
@@ -2899,8 +3547,8 @@ extern const int32_t g_FieldOffsetTable2018[8] =
 	RedLockController_t3406650382::get_offset_of_pSr_10(),
 	RedLockController_t3406650382::get_offset_of_hasKey_11(),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2019 = { sizeof (RightController_t480625974), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2019[9] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2022 = { sizeof (RightController_t480625974), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2022[9] = 
 {
 	RightController_t480625974::get_offset_of_unpassableBlocksTags_4(),
 	RightController_t480625974::get_offset_of_movableBlocksTags_5(),
@@ -2912,8 +3560,8 @@ extern const int32_t g_FieldOffsetTable2019[9] =
 	RightController_t480625974::get_offset_of_HitWall_11(),
 	RightController_t480625974::get_offset_of_MoveSound_12(),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2020 = { sizeof (Swipe_t3731713951), -1, sizeof(Swipe_t3731713951_StaticFields), 0 };
-extern const int32_t g_FieldOffsetTable2020[9] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2023 = { sizeof (Swipe_t3731713951), -1, sizeof(Swipe_t3731713951_StaticFields), 0 };
+extern const int32_t g_FieldOffsetTable2023[9] = 
 {
 	Swipe_t3731713951::get_offset_of_Tap_4(),
 	Swipe_t3731713951_StaticFields::get_offset_of_SwipeLeft_5(),
@@ -2925,16 +3573,27 @@ extern const int32_t g_FieldOffsetTable2020[9] =
 	Swipe_t3731713951::get_offset_of_SwipeDelta_11(),
 	Swipe_t3731713951::get_offset_of_delay_12(),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2021 = { sizeof (U3CDelayU3Ec__Iterator0_t3710694917), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2021[4] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2024 = { sizeof (U3CDelayU3Ec__Iterator0_t3710694917), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2024[4] = 
 {
 	U3CDelayU3Ec__Iterator0_t3710694917::get_offset_of_U24this_0(),
 	U3CDelayU3Ec__Iterator0_t3710694917::get_offset_of_U24current_1(),
 	U3CDelayU3Ec__Iterator0_t3710694917::get_offset_of_U24disposing_2(),
 	U3CDelayU3Ec__Iterator0_t3710694917::get_offset_of_U24PC_3(),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2022 = { sizeof (TopController_t3434017495), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2022[9] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2025 = { sizeof (TeleporterController_t2611489658), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2025[7] = 
+{
+	TeleporterController_t2611489658::get_offset_of_TeleportSound_4(),
+	TeleporterController_t2611489658::get_offset_of_playerController_5(),
+	TeleporterController_t2611489658::get_offset_of_player_6(),
+	TeleporterController_t2611489658::get_offset_of_portalsArray_7(),
+	TeleporterController_t2611489658::get_offset_of_portals_8(),
+	TeleporterController_t2611489658::get_offset_of_rnd_9(),
+	TeleporterController_t2611489658::get_offset_of_teleported_10(),
+};
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2026 = { sizeof (TopController_t3434017495), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2026[9] = 
 {
 	TopController_t3434017495::get_offset_of_unpassableBlocksTags_4(),
 	TopController_t3434017495::get_offset_of_movableBlocksTags_5(),
@@ -2946,8 +3605,8 @@ extern const int32_t g_FieldOffsetTable2022[9] =
 	TopController_t3434017495::get_offset_of_HitWall_11(),
 	TopController_t3434017495::get_offset_of_MoveSound_12(),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2023 = { sizeof (VoidController_t290162335), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2023[5] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2027 = { sizeof (VoidController_t290162335), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable2027[5] = 
 {
 	VoidController_t290162335::get_offset_of_voidFilled_4(),
 	VoidController_t290162335::get_offset_of_fillSound_5(),

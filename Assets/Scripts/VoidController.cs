@@ -22,12 +22,12 @@ public class VoidController : MonoBehaviour
 		{
 			if (other.CompareTag("block"))
 			{
-				sr.sprite = voidFilled;
 				Destroy(other.gameObject);
 				other.GetComponent<SpriteRenderer>().sortingOrder = 0;
 				filled = true;
-				transform.tag = "HoleFilled";
 				fillSound.Play();
+				sr.sprite = voidFilled;
+				transform.tag = "HoleFilled";
 			}
 		}
 	}

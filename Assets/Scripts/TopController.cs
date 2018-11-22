@@ -35,6 +35,7 @@ public class TopController : MonoBehaviour
 			MoveSound.Play();
 			blocked = false;
 			moveBlock = false;
+			Swipe.SwipeUp = false;
 		}
 		else if (Swipe.SwipeUp && !moveBlock)
 		{

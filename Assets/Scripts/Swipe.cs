@@ -15,6 +15,11 @@ public class Swipe : MonoBehaviour
 
     private bool delay;
 
+    void Start()
+    {
+        StartCoroutine(Delay());
+    }
+
     void Update()
     {
         Tap = SwipeDown = SwipeLeft = SwipeRight = SwipeUp = false;
@@ -53,7 +58,7 @@ public class Swipe : MonoBehaviour
             SwipeDelta = (Vector2) Input.mousePosition - StartTouch;
         }
 
-        if (SwipeDelta.magnitude > 100 && IsDragging)
+        if (SwipeDelta.magnitude > 50 && IsDragging)
         {
             float x = SwipeDelta.x;
             float y = SwipeDelta.y;
@@ -83,31 +88,31 @@ public class Swipe : MonoBehaviour
             Reset();
         }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow) && !delay)
+        if ((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) && !delay)
         {
             SwipeRight = true;
             StartCoroutine(Delay());
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow) && !delay)
+        else if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) && !delay)
         {
             SwipeLeft = true;
             StartCoroutine(Delay());
         }
-        else if (Input.GetKeyDown(KeyCode.UpArrow) && !delay)
+        else if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && !delay)
         {
             SwipeUp = true;
             StartCoroutine(Delay());
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) && !delay)
+        else if ((Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) && !delay)
         {
             SwipeDown = true;
             StartCoroutine(Delay());
         }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
+    }
+    
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void Reset()
@@ -116,7 +121,7 @@ public class Swipe : MonoBehaviour
         IsDragging = false;
     }
 
-    IEnumerator Delay()
+    private IEnumerator Delay()
     {
         delay = true;
         yield return new WaitForSeconds(0.1f);

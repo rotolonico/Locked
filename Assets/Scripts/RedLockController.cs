@@ -25,29 +25,29 @@ public class RedLockController : MonoBehaviour
 
 	private void OnTriggerStay2D(Collider2D other)
 	{
-		if (!hasKey)
+		if (!hasKey && (other.transform.name == "rightCol" || other.transform.name == "leftCol" || other.transform.name == "topCol" || other.transform.name == "botCol"))
 		{
 			if (playerController.HasRedKey > 0)
 			{
 				sr.sprite = LockKey;
-				UnlockSound.Play();
 				playerController.HasRedKey -= 1;
+				UnlockSound.Play();
 				hasKey = true;
 				transform.tag = "LockOpen";
-				playerController.RemoveRedKey();
-				
 			}
-		}
-
-		if (other != centerCollider)
-		{
-			pSr.enabled = false;
-			
 		}
 		if (other == centerCollider)
 		{
 			pSr.enabled = true;
 			
+		}
+	}
+
+	private void OnTriggerExit2D(Collider2D other)
+	{
+		if (other == centerCollider)
+		{
+			pSr.enabled = false;
 		}
 	}
 }

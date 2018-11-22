@@ -6,165 +6,196 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-	public Sprite Background;
-	public SpriteRenderer KeySr;
-	public SpriteRenderer RedKeySr;
-	public AudioSource GetKeySound;
-	public Transform KeyImage;
-	public Transform RedKeyImage;
-	
-	private readonly Vector3 screenSize = new Vector3(Screen.width/130,3,0);
-	private Vector2 transformedPosition;
-	private GameObject camera;
-	private GameObject[] keyImages;
-	private GameObject[] redKeyImages;
-	private Rigidbody2D[] keyImagesRb;
-	private Rigidbody2D[] redKeyImagesRb;
-	private float screenWidth;
-	private readonly Vector2 keyShift = new Vector2(1,0);
+    public Sprite Background;
+    public SpriteRenderer KeySr;
+    public SpriteRenderer RedKeySr;
+    public SpriteRenderer GreenKeySr;
+    public SpriteRenderer BlueKeySr;
+    public AudioSource GetKeySound;
+    public Transform KeyImage;
+    public Transform RedKeyImage;
+    public Transform GreenKeyImage;
+    public Transform BlueKeyImage;
 
-	public int HasKey;
-	public int HasRedKey;
+    private readonly Vector3 screenSize = new Vector3(Screen.width / 130, 3, 0);
+    private Vector2 transformedPosition;
+    private GameObject camera;
+    private GameObject[] keyImages;
+    private GameObject[] redKeyImages;
+    private GameObject[] greenKeyImages;
+    private GameObject[] blueKeyImages;
+    private Rigidbody2D[] keyImagesRb;
+    private Rigidbody2D[] redKeyImagesRb;
+    private Rigidbody2D[] greenKeyImagesRb;
+    private Rigidbody2D[] blueKeyImagesRb;
+    private Transform KeySpawn;
+    private readonly Vector2 keyShift = new Vector2(1, 0);
 
-	void Start()
-	{
-		camera = GameObject.FindGameObjectWithTag("MainCamera");
-		screenWidth = Screen.width;
-		ReloadKeys();
-	}
+    public int HasKey;
+    public int HasRedKey;
+    public int HasGreenKey;
+    public int HasBlueKey;
 
-	private void Update()
-	{
-		if (HasKey > 0)
-		{
-			KeySr.enabled = true;
-		}
-		else
-		{
-			KeySr.enabled = false;
-		}
-		if (HasRedKey > 0)
-		{
-			RedKeySr.enabled = true;
-		}
-		else
-		{
-			RedKeySr.enabled = false;
-		}
-				
-		if (Screen.width != screenWidth)
-		{
-			screenWidth = Screen.width;
-			Rescale();
-		}
-	}
+    public bool Teleporting;
 
-	private void OnTriggerEnter2D(Collider2D other)
-	{
-		if (other.gameObject.CompareTag("key") && other.GetComponent<SpriteRenderer>().sprite != Background)
-		{
-			HasKey += 1;
-			other.GetComponent<SpriteRenderer>().sprite = Background;
-			KeySr.enabled = true;
-			KeyShift();
-			Instantiate(KeyImage, camera.transform.position - screenSize, Quaternion.identity).transform.parent = GameObject.FindGameObjectWithTag("Canvas").transform;
-			GetKeySound.Play();
-		}
-		if (other.gameObject.CompareTag("redKey") && other.GetComponent<SpriteRenderer>().sprite != Background)
-		{
-			HasRedKey += 1;
-			other.GetComponent<SpriteRenderer>().sprite = Background;
-			RedKeySr.enabled = true;
-			KeyShift();
-			Instantiate(RedKeyImage, camera.transform.position - screenSize, Quaternion.identity).transform.parent = GameObject.FindGameObjectWithTag("Canvas").transform;
-			GetKeySound.Play();
-		}
-	}
+    void Start()
+    {
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        KeySpawn = GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
+    }
 
-	private void ReloadKeys()
-	{
-		keyImages = GameObject.FindGameObjectsWithTag("KeyImage");
-		redKeyImages = GameObject.FindGameObjectsWithTag("RedKeyImage");
-		keyImagesRb = new Rigidbody2D[keyImages.Length];
-		redKeyImagesRb = new Rigidbody2D[redKeyImages.Length];
-		for (var i = 0; i < keyImages.Length; i++)
-		{
-			keyImagesRb[i] = keyImages[i].GetComponent<Rigidbody2D>();
-		}
-		for (var i = 0; i < redKeyImages.Length; i++)
-		{
-			redKeyImagesRb[i] = redKeyImages[i].GetComponent<Rigidbody2D>();
-		}
-	}
+    private void Update()
+    {
+        Rescale();
+        if (HasKey > 0)
+        {
+            KeySr.enabled = true;
+        }
+        else
+        {
+            KeySr.enabled = false;
+        }
 
-	private void KeyShift()
-	{
-		ReloadKeys();
-		foreach (var i in keyImagesRb)
-		{
-			i.MovePosition(i.position + keyShift);
-		}
-		foreach (var i in redKeyImagesRb)
-		{
-			i.MovePosition(i.position + keyShift);
-		}
-	}
+        if (HasRedKey > 0)
+        {
+            RedKeySr.enabled = true;
+        }
+        else
+        {
+            RedKeySr.enabled = false;
+        }
+        
+        if (HasGreenKey > 0)
+        {
+            GreenKeySr.enabled = true;
+        }
+        else
+        {
+            GreenKeySr.enabled = false;
+        }
+        
+        if (HasBlueKey > 0)
+        {
+            BlueKeySr.enabled = true;
+        }
+        else
+        {
+            BlueKeySr.enabled = false;
+        }
 
-	public void RemoveRedKey()
-	{
-		ReloadKeys();
-		Debug.Log(redKeyImagesRb.Length);
-		foreach (var i in keyImagesRb)
-		{
-			if (i.position.x > redKeyImagesRb[0].position.x)
-			{
-				i.MovePosition(i.position - keyShift);
-			}
-		}
-		foreach (var j in redKeyImagesRb)
-		{
-			if (j.position.x > redKeyImagesRb[0].position.x)
-			{
-				j.MovePosition(j.position - keyShift);
-			}
-		}
-		Destroy(redKeyImages[0]);
-	}
-	
-	public void RemoveKey()
-	{
-		ReloadKeys();
-		foreach (var i in keyImagesRb)
-		{
-			if (i.position.x > keyImagesRb[0].position.x)
-			{
-				i.MovePosition(i.position - keyShift);
-			}
-		}
-		foreach (var j in redKeyImagesRb)
-		{
-			if (j.position.x > keyImagesRb[0].position.x)
-			{
-				j.MovePosition(j.position - keyShift);
-			}
-		}
-		Destroy(keyImages[0]);
-	}
-	
-	
-	private void Rescale()
-	{
-		ReloadKeys();
-		for (var i = 0; i > keyImagesRb.Length; i++)
-		{
-			keyImagesRb[i].MovePosition(camera.transform.position - screenSize + (Vector3)keyShift*i);
-		}
-		for (var i = 0; i > redKeyImagesRb.Length; i++)
-		{
-			redKeyImagesRb[i].MovePosition(camera.transform.position - screenSize + (Vector3)keyShift*(i+keyImagesRb.Length));
-		}
-		Debug.Log(screenWidth);
-		Debug.Log(keyImagesRb);
+        if (HasKey < keyImages.Length)
+        {
+            Destroy(keyImages[0]);
+        }
+        if (HasRedKey < redKeyImages.Length)
+        {
+            Destroy(redKeyImages[0]);
+        }
+        if (HasGreenKey < greenKeyImages.Length)
+        {
+            Destroy(greenKeyImages[0]);
+        }
+        if (HasBlueKey < blueKeyImages.Length)
+        {
+            Destroy(blueKeyImages[0]);
+        }
+    }
 
-	}
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("key") && other.GetComponent<SpriteRenderer>().sprite != Background)
+        {
+            HasKey += 1;
+            other.GetComponent<SpriteRenderer>().sprite = Background;
+            KeySr.enabled = true;
+            Instantiate(KeyImage, camera.transform.position - screenSize - (Vector3)keyShift*50, Quaternion.identity).transform.parent =
+                GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
+            GetKeySound.Play();
+        }
+
+        if (other.gameObject.CompareTag("redKey") && other.GetComponent<SpriteRenderer>().sprite != Background)
+        {
+            HasRedKey += 1;
+            other.GetComponent<SpriteRenderer>().sprite = Background;
+            RedKeySr.enabled = true;
+            Instantiate(RedKeyImage, camera.transform.position - screenSize - (Vector3)keyShift*50, Quaternion.identity).transform.parent =
+                GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
+            GetKeySound.Play();
+        }
+
+        if (other.gameObject.CompareTag("greenKey") && other.GetComponent<SpriteRenderer>().sprite != Background)
+        {
+            HasGreenKey += 1;
+            other.GetComponent<SpriteRenderer>().sprite = Background;
+            GreenKeySr.enabled = true;
+            Instantiate(GreenKeyImage, camera.transform.position - screenSize - (Vector3)keyShift*50, Quaternion.identity).transform.parent =
+                GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
+            GetKeySound.Play();
+        }
+
+        if (other.gameObject.CompareTag("blueKey") && other.GetComponent<SpriteRenderer>().sprite != Background)
+        {
+            HasBlueKey += 1;
+            other.GetComponent<SpriteRenderer>().sprite = Background;
+            BlueKeySr.enabled = true;
+            Instantiate(BlueKeyImage, camera.transform.position - screenSize - (Vector3)keyShift*50, Quaternion.identity).transform.parent =
+                GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
+            GetKeySound.Play();
+        }
+    }
+
+    private void ReloadKeys()
+    {
+        keyImages = GameObject.FindGameObjectsWithTag("KeyImage");
+        redKeyImages = GameObject.FindGameObjectsWithTag("RedKeyImage");
+        greenKeyImages = GameObject.FindGameObjectsWithTag("GreenKeyImage");
+        blueKeyImages = GameObject.FindGameObjectsWithTag("BlueKeyImage");
+        keyImagesRb = new Rigidbody2D[keyImages.Length];
+        redKeyImagesRb = new Rigidbody2D[redKeyImages.Length];
+        greenKeyImagesRb = new Rigidbody2D[greenKeyImages.Length];
+        blueKeyImagesRb = new Rigidbody2D[blueKeyImages.Length];
+        for (var i = 0; i < keyImages.Length; i++)
+        {
+            keyImagesRb[i] = keyImages[i].GetComponent<Rigidbody2D>();
+        }
+
+        for (var i = 0; i < redKeyImages.Length; i++)
+        {
+            redKeyImagesRb[i] = redKeyImages[i].GetComponent<Rigidbody2D>();
+        }
+
+        for (var i = 0; i < greenKeyImages.Length; i++)
+        {
+            greenKeyImagesRb[i] = greenKeyImages[i].GetComponent<Rigidbody2D>();
+        }
+
+        for (var i = 0; i < blueKeyImages.Length; i++)
+        {
+            blueKeyImagesRb[i] = blueKeyImages[i].GetComponent<Rigidbody2D>();
+        }
+    }
+
+    private void Rescale()
+    {
+        ReloadKeys();
+        for (var i = 0; i < keyImagesRb.Length; i++)
+        {
+            keyImagesRb[i].MovePosition(KeySpawn.position + (Vector3) keyShift * i);
+        }
+
+        for (var i = 0; i < redKeyImagesRb.Length; i++)
+        {
+            redKeyImagesRb[i].MovePosition(KeySpawn.position + (Vector3) keyShift * (i + keyImagesRb.Length));
+        }
+
+        for (var i = 0; i < greenKeyImagesRb.Length; i++)
+        {
+            greenKeyImagesRb[i].MovePosition(KeySpawn.position + (Vector3) keyShift * (i + keyImagesRb.Length + redKeyImagesRb.Length));
+        }
+
+        for (var i = 0; i < blueKeyImagesRb.Length; i++)
+        {
+            blueKeyImagesRb[i].MovePosition(KeySpawn.position + (Vector3) keyShift * (i + keyImagesRb.Length + redKeyImagesRb.Length + greenKeyImagesRb.Length));
+        }
+    }
 }
