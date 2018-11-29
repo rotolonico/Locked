@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D[] blueKeyImagesRb;
     private Transform KeySpawn;
     private readonly Vector2 keyShift = new Vector2(1, 0);
+    private GameObject[] gameObjects;
+    
 
     public int HasKey;
     public int HasRedKey;
@@ -46,102 +48,109 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Rescale();
-        if (HasKey > 0)
-        {
-            KeySr.enabled = true;
-        }
-        else
-        {
-            KeySr.enabled = false;
-        }
+            Rescale();
+            if (HasKey > 0)
+            {
+                KeySr.enabled = true;
+            }
+            else
+            {
+                KeySr.enabled = false;
+            }
 
-        if (HasRedKey > 0)
-        {
-            RedKeySr.enabled = true;
-        }
-        else
-        {
-            RedKeySr.enabled = false;
-        }
-        
-        if (HasGreenKey > 0)
-        {
-            GreenKeySr.enabled = true;
-        }
-        else
-        {
-            GreenKeySr.enabled = false;
-        }
-        
-        if (HasBlueKey > 0)
-        {
-            BlueKeySr.enabled = true;
-        }
-        else
-        {
-            BlueKeySr.enabled = false;
-        }
+            if (HasRedKey > 0)
+            {
+                RedKeySr.enabled = true;
+            }
+            else
+            {
+                RedKeySr.enabled = false;
+            }
 
-        if (HasKey < keyImages.Length)
-        {
-            Destroy(keyImages[0]);
-        }
-        if (HasRedKey < redKeyImages.Length)
-        {
-            Destroy(redKeyImages[0]);
-        }
-        if (HasGreenKey < greenKeyImages.Length)
-        {
-            Destroy(greenKeyImages[0]);
-        }
-        if (HasBlueKey < blueKeyImages.Length)
-        {
-            Destroy(blueKeyImages[0]);
-        }
+            if (HasGreenKey > 0)
+            {
+                GreenKeySr.enabled = true;
+            }
+            else
+            {
+                GreenKeySr.enabled = false;
+            }
+
+            if (HasBlueKey > 0)
+            {
+                BlueKeySr.enabled = true;
+            }
+            else
+            {
+                BlueKeySr.enabled = false;
+            }
+
+            if (HasKey < keyImages.Length)
+            {
+                Destroy(keyImages[0]);
+            }
+
+            if (HasRedKey < redKeyImages.Length)
+            {
+                Destroy(redKeyImages[0]);
+            }
+
+            if (HasGreenKey < greenKeyImages.Length)
+            {
+                Destroy(greenKeyImages[0]);
+            }
+
+            if (HasBlueKey < blueKeyImages.Length)
+            {
+                Destroy(blueKeyImages[0]);
+            }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("key") && other.GetComponent<SpriteRenderer>().sprite != Background)
-        {
-            HasKey += 1;
-            other.GetComponent<SpriteRenderer>().sprite = Background;
-            KeySr.enabled = true;
-            Instantiate(KeyImage, camera.transform.position - screenSize - (Vector3)keyShift*50, Quaternion.identity).transform.parent =
-                GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
-            GetKeySound.Play();
-        }
+            if (other.gameObject.CompareTag("key") && other.GetComponent<SpriteRenderer>().sprite != Background)
+            {
+                HasKey += 1;
+                other.GetComponent<SpriteRenderer>().sprite = Background;
+                KeySr.enabled = true;
+                Instantiate(KeyImage, camera.transform.position - screenSize - (Vector3) keyShift * 50,
+                        Quaternion.identity).transform.parent =
+                    GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
+                GetKeySound.Play();
+            }
 
-        if (other.gameObject.CompareTag("redKey") && other.GetComponent<SpriteRenderer>().sprite != Background)
-        {
-            HasRedKey += 1;
-            other.GetComponent<SpriteRenderer>().sprite = Background;
-            RedKeySr.enabled = true;
-            Instantiate(RedKeyImage, camera.transform.position - screenSize - (Vector3)keyShift*50, Quaternion.identity).transform.parent =
-                GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
-            GetKeySound.Play();
-        }
+            if (other.gameObject.CompareTag("redKey") && other.GetComponent<SpriteRenderer>().sprite != Background)
+            {
+                HasRedKey += 1;
+                other.GetComponent<SpriteRenderer>().sprite = Background;
+                RedKeySr.enabled = true;
+                Instantiate(RedKeyImage, camera.transform.position - screenSize - (Vector3) keyShift * 50,
+                        Quaternion.identity).transform.parent =
+                    GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
+                GetKeySound.Play();
+            }
 
-        if (other.gameObject.CompareTag("greenKey") && other.GetComponent<SpriteRenderer>().sprite != Background)
-        {
-            HasGreenKey += 1;
-            other.GetComponent<SpriteRenderer>().sprite = Background;
-            GreenKeySr.enabled = true;
-            Instantiate(GreenKeyImage, camera.transform.position - screenSize - (Vector3)keyShift*50, Quaternion.identity).transform.parent =
-                GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
-            GetKeySound.Play();
-        }
+            if (other.gameObject.CompareTag("greenKey") && other.GetComponent<SpriteRenderer>().sprite != Background)
+            {
+                HasGreenKey += 1;
+                other.GetComponent<SpriteRenderer>().sprite = Background;
+                GreenKeySr.enabled = true;
+                Instantiate(GreenKeyImage, camera.transform.position - screenSize - (Vector3) keyShift * 50,
+                        Quaternion.identity).transform.parent =
+                    GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
+                GetKeySound.Play();
+            }
 
-        if (other.gameObject.CompareTag("blueKey") && other.GetComponent<SpriteRenderer>().sprite != Background)
-        {
-            HasBlueKey += 1;
-            other.GetComponent<SpriteRenderer>().sprite = Background;
-            BlueKeySr.enabled = true;
-            Instantiate(BlueKeyImage, camera.transform.position - screenSize - (Vector3)keyShift*50, Quaternion.identity).transform.parent =
-                GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
-            GetKeySound.Play();
-        }
+            if (other.gameObject.CompareTag("blueKey") && other.GetComponent<SpriteRenderer>().sprite != Background)
+            {
+                HasBlueKey += 1;
+                other.GetComponent<SpriteRenderer>().sprite = Background;
+                BlueKeySr.enabled = true;
+                Instantiate(BlueKeyImage, camera.transform.position - screenSize - (Vector3) keyShift * 50,
+                        Quaternion.identity).transform.parent =
+                    GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
+                GetKeySound.Play();
+            }
     }
 
     private void ReloadKeys()

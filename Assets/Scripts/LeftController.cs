@@ -47,31 +47,32 @@ public class LeftController : MonoBehaviour
 
 	private void CheckCollider()
 	{
-		foreach (var i in unpassableBlocksTags)
-		{
-			foreach (var j in collider)
+			foreach (var i in unpassableBlocksTags)
 			{
-				if (j != null && j.CompareTag(i))
+				foreach (var j in collider)
 				{
-					blocked = true;
+					if (j != null && j.CompareTag(i))
+					{
+						blocked = true;
+					}
 				}
 			}
-		}
-		foreach (var i in movableBlocksTags)
-		{
-			foreach (var j in collider)
+
+			foreach (var i in movableBlocksTags)
 			{
-				if (j != null && j.CompareTag(i))
+				foreach (var j in collider)
 				{
-					moveBlock = true;
+					if (j != null && j.CompareTag(i))
+					{
+						moveBlock = true;
+					}
 				}
 			}
-		}
 	}
 	private void OnTriggerStay2D(Collider2D other)
 	{
-		if (collider.Count < 3)
-			collider.Add(other);
+			if (collider.Count < 3)
+				collider.Add(other);
 	}
 
 	private void OnTriggerExit2D(Collider2D other)

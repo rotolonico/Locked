@@ -58,10 +58,13 @@
     <Compile Include="Assets\Scripts\BlockBotController.cs" />
     <Compile Include="Assets\Scripts\BlockLeftController.cs" />
     <Compile Include="Assets\Scripts\BlockRightController.cs" />
+    <Compile Include="Assets\Scripts\BlockSelector.cs" />
+    <Compile Include="Assets\Scripts\BlockSelectorToggle.cs" />
     <Compile Include="Assets\Scripts\BlockTopController.cs" />
     <Compile Include="Assets\Scripts\BlueLockController.cs" />
     <Compile Include="Assets\Scripts\BotController.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\EditorHandler.cs" />
     <Compile Include="Assets\Scripts\GreenLockController.cs" />
     <Compile Include="Assets\Scripts\LeftController.cs" />
     <Compile Include="Assets\Scripts\LimitedBlockController.cs" />

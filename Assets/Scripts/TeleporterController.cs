@@ -12,6 +12,7 @@ public class TeleporterController : MonoBehaviour
 	private List<GameObject> portals = new List<GameObject>();
 	private readonly System.Random rnd = new System.Random();
 	private bool teleported;
+	private bool isBlocked;
 
 	private void Start()
 	{
@@ -22,31 +23,39 @@ public class TeleporterController : MonoBehaviour
 
 	private void OnTriggerStay2D(Collider2D other)
 	{
-		if (other.CompareTag("Player") && !playerController.Teleporting)
-		{
-			portals.Clear();
-			portalsArray = GameObject.FindGameObjectsWithTag(transform.tag);
-			
-			foreach (var i in portalsArray)
+			isBlocked = false;
+			if (other.CompareTag("block"))
 			{
-				if(i != gameObject)
-				{
-					portals.Add(i);
-				}
+				isBlocked = true;
 			}
 
-			if (portals != null)
+			if (other.CompareTag("Player") && !playerController.Teleporting)
 			{
-				int r = rnd.Next(portals.Count);
-				player.transform.position = portals[r].transform.position;
-				TeleportSound.Play();
-				playerController.Teleporting = true;
+				portals.Clear();
+				portalsArray = GameObject.FindGameObjectsWithTag(transform.tag);
+
+				foreach (var i in portalsArray)
+				{
+					if (i != gameObject && !i.GetComponent<TeleporterController>().isBlocked)
+					{
+						portals.Add(i);
+					}
+				}
+
+				if (portals.Count != 0)
+				{
+					int r = rnd.Next(portals.Count);
+					Debug.Log(r);
+					player.transform.position = portals[r].transform.position;
+					TeleportSound.Play();
+					playerController.Teleporting = true;
+				}
+
 			}
-			
-		} else if (other.CompareTag("Player") && playerController.Teleporting)
-		{
-			teleported = true;
-		}	
+			else if (other.CompareTag("Player") && playerController.Teleporting)
+			{
+				teleported = true;
+			}
 	}
 
 	private void OnTriggerExit2D(Collider2D other)
@@ -55,6 +64,7 @@ public class TeleporterController : MonoBehaviour
 		{
 			playerController.Teleporting = false;
 			teleported = false;
+			isBlocked = false;
 		}
 	}
 }

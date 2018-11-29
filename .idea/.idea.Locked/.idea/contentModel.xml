@@ -9,10 +9,13 @@
           <e p="BlockBotController.cs" t="Include" />
           <e p="BlockLeftController.cs" t="Include" />
           <e p="BlockRightController.cs" t="Include" />
+          <e p="BlockSelector.cs" t="Include" />
+          <e p="BlockSelectorToggle.cs" t="Include" />
           <e p="BlockTopController.cs" t="Include" />
           <e p="BlueLockController.cs" t="Include" />
           <e p="BotController.cs" t="Include" />
           <e p="CameraController.cs" t="Include" />
+          <e p="EditorHandler.cs" t="Include" />
           <e p="GreenLockController.cs" t="Include" />
           <e p="LeftController.cs" t="Include" />
           <e p="LimitedBlockController.cs" t="Include" />

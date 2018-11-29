@@ -5,13 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class Swipe : MonoBehaviour
 {
-    public bool Tap;
+    public static bool Tap;
     public static bool SwipeLeft;
     public static bool SwipeRight;
     public static bool SwipeUp;
     public static bool SwipeDown;
     public bool IsDragging;
-    public Vector2 StartTouch, SwipeDelta;
+    public static Vector2 StartTouch, SwipeDelta;
 
     private bool delay;
 
@@ -113,6 +113,16 @@ public class Swipe : MonoBehaviour
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    
+    public void EditorScene()
+    {
+        SceneManager.LoadScene(1);
+    }
+    
+    public void LeaveEditorScene()
+    {
+        SceneManager.LoadScene(0);
     }
 
     private void Reset()

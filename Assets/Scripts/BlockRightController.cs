@@ -27,47 +27,47 @@ public class BlockRightController : MonoBehaviour
 
 	void Update ()
 	{
-		if (Swipe.SwipeLeft && movable && playerTouch && playerMovement.Movable)
-		{
-			block.transform.position += Vector3.left;
-			player.transform.position += Vector3.left;
-			MoveSound.Play();
-			blocked = false;
-			Swipe.SwipeLeft = false;
-		}
-		else if (Swipe.SwipeLeft && !movable && playerTouch)
-		{
-			HitWall.Play();
-		}
+			if (Swipe.SwipeLeft && movable && playerTouch && playerMovement.Movable)
+			{
+				block.transform.position += Vector3.left;
+				player.transform.position += Vector3.left;
+				MoveSound.Play();
+				blocked = false;
+				Swipe.SwipeLeft = false;
+			}
+			else if (Swipe.SwipeLeft && !movable && playerTouch)
+			{
+				HitWall.Play();
+			}
 
-		antiBlock.GetComponent<BlockLeftController>().movable = !blocked;
+			antiBlock.GetComponent<BlockLeftController>().movable = !blocked;
 	}
 
 	
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.CompareTag("Player"))
-		{
-			playerTouch = true;
-		}
+			if (other.CompareTag("Player"))
+			{
+				playerTouch = true;
+			}
 	}
 	private void OnTriggerStay2D(Collider2D other)
 	{
-		blocked = false;
-		foreach (var i in unpassableBlocksTags)
-		{
-			if (other.CompareTag(i))
+			blocked = false;
+			foreach (var i in unpassableBlocksTags)
 			{
-				blocked = true;
+				if (other.CompareTag(i))
+				{
+					blocked = true;
+				}
 			}
-		}
 	}
 	private void OnTriggerExit2D(Collider2D other)
 	{
-		blocked = false;
-		if (other.CompareTag("Player"))
-		{
-			playerTouch = false;
-		}
+			blocked = false;
+			if (other.CompareTag("Player"))
+			{
+				playerTouch = false;
+			}
 	}
 }

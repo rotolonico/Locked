@@ -36,11 +36,10 @@ public class RedLockController : MonoBehaviour
 				transform.tag = "LockOpen";
 			}
 		}
-		if (other == centerCollider)
-		{
-			pSr.enabled = true;
-			
-		}
+			if (other == centerCollider)
+			{
+				pSr.enabled = true;
+			}
 	}
 
 	private void OnTriggerExit2D(Collider2D other)

@@ -18,15 +18,16 @@ public class LimitedBlockController : MonoBehaviour
 
 	private void OnTriggerExit2D(Collider2D other)
 	{
-		if (other.CompareTag("Player"))
-		{
-			limit -= 1;
-			if (limit == 0)
+			if (other.CompareTag("Player"))
 			{
-				Instantiate(Hole, transform.position, transform.rotation);
-				Destroy(gameObject);
+				limit -= 1;
+				if (limit == 0)
+				{
+					Instantiate(Hole, transform.position, transform.rotation);
+					Destroy(gameObject);
+				}
+
+				sr.sprite = limitedSprites[limit];
 			}
-			sr.sprite = limitedSprites[limit];
-		}
 	}
 }
