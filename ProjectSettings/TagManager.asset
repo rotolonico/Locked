@@ -63,6 +63,14 @@ TagManager:
   - 29
   - EditorHandler
   - 30
+  - PlayButton
+  - end
+  - selectorActive
+  - blockSelector
+  - back
+  - saveButton
+  - publishButton
+  - loadButton
   layers:
   - Default
   - TransparentFX

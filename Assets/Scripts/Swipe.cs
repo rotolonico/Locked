@@ -58,7 +58,7 @@ public class Swipe : MonoBehaviour
             SwipeDelta = (Vector2) Input.mousePosition - StartTouch;
         }
 
-        if (SwipeDelta.magnitude > 50 && IsDragging)
+        if (SwipeDelta.magnitude > 100 && IsDragging)
         {
             float x = SwipeDelta.x;
             float y = SwipeDelta.y;
@@ -108,21 +108,6 @@ public class Swipe : MonoBehaviour
             SwipeDown = true;
             StartCoroutine(Delay());
         }
-    }
-    
-    public void RestartLevel()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-    
-    public void EditorScene()
-    {
-        SceneManager.LoadScene(1);
-    }
-    
-    public void LeaveEditorScene()
-    {
-        SceneManager.LoadScene(0);
     }
 
     private void Reset()

@@ -2,7 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -31,6 +34,8 @@ public class PlayerController : MonoBehaviour
     private Transform KeySpawn;
     private readonly Vector2 keyShift = new Vector2(1, 0);
     private GameObject[] gameObjects;
+    private EditorHandler editorHandler;
+    private Toggle playToggle;
     
 
     public int HasKey;
@@ -44,11 +49,11 @@ public class PlayerController : MonoBehaviour
     {
         camera = GameObject.FindGameObjectWithTag("MainCamera");
         KeySpawn = GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
+        editorHandler = GameObject.FindGameObjectWithTag("EditorHandler").GetComponent<EditorHandler>();
     }
 
     private void Update()
     {
-            Rescale();
             if (HasKey > 0)
             {
                 KeySr.enabled = true;
@@ -83,27 +88,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 BlueKeySr.enabled = false;
-            }
-
-            if (HasKey < keyImages.Length)
-            {
-                Destroy(keyImages[0]);
-            }
-
-            if (HasRedKey < redKeyImages.Length)
-            {
-                Destroy(redKeyImages[0]);
-            }
-
-            if (HasGreenKey < greenKeyImages.Length)
-            {
-                Destroy(greenKeyImages[0]);
-            }
-
-            if (HasBlueKey < blueKeyImages.Length)
-            {
-                Destroy(blueKeyImages[0]);
-            }
+            }       
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -151,60 +136,22 @@ public class PlayerController : MonoBehaviour
                     GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
                 GetKeySound.Play();
             }
-    }
 
-    private void ReloadKeys()
-    {
-        keyImages = GameObject.FindGameObjectsWithTag("KeyImage");
-        redKeyImages = GameObject.FindGameObjectsWithTag("RedKeyImage");
-        greenKeyImages = GameObject.FindGameObjectsWithTag("GreenKeyImage");
-        blueKeyImages = GameObject.FindGameObjectsWithTag("BlueKeyImage");
-        keyImagesRb = new Rigidbody2D[keyImages.Length];
-        redKeyImagesRb = new Rigidbody2D[redKeyImages.Length];
-        greenKeyImagesRb = new Rigidbody2D[greenKeyImages.Length];
-        blueKeyImagesRb = new Rigidbody2D[blueKeyImages.Length];
-        for (var i = 0; i < keyImages.Length; i++)
+        if (other.gameObject.CompareTag("end") && !EditorHandler.PublishMode)
         {
-            keyImagesRb[i] = keyImages[i].GetComponent<Rigidbody2D>();
-        }
-
-        for (var i = 0; i < redKeyImages.Length; i++)
-        {
-            redKeyImagesRb[i] = redKeyImages[i].GetComponent<Rigidbody2D>();
-        }
-
-        for (var i = 0; i < greenKeyImages.Length; i++)
-        {
-            greenKeyImagesRb[i] = greenKeyImages[i].GetComponent<Rigidbody2D>();
-        }
-
-        for (var i = 0; i < blueKeyImages.Length; i++)
-        {
-            blueKeyImagesRb[i] = blueKeyImages[i].GetComponent<Rigidbody2D>();
-        }
-    }
-
-    private void Rescale()
-    {
-        ReloadKeys();
-        for (var i = 0; i < keyImagesRb.Length; i++)
-        {
-            keyImagesRb[i].MovePosition(KeySpawn.position + (Vector3) keyShift * i);
-        }
-
-        for (var i = 0; i < redKeyImagesRb.Length; i++)
-        {
-            redKeyImagesRb[i].MovePosition(KeySpawn.position + (Vector3) keyShift * (i + keyImagesRb.Length));
-        }
-
-        for (var i = 0; i < greenKeyImagesRb.Length; i++)
-        {
-            greenKeyImagesRb[i].MovePosition(KeySpawn.position + (Vector3) keyShift * (i + keyImagesRb.Length + redKeyImagesRb.Length));
-        }
-
-        for (var i = 0; i < blueKeyImagesRb.Length; i++)
-        {
-            blueKeyImagesRb[i].MovePosition(KeySpawn.position + (Vector3) keyShift * (i + keyImagesRb.Length + redKeyImagesRb.Length + greenKeyImagesRb.Length));
+            if (EditorHandler.PublishMode)
+            {
+                
+            } else if (EditorHandler.playMode)
+            {
+                playToggle = GameObject.FindGameObjectWithTag("PlayButton").GetComponent<Toggle>();
+                playToggle.isOn = false;
+                editorHandler.EditorMode();
+            }
+            else
+            {
+                SceneManager.LoadScene(3);
+            }
         }
     }
 }

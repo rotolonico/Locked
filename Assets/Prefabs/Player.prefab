@@ -231,7 +231,6 @@ GameObject:
   - component: {fileID: 50953310601776410}
   - component: {fileID: 61438549374253454}
   - component: {fileID: 114222946370842328}
-  - component: {fileID: 114966478420040950}
   - component: {fileID: 82570002388677698}
   - component: {fileID: 82645186284960702}
   m_Layer: 0
@@ -1682,18 +1681,6 @@ MonoBehaviour:
   Movable: 1
   HitWall: {fileID: 82188582683672134}
   MoveSound: {fileID: 82573662863549362}
---- !u!114 &114966478420040950
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1965968997435726}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b539390d2e4c4884837e531363bb5f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsDragging: 0
 --- !u!212 &212155680114382762
 SpriteRenderer:
   m_ObjectHideFlags: 1

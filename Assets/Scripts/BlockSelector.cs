@@ -14,7 +14,7 @@ public class BlockSelector : MonoBehaviour
 
 	public void OnClick()
 	{
-			playerController.selectedObject = Selectable;
+		playerController.selectedObject = Selectable;
 	}
 	
 }
