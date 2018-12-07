@@ -71,6 +71,9 @@ TagManager:
   - saveButton
   - publishButton
   - loadButton
+  - keyList
+  - keyInventory
+  - keyCanvas
   layers:
   - Default
   - TransparentFX

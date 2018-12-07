@@ -21,21 +21,11 @@ public class PlayerController : MonoBehaviour
     public Transform BlueKeyImage;
 
     private readonly Vector3 screenSize = new Vector3(Screen.width / 130, 3, 0);
-    private Vector2 transformedPosition;
-    private GameObject camera;
-    private GameObject[] keyImages;
-    private GameObject[] redKeyImages;
-    private GameObject[] greenKeyImages;
-    private GameObject[] blueKeyImages;
-    private Rigidbody2D[] keyImagesRb;
-    private Rigidbody2D[] redKeyImagesRb;
-    private Rigidbody2D[] greenKeyImagesRb;
-    private Rigidbody2D[] blueKeyImagesRb;
-    private Transform KeySpawn;
-    private readonly Vector2 keyShift = new Vector2(1, 0);
-    private GameObject[] gameObjects;
+    private Transform keyHolder;
+    private Animator keyHolderAnimator;
     private EditorHandler editorHandler;
     private Toggle playToggle;
+    private bool isKeyListUp;
     
 
     public int HasKey;
@@ -47,9 +37,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
-        KeySpawn = GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
         editorHandler = GameObject.FindGameObjectWithTag("EditorHandler").GetComponent<EditorHandler>();
+        keyHolder = GameObject.FindGameObjectWithTag("keyList").transform;
+        keyHolderAnimator = GameObject.FindGameObjectWithTag("keyInventory").GetComponent<Animator>();
     }
 
     private void Update()
@@ -88,7 +78,18 @@ public class PlayerController : MonoBehaviour
             else
             {
                 BlueKeySr.enabled = false;
-            }       
+            }
+
+        if (!isKeyListUp && (HasKey > 0 || HasRedKey > 0 || HasGreenKey > 0 || HasBlueKey > 0))
+        {
+            keyHolderAnimator.Play("PopupAnimation");
+            isKeyListUp = true;
+        }
+        if (isKeyListUp && HasKey == 0 && HasRedKey == 0 && HasGreenKey == 0 && HasBlueKey == 0)
+        {
+            keyHolderAnimator.Play("PopdownAnimation");
+            isKeyListUp = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -98,9 +99,7 @@ public class PlayerController : MonoBehaviour
                 HasKey += 1;
                 other.GetComponent<SpriteRenderer>().sprite = Background;
                 KeySr.enabled = true;
-                Instantiate(KeyImage, camera.transform.position - screenSize - (Vector3) keyShift * 50,
-                        Quaternion.identity).transform.parent =
-                    GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
+                Instantiate(KeyImage, keyHolder.position, Quaternion.identity).SetParent(keyHolder, false);
                 GetKeySound.Play();
             }
 
@@ -109,9 +108,8 @@ public class PlayerController : MonoBehaviour
                 HasRedKey += 1;
                 other.GetComponent<SpriteRenderer>().sprite = Background;
                 RedKeySr.enabled = true;
-                Instantiate(RedKeyImage, camera.transform.position - screenSize - (Vector3) keyShift * 50,
-                        Quaternion.identity).transform.parent =
-                    GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
+                Instantiate(RedKeyImage, keyHolder.position,
+                    Quaternion.identity).SetParent(keyHolder, false);
                 GetKeySound.Play();
             }
 
@@ -120,9 +118,8 @@ public class PlayerController : MonoBehaviour
                 HasGreenKey += 1;
                 other.GetComponent<SpriteRenderer>().sprite = Background;
                 GreenKeySr.enabled = true;
-                Instantiate(GreenKeyImage, camera.transform.position - screenSize - (Vector3) keyShift * 50,
-                        Quaternion.identity).transform.parent =
-                    GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
+                Instantiate(GreenKeyImage, keyHolder.position,
+                    Quaternion.identity).SetParent(keyHolder, false);
                 GetKeySound.Play();
             }
 
@@ -131,9 +128,8 @@ public class PlayerController : MonoBehaviour
                 HasBlueKey += 1;
                 other.GetComponent<SpriteRenderer>().sprite = Background;
                 BlueKeySr.enabled = true;
-                Instantiate(BlueKeyImage, camera.transform.position - screenSize - (Vector3) keyShift * 50,
-                        Quaternion.identity).transform.parent =
-                    GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0);
+                Instantiate(BlueKeyImage, keyHolder.position,
+                    Quaternion.identity).SetParent(keyHolder, false);
                 GetKeySound.Play();
             }
 
@@ -142,7 +138,7 @@ public class PlayerController : MonoBehaviour
             if (EditorHandler.PublishMode)
             {
                 
-            } else if (EditorHandler.playMode)
+            } else if (EditorHandler.playMode && EditorHandler.inEditor)
             {
                 playToggle = GameObject.FindGameObjectWithTag("PlayButton").GetComponent<Toggle>();
                 playToggle.isOn = false;
@@ -150,8 +146,38 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                SceneManager.LoadScene(3);
+                Destroy(GameObject.Find("EditorHandler"));
+                SceneManager.LoadScene(0);
             }
+        }
+    }
+            
+    public void RemoveKeys(){
+        var keyImages = GameObject.FindGameObjectsWithTag("KeyImage");
+        for (var i = 0; i < keyImages.Length - HasKey; i++)
+        {
+            Destroy(keyImages[i]);
+        }
+    }
+    public void RemoveRedKeys(){
+        var keyImages = GameObject.FindGameObjectsWithTag("RedKeyImage");
+        for (var i = 0; i < keyImages.Length - HasRedKey; i++)
+        {
+            Destroy(keyImages[i]);
+        }
+    }
+    public void RemoveGreenKeys(){
+        var keyImages = GameObject.FindGameObjectsWithTag("GreenKeyImage");
+        for (var i = 0; i < keyImages.Length - HasGreenKey; i++)
+        {
+            Destroy(keyImages[i]);
+        }
+    }
+    public void RemoveBlueKeys(){
+        var keyImages = GameObject.FindGameObjectsWithTag("BlueKeyImage");
+        for (var i = 0; i < keyImages.Length - HasBlueKey; i++)
+        {
+            Destroy(keyImages[i]);
         }
     }
 }

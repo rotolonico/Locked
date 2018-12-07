@@ -37,6 +37,7 @@ public class EditorHandler : MonoBehaviour {
 
 	public static bool playMode;
 	public static bool PublishMode;
+	public static bool inEditor;
 
 	private AudioSource placeSound;
 	private AudioSource noSound;
@@ -65,6 +66,8 @@ public class EditorHandler : MonoBehaviour {
 	private Text levelCodeHint;
 	private InputField shareInputField;
 	private InputField inputField;
+	private Animator keyHolderAnimator;
+	private Image blockImageImage;
 
 	public bool tap = true;
 	
@@ -82,10 +85,10 @@ public class EditorHandler : MonoBehaviour {
 		yesSound = GameObject.Find("YesSound").GetComponent<AudioSource>();
 		EditorInitialized = true;
 		saveButton = GameObject.FindGameObjectWithTag("saveButton").GetComponent<Button>();
-		publishButton = GameObject.FindGameObjectWithTag("publishButton").GetComponent<Button>();
+		//publishButton = GameObject.FindGameObjectWithTag("publishButton").GetComponent<Button>();
 		loadButtonAnimator = GameObject.FindGameObjectWithTag("loadButton").GetComponent<Animator>();
 		saveButtonAnimator = GameObject.FindGameObjectWithTag("saveButton").GetComponent<Animator>();
-		publishButtonAnimator = GameObject.FindGameObjectWithTag("publishButton").GetComponent<Animator>();
+		//publishButtonAnimator = GameObject.FindGameObjectWithTag("publishButton").GetComponent<Animator>();
 		backButton = GameObject.FindGameObjectWithTag("back").GetComponent<Button>();
 		blockToggle = GameObject.FindGameObjectWithTag("selectorActive").GetComponent<Toggle>();
 		animatorToggle = GameObject.FindGameObjectWithTag("selectorActive").GetComponent<Animator>();
@@ -93,6 +96,7 @@ public class EditorHandler : MonoBehaviour {
 		playButtonRenderer = GameObject.FindGameObjectWithTag("PlayButton").GetComponentInChildren<Image>();
 		playButtonToggle = GameObject.FindGameObjectWithTag("PlayButton").GetComponent<Toggle>();
 		blockImage = GameObject.Find("BlockImage");
+		blockImageImage = blockImage.GetComponent<Image>();
 		saveLevelWindow = GameObject.Find("SaveLevelWindow");
 		shareLevelWindow = GameObject.Find("ShareLevelWindow");
 		publishLevel = GameObject.Find("PublishLevel");
@@ -105,6 +109,9 @@ public class EditorHandler : MonoBehaviour {
 		levelCodeHint = GameObject.Find("LevelCodeHint").GetComponent<Text>();
 		shareInputField = GameObject.Find("ShareInputField").GetComponent<InputField>();
 		inputField = GameObject.Find("InputField").GetComponent<InputField>();
+		keyHolderAnimator = GameObject.FindGameObjectWithTag("keyInventory").GetComponent<Animator>();
+		shareInputField.characterValidation = InputField.CharacterValidation.EmailAddress;
+		inputField.characterValidation = InputField.CharacterValidation.EmailAddress;
 	}
 	
 	
@@ -112,7 +119,11 @@ public class EditorHandler : MonoBehaviour {
 
 		if (SceneManager.GetActiveScene().buildIndex == 1 && !EditorInitialized)
 		{
+			inEditor = true;
 			EditorInitialize();
+		} else if (inEditor && SceneManager.GetActiveScene().buildIndex != 1)
+		{
+			inEditor = false;
 		}
 
 		if (playMode)
@@ -132,7 +143,7 @@ public class EditorHandler : MonoBehaviour {
 				musicOn = true;
 			}
 
-			if (Input.GetMouseButtonUp(0) && tap)
+			if (Input.GetMouseButtonDown(0) && tap)
 			{
 				mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 				float dist;
@@ -195,28 +206,28 @@ public class EditorHandler : MonoBehaviour {
 				}
 			}
 
-			if (Swipe.SwipeUp && !EventSystem.current.IsPointerOverGameObject())
+			if (Swipe.SwipeUp && !blockImageImage.raycastTarget)
 			{
 				Camera.main.transform.position += Vector3.up;
 				tap = false;
 			}
-			if (Swipe.SwipeDown && !EventSystem.current.IsPointerOverGameObject())
+			if (Swipe.SwipeDown && !blockImageImage.raycastTarget)
 			{
 				Camera.main.transform.position += Vector3.down;
 				tap = false;
 			}
-			if (Swipe.SwipeRight && !EventSystem.current.IsPointerOverGameObject())
+			if (Swipe.SwipeRight && !blockImageImage.raycastTarget)
 			{
 				Camera.main.transform.position += Vector3.right;
 				tap = false;
 			}
-			if (Swipe.SwipeLeft && !EventSystem.current.IsPointerOverGameObject())
+			if (Swipe.SwipeLeft && !blockImageImage.raycastTarget)
 			{
 				Camera.main.transform.position += Vector3.left;
 				tap = false;
 			}
 			
-			if (Input.GetMouseButtonUp(0) || Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+			if (!Input.GetMouseButton(0) || Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
 			{
 				tap = true;
 			}
@@ -230,14 +241,14 @@ public class EditorHandler : MonoBehaviour {
 		backButton.enabled = false;
 		blockToggle.enabled = false;
 		saveButton.enabled = false;
-		publishButton.enabled = false;
+		//publishButton.enabled = false;
 		shareButton.enabled = false;
 		shareButtonAnimator.Play("GorightAnimation");
 		animatorToggle.Play("GoleftAnimation");
 		animatorBack.Play("GorightAnimation");
 		loadButtonAnimator.Play("PopupAnimation");
 		saveButtonAnimator.Play("PopupAnimation");
-		publishButtonAnimator.Play("PopupAnimation");
+		//publishButtonAnimator.Play("PopupAnimation");
 		if (blockToggle.isOn)
 		{
 			animatorSelector = GameObject.FindGameObjectWithTag("blockSelector").GetComponent<Animator>();
@@ -254,7 +265,7 @@ public class EditorHandler : MonoBehaviour {
 	public void EditorMode()
 	{
 		EditorInitialize();
-		Transform keyInventory = GameObject.Find("KeyInventory").transform;
+		Transform keyInventory = GameObject.Find("KeyListContent").transform;
 		foreach (Transform child in keyInventory.transform) {
 			Destroy(child.gameObject);
 		}
@@ -262,14 +273,15 @@ public class EditorHandler : MonoBehaviour {
 		backButton.enabled = true;
 		blockToggle.enabled = true;
 		saveButton.enabled = true;
-		publishButton.enabled = true;
+		//publishButton.enabled = true;
 		shareButton.enabled = true;
 		shareButtonAnimator.Play("GoleftbackAnimation");
 		animatorToggle.Play("GorightbackAnimation");
 		animatorBack.Play("GoleftbackAnimation");
 		loadButtonAnimator.Play("PopdownAnimation");
 		saveButtonAnimator.Play("PopdownAnimation");
-		publishButtonAnimator.Play("PopdownAnimation");
+		//publishButtonAnimator.Play("PopdownAnimation");
+		keyHolderAnimator.Play("PopdownAnimation");
 		ClearEditor();
 		LoadLevelInEditor(savedLevel);
 	}
@@ -406,7 +418,7 @@ public class EditorHandler : MonoBehaviour {
 		yesSound.Play();
 		String levelName = levelText.GetComponent<Text>().text;
 		var level = SaveLevel();
-		PlayerPrefs.SetString("level-" + levelName,level);
+		PlayerPrefs.SetString("level-" + levelName,Convert.ToBase64String(Compress(level)));
 		BackToMainCanvas();
 	}
 		
@@ -418,7 +430,7 @@ public class EditorHandler : MonoBehaviour {
 		if (level != "")
 		{
 			ClearEditor();
-			LoadLevelInEditor(level);
+			LoadLevelInEditor(Decompress(Convert.FromBase64String(level)));
 			BackToMainCanvas();
 		}
 		else

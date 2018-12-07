@@ -35,6 +35,7 @@ public class LockController : MonoBehaviour
 				hasKey = true;
 				playerController.HasKey -= 1;
 				transform.tag = "LockOpen";
+				playerController.RemoveKeys();
 			}
 		}
 

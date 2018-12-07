@@ -34,6 +34,7 @@ public class BlueLockController : MonoBehaviour
 				hasKey = true;
 				playerController.HasBlueKey -= 1;
 				transform.tag = "LockOpen";
+				playerController.RemoveBlueKeys();
 			}
 		}
 			if (other == centerCollider)

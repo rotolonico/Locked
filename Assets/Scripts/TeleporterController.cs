@@ -45,7 +45,6 @@ public class TeleporterController : MonoBehaviour
 				if (portals.Count != 0)
 				{
 					int r = rnd.Next(portals.Count);
-					Debug.Log(r);
 					player.transform.position = portals[r].transform.position;
 					TeleportSound.Play();
 					playerController.Teleporting = true;

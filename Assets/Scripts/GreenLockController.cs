@@ -34,6 +34,7 @@ public class GreenLockController : MonoBehaviour
 				hasKey = true;
 				playerController.HasGreenKey -= 1;
 				transform.tag = "LockOpen";
+				playerController.RemoveGreenKeys();
 			}
 		}
 			if (other == centerCollider)

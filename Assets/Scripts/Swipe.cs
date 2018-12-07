@@ -23,16 +23,16 @@ public class Swipe : MonoBehaviour
     void Update()
     {
         Tap = SwipeDown = SwipeLeft = SwipeRight = SwipeUp = false;
-        if (Input.GetMouseButtonDown(0))
-        {
-            IsDragging = true;
-            Tap = true;
-            StartTouch = Input.mousePosition;
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            Reset();
-        }
+//        if (Input.GetMouseButtonDown(0))
+//        {
+//            IsDragging = true;
+//            Tap = true;
+//            StartTouch = Input.mousePosition;
+//        }
+//        else if (Input.GetMouseButtonUp(0))
+//        {
+//            Reset();
+//        }
 
         if (Input.touchCount > 0)
         {
@@ -53,10 +53,10 @@ public class Swipe : MonoBehaviour
             SwipeDelta = Input.touches[0].position - StartTouch;
         }
 
-        if (Input.GetMouseButton(0))
-        {
-            SwipeDelta = (Vector2) Input.mousePosition - StartTouch;
-        }
+//        if (Input.GetMouseButton(0))
+//        {
+//            SwipeDelta = (Vector2) Input.mousePosition - StartTouch;
+//        }
 
         if (SwipeDelta.magnitude > 100 && IsDragging)
         {

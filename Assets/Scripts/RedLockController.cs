@@ -34,6 +34,7 @@ public class RedLockController : MonoBehaviour
 				UnlockSound.Play();
 				hasKey = true;
 				transform.tag = "LockOpen";
+				playerController.RemoveRedKeys();
 			}
 		}
 			if (other == centerCollider)
