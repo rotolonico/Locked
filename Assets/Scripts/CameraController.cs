@@ -5,26 +5,26 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public AudioSource CameraScroll;
-    
+
     private float distanceX;
     private float distanceY;
 
     private Transform playerTransform;
     private Transform cameraTransform;
-    
+
     private Vector3 playerPosition;
     private Vector3 cameraPosition;
-    
+
     private Vector2 playerPositionX;
     private Vector2 cameraPositionX;
-    
+
     private Vector2 playerPositionY;
     private Vector2 cameraPositionY;
 
-    private readonly Vector3 right = new Vector3(6,0,0);
-    private readonly Vector3 up = new Vector3(0,6,0);
-    private readonly Vector3 left = new Vector3(-6,0,0);
-    private readonly Vector3 down = new Vector3(0,-6,0);
+    private readonly Vector3 right = new Vector3(6, 0, 0);
+    private readonly Vector3 up = new Vector3(0, 6, 0);
+    private readonly Vector3 left = new Vector3(-6, 0, 0);
+    private readonly Vector3 down = new Vector3(0, -6, 0);
 
     private bool moveUp;
     private bool moveRight;
@@ -44,7 +44,9 @@ public class CameraController : MonoBehaviour
         {
             playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         }
-        cameraTransform = gameObject.GetComponent<Transform>();
+
+        cameraTransform = gameObject.transform;
+        Camera.main.orthographicSize = 3;
     }
 
     private void Update()
@@ -65,10 +67,10 @@ public class CameraController : MonoBehaviour
             distanceX = Vector2.Distance(cameraPositionX, playerPositionX);
             distanceY = Vector2.Distance(cameraPositionY, playerPositionY);
 
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                cameraMode = true;
-            }
+//            if (Input.GetKeyDown(KeyCode.C))
+//            {
+//                cameraMode = true;
+//            }
 
             if (!cameraMode)
             {

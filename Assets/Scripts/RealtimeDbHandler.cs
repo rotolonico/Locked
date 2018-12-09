@@ -1,5 +1,4 @@
-﻿
-public class RealtimeDbHandler
+﻿public class RealtimeDbHandler
 {
     /*
     private FirebaseApp app;

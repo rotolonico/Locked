@@ -77,6 +77,7 @@
           <e p="LimitedBlockController.cs" t="Include" />
           <e p="LockController.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
+          <e p="PlayerSpawnController.cs" t="Include" />
           <e p="RealtimeDbHandler.cs" t="Include" />
           <e p="RedLockController.cs" t="Include" />
           <e p="RightController.cs" t="Include" />

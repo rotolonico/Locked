@@ -13,6 +13,7 @@ public class BlockRightController : MonoBehaviour
 	private GameObject player;
 	private Transform antiBlock;
 	private LeftController playerMovement;
+	private BoxCollider2D collider;
 	
 	public AudioSource HitWall;
 	public AudioSource MoveSound;
@@ -64,6 +65,8 @@ public class BlockRightController : MonoBehaviour
 	}
 	private void OnTriggerExit2D(Collider2D other)
 	{
+		collider.enabled = false;
+		collider.enabled = true;
 			blocked = false;
 			if (other.CompareTag("Player"))
 			{

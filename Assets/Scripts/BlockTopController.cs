@@ -5,69 +5,76 @@ using UnityEngine;
 
 public class BlockTopController : MonoBehaviour
 {
-	private readonly String[] unpassableBlocksTags = {"Wall", "Lock", "block", "RightOnly", "DownOnly", "LeftOnly"};
-	public bool movable = true;
-	private bool blocked;
-	private bool playerTouch;
-	private GameObject block;
-	private GameObject player;
-	private Transform antiBlock;
-	private BotController playerMovement;
-	
-	public AudioSource HitWall;
-	public AudioSource MoveSound;
+    private readonly String[] unpassableBlocksTags = {"Wall", "Lock", "block", "RightOnly", "DownOnly", "LeftOnly"};
+    public bool movable = true;
+    private bool blocked;
+    private bool playerTouch;
+    private GameObject block;
+    private GameObject player;
+    private Transform antiBlock;
+    private BotController playerMovement;
+    private BoxCollider2D collider;
 
-	void Start()
-	{
-		block = transform.parent.gameObject;
-		antiBlock = transform.parent.GetChild(1);
-		player = GameObject.FindGameObjectWithTag("Player");
-		playerMovement = player.transform.GetChild(2).GetComponent<BotController>();
-	}
+    public AudioSource HitWall;
+    public AudioSource MoveSound;
 
-	void Update ()
-	{
-			if (Swipe.SwipeDown && movable && playerTouch && playerMovement.Movable)
-			{
-				block.transform.position += Vector3.down;
-				player.transform.position += Vector3.down;
-				MoveSound.Play();
-				blocked = false;
-				Swipe.SwipeDown = false;
-			}
-			else if (Swipe.SwipeDown && !movable && playerTouch)
-			{
-				HitWall.Play();
-			}
+    void Start()
+    {
+        block = transform.parent.gameObject;
+        antiBlock = transform.parent.GetChild(1);
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerMovement = player.transform.GetChild(2).GetComponent<BotController>();
+    }
 
-			antiBlock.GetComponent<BlockBotController>().movable = !blocked;
-	}
+    void Update()
+    {
+        if (Swipe.SwipeDown && movable && playerTouch && playerMovement.Movable)
+        {
+            block.transform.position += Vector3.down;
+            player.transform.position += Vector3.down;
+            MoveSound.Play();
+            blocked = false;
+            Swipe.SwipeDown = false;
+        }
+        else if (Swipe.SwipeDown && !movable && playerTouch)
+        {
+            HitWall.Play();
+        }
 
-	
-	private void OnTriggerEnter2D(Collider2D other)
-	{
-			if (other.CompareTag("Player"))
-			{
-				playerTouch = true;
-			}
-	}
-	private void OnTriggerStay2D(Collider2D other)
-	{
-			blocked = false;
-			foreach (var i in unpassableBlocksTags)
-			{
-				if (other.CompareTag(i))
-				{
-					blocked = true;
-				}
-			}
-	}
-	private void OnTriggerExit2D(Collider2D other)
-	{
-			blocked = false;
-			if (other.CompareTag("Player"))
-			{
-				playerTouch = false;
-			}
-	}
+        antiBlock.GetComponent<BlockBotController>().movable = !blocked;
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerTouch = true;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        blocked = false;
+        foreach (var i in unpassableBlocksTags)
+        {
+            if (other.CompareTag(i))
+            {
+                blocked = true;
+            }
+        }
+
+        Debug.Log(other);
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        collider.enabled = false;
+        collider.enabled = true;
+        blocked = false;
+        if (other.CompareTag("Player"))
+        {
+            playerTouch = false;
+        }
+    }
 }

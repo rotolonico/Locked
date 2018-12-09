@@ -74,6 +74,11 @@ TagManager:
   - keyList
   - keyInventory
   - keyCanvas
+  - checkpoint
+  - playerSpawn
+  - Restart
+  - 31
+  - 32
   layers:
   - Default
   - TransparentFX
