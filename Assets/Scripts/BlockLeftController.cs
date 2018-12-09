@@ -24,6 +24,7 @@ public class BlockLeftController : MonoBehaviour
         antiBlock = transform.parent.GetChild(3);
         player = GameObject.FindGameObjectWithTag("Player");
         playerMovement = player.transform.GetChild(0).GetComponent<RightController>();
+        collider = gameObject.GetComponent<BoxCollider2D>();
     }
 
     void Update()
@@ -67,13 +68,13 @@ public class BlockLeftController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        collider.enabled = false;
-        collider.enabled = true;
         if (other.CompareTag("Player"))
         {
             playerTouch = false;
         }
 
         blocked = false;
+        collider.enabled = false;
+        collider.enabled = true;
     }
 }

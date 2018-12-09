@@ -24,6 +24,7 @@ public class BlockTopController : MonoBehaviour
         antiBlock = transform.parent.GetChild(1);
         player = GameObject.FindGameObjectWithTag("Player");
         playerMovement = player.transform.GetChild(2).GetComponent<BotController>();
+        collider = gameObject.GetComponent<BoxCollider2D>();
     }
 
     void Update()
@@ -63,18 +64,16 @@ public class BlockTopController : MonoBehaviour
                 blocked = true;
             }
         }
-
-        Debug.Log(other);
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        collider.enabled = false;
-        collider.enabled = true;
         blocked = false;
         if (other.CompareTag("Player"))
         {
             playerTouch = false;
         }
+        collider.enabled = false;
+        collider.enabled = true;
     }
 }
