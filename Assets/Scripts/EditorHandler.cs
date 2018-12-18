@@ -502,7 +502,7 @@ public class EditorHandler : MonoBehaviour
         shareButtonAnimator.Play("GorightAnimation");
         animatorToggle.Play("GoleftAnimation");
         animatorBack.Play("GorightAnimation");
-        helpButtonAnimator.Play("GoleftAnimation");
+        helpButtonAnimator.Play("GoleftbackAnimation");
         loadButtonAnimator.Play("PopupAnimation");
         saveButtonAnimator.Play("PopupAnimation");
         //publishButtonAnimator.Play("PopupAnimation");
