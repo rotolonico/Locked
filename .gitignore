@@ -1,0 +1,9 @@
+Library/
+Locked-Game/
+Temp/
+Assets/StreamingAssets/
+Assets/StreamingAssets.meta
+Assets/Firebase/
+Assets/Firebase.meta
+Assets/google-services.json
+Assets/google-services.json.meta

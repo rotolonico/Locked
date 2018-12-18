@@ -79,6 +79,7 @@ TagManager:
   - Restart
   - 31
   - 32
+  - changeTool
   layers:
   - Default
   - TransparentFX

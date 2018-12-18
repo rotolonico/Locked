@@ -55,7 +55,25 @@ public class PlayerController : MonoBehaviour
         transform.position = playerSpawn.transform.position;
         EditorHandler.isBackToCheckpoint = false;
         playerSpawn.GetComponent<PlayerSpawnController>().Initialize();
+        ClearKeys();
         CheckpointTouched();
+    }
+
+    public void ClearKeys()
+    {
+        Transform keyInventory = GameObject.Find("KeyListContent").transform;
+        if (keyInventory.childCount != 0)
+        {
+            isKeyListUp = true;
+            HasKey = 0;
+            HasRedKey = 0;
+            HasBlueKey = 0;
+            HasGreenKey = 0;
+        }
+        foreach (Transform child in keyInventory.transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     private void Update()
@@ -104,6 +122,7 @@ public class PlayerController : MonoBehaviour
 
         if (isKeyListUp && HasKey == 0 && HasRedKey == 0 && HasGreenKey == 0 && HasBlueKey == 0)
         {
+            Debug.Log("TEST");
             keyHolderAnimator.Play("PopdownAnimation");
             isKeyListUp = false;
         }
@@ -163,8 +182,20 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Destroy(GameObject.Find("EditorHandler"));
-                SceneManager.LoadScene(0);
+                if (EditorHandler.currentLevelNumber != 0)
+                {
+                    if (EditorHandler.beatenLevelNumber < EditorHandler.currentLevelNumber)
+                    {
+                        EditorHandler.beatenLevelNumber = EditorHandler.currentLevelNumber;
+                        EditorHandler.SaveToFile(EditorHandler.beatenLevelNumber, EditorHandler.isNotFirstTimeEditor);
+                    }
+                    editorHandler.LoadNormalLevelInLevelScene(EditorHandler.currentLevelNumber+1);
+                }
+                else
+                {
+                    Destroy(GameObject.Find("EditorHandler"));
+                    SceneManager.LoadScene(0);
+                }
             }
         }
 

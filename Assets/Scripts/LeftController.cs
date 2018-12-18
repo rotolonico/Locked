@@ -18,7 +18,7 @@ public class LeftController : MonoBehaviour
 
     private void Start()
     {
-        Player = GameObject.FindGameObjectWithTag("Player");
+        Player = transform.parent.gameObject;
     }
 
     private void Update()

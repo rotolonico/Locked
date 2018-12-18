@@ -72,6 +72,8 @@
           <e p="CameraController.cs" t="Include" />
           <e p="DatabaseHandler.cs" t="Include" />
           <e p="EditorHandler.cs" t="Include" />
+          <e p="GameData.cs" t="Include" />
+          <e p="GenericLevelController.cs" t="Include" />
           <e p="GreenLockController.cs" t="Include" />
           <e p="LeftController.cs" t="Include" />
           <e p="LimitedBlockController.cs" t="Include" />
@@ -81,6 +83,7 @@
           <e p="RealtimeDbHandler.cs" t="Include" />
           <e p="RedLockController.cs" t="Include" />
           <e p="RightController.cs" t="Include" />
+          <e p="SelectSprite.cs" t="Include" />
           <e p="Swipe.cs" t="Include" />
           <e p="TeleporterController.cs" t="Include" />
           <e p="TopController.cs" t="Include" />

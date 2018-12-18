@@ -81,6 +81,8 @@
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\DatabaseHandler.cs" />
     <Compile Include="Assets\Scripts\EditorHandler.cs" />
+    <Compile Include="Assets\Scripts\GameData.cs" />
+    <Compile Include="Assets\Scripts\GenericLevelController.cs" />
     <Compile Include="Assets\Scripts\GreenLockController.cs" />
     <Compile Include="Assets\Scripts\LeftController.cs" />
     <Compile Include="Assets\Scripts\LimitedBlockController.cs" />
@@ -90,6 +92,7 @@
     <Compile Include="Assets\Scripts\RealtimeDbHandler.cs" />
     <Compile Include="Assets\Scripts\RedLockController.cs" />
     <Compile Include="Assets\Scripts\RightController.cs" />
+    <Compile Include="Assets\Scripts\SelectSprite.cs" />
     <Compile Include="Assets\Scripts\Swipe.cs" />
     <Compile Include="Assets\Scripts\TeleporterController.cs" />
     <Compile Include="Assets\Scripts\TopController.cs" />

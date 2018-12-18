@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Analytics;
@@ -20,6 +21,7 @@ public class EditorHandler : MonoBehaviour
     private Ray mousePositionRay;
     private Ray touchPositionRay;
     private Collider2D[] hitColliders;
+    private Collider2D[] selectedColliders;
     private Animator animatorSelector;
     private Animator animatorToggle;
     private Animator animatorBack;
@@ -29,11 +31,15 @@ public class EditorHandler : MonoBehaviour
 
     private int levelRows = 96;
     private int levelColumns = 96;
+    readonly float mouseThreshold = 0.2f;
 
-    private static string savedLevel;
+    public static string savedLevel;
 
     public GameObject[] blocks = new GameObject[33];
     public GameObject[] editorBlocks = new GameObject[33];
+
+    public Button[] levelButtons = new Button[10];
+    public String[] levels = new String[10];
 
     public static bool playMode;
     public static bool PublishMode;
@@ -54,10 +60,15 @@ public class EditorHandler : MonoBehaviour
     private Image playButtonRenderer;
     public Sprite playSprite;
     public Sprite pauseSprite;
+    public Sprite lockedLevelSprite;
+    public Sprite mouseSprite;
+    public Sprite selectionSprite;
+    public Color highlightedColor = new Color(0.3f, 0.29f, 0.29f);
 
     private GameObject blockImage;
     private GameObject saveLevelWindow;
     private GameObject shareLevelWindow;
+    private GameObject helpWindow;
     private GameObject quitLevelWindow;
     private GameObject publishLevel;
     private GameObject saveLevel;
@@ -65,23 +76,63 @@ public class EditorHandler : MonoBehaviour
     private GameObject levelText;
     private GameObject levelTextHint;
     private Animator shareButtonAnimator;
+    private Animator helpButtonAnimator;
     private Animator quitButtonAnimator;
     private Button quitButton;
     private Button shareButton;
+    private Button helpButton;
     private Text levelCodeHint;
     private InputField shareInputField;
     private InputField inputField;
     private Animator keyHolderAnimator;
+    private Toggle changeToolToggle;
+    private Animator changeToolAnimator;
     private Image blockImageImage;
     private PlayerController playerController;
+    public static int beatenLevelNumber;
+    public static bool isNotFirstTimeEditor;
+    public static int currentLevelNumber;
+    private Vector3 mousePosition;
+    private Vector3 mouseEndPosition;
+    private RectTransform selectionBox;
+    private Vector2 startMousePosition = Vector2.zero;
+    private Collider2D[] checkSpriteCollision;
+    private bool movingSelection;
+    private Vector3 newMousePosition;
+    private Vector3 mousePosition1;
+    private int tutorialProgress;
+    private Text tutorialText;
+    private String[] editorTutorialText = new String[7];
+    bool isPointerOverGameObject = true;
+    
 
     public bool tap = true;
 
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        LoadToFile();
         mouseHitPlane = new Plane(Vector3.forward, transform.position);
         playMode = true;
+        GameOver = false;
+        LevelButtonsInitialize();
+    }
+
+    private void LevelButtonsInitialize()
+    {
+        for (var i = 0; i < levelButtons.Length; i++)
+        {
+            if (beatenLevelNumber >= i)
+            {
+                levelButtons[i].interactable = true;
+            }
+            else
+            {
+                levelButtons[i].GetComponent<Image>().sprite = lockedLevelSprite;
+                levelButtons[i].transform.GetChild(0).GetComponent<Text>().text = "";
+                levelButtons[i].interactable = false;
+            }
+        }
     }
 
     private void EditorInitialize()
@@ -91,6 +142,8 @@ public class EditorHandler : MonoBehaviour
         yesSound = GameObject.Find("YesSound").GetComponent<AudioSource>();
         EditorInitialized = true;
         saveButton = GameObject.FindGameObjectWithTag("saveButton").GetComponent<Button>();
+        helpButton = GameObject.Find("HelpButton").GetComponent<Button>();
+        helpButtonAnimator = GameObject.Find("HelpButton").GetComponent<Animator>();
         //publishButton = GameObject.FindGameObjectWithTag("publishButton").GetComponent<Button>();
         loadButtonAnimator = GameObject.FindGameObjectWithTag("loadButton").GetComponent<Animator>();
         saveButtonAnimator = GameObject.FindGameObjectWithTag("saveButton").GetComponent<Animator>();
@@ -104,7 +157,9 @@ public class EditorHandler : MonoBehaviour
         blockImage = GameObject.Find("BlockImage");
         blockImageImage = blockImage.GetComponent<Image>();
         saveLevelWindow = GameObject.Find("SaveLevelWindow");
+        tutorialText = GameObject.Find("TutorialText").GetComponent<Text>();
         shareLevelWindow = GameObject.Find("ShareLevelWindow");
+        helpWindow = GameObject.Find("HelpWindow");
         quitLevelWindow = GameObject.Find("QuitLevelWindow");
         publishLevel = GameObject.Find("PublishLevel");
         saveLevel = GameObject.Find("SaveLevel");
@@ -119,6 +174,16 @@ public class EditorHandler : MonoBehaviour
         shareInputField = GameObject.Find("ShareInputField").GetComponent<InputField>();
         inputField = GameObject.Find("InputField").GetComponent<InputField>();
         keyHolderAnimator = GameObject.FindGameObjectWithTag("keyInventory").GetComponent<Animator>();
+        changeToolToggle = GameObject.FindGameObjectWithTag("changeTool").GetComponent<Toggle>();
+        changeToolAnimator = GameObject.FindGameObjectWithTag("changeTool").GetComponent<Animator>();
+        editorTutorialText[0] = "Welcome to the game\'s editor!\nHere is where the magic happens\nDo you want to learn how it works?";
+        editorTutorialText[1] = "Click the \"block button\" to get a list of all available blocks\nClick anywhere on the screen to place the block you selected";
+        editorTutorialText[2] = "Click the \"play button\" to test your awesome level";
+        editorTutorialText[3] = "The \"save button\" will make you able to save the level you are\ncreating\nGive the save a name and then use the \"load button\" to load it back in";
+        editorTutorialText[4] = "Are you ready to share your level with the world?\nClick on the \"share button\" and the level code will be copied\ninto your clipboard\nYou can send the code to a friend or load in a level from a friend by clicking on the \"load button\" in the share level window";
+        editorTutorialText[5] = "As of right now there are two different tools you can use to \nmake your levels:\n- The draw tool, that allows you to place blocks in your level\n- The selection tool, that allows you to select a group of blocks and move or delete them\nUse the \"change tool button\" to switch between the tools";
+        editorTutorialText[6] = "You can access this tutorial at any time by clicking on the \"help button\"";
+        
         if (GameObject.FindGameObjectWithTag("Player") != null)
         {
             playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -131,8 +196,12 @@ public class EditorHandler : MonoBehaviour
 
     void Update()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 1 && !EditorInitialized)
-        {
+        if (!EditorInitialized && SceneManager.GetActiveScene().buildIndex == 1)
+        {           
+            if (!isNotFirstTimeEditor)
+            {
+                EditorFirstTime();
+            }
             inEditor = true;
             EditorInitialize();
         }
@@ -158,70 +227,201 @@ public class EditorHandler : MonoBehaviour
                 musicOn = true;
             }
 
-            if (Input.GetMouseButtonDown(0) && tap)
-            {
-                mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-                float dist;
-                if (mouseHitPlane.Raycast(mousePositionRay, out dist))
+                if (EditorInitialized && Input.GetMouseButtonDown(0) && tap)
                 {
-                    Vector3 mousePosition = mousePositionRay.GetPoint(dist);
-                    mousePosition.x = (float) Math.Round(mousePosition.x);
-                    mousePosition.y = (float) Math.Round(mousePosition.y);
-                    mousePosition.z = (float) Math.Round(mousePosition.z);
-                    hitColliders = Physics2D.OverlapCircleAll(mousePosition, 0.3f);
-                    if (!EventSystem.current.IsPointerOverGameObject())
+                    mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    float dist;
+                    if (mouseHitPlane.Raycast(mousePositionRay, out dist))
                     {
-                        foreach (var i in hitColliders)
+                        mousePosition = mousePositionRay.GetPoint(dist);
+                        mousePosition.x = (float) Math.Round(mousePosition.x);
+                        mousePosition.y = (float) Math.Round(mousePosition.y);
+                        mousePosition.z = (float) Math.Round(mousePosition.z);
+                        hitColliders = Physics2D.OverlapCircleAll(mousePosition, 0.3f);
+                        if (!EventSystem.current.IsPointerOverGameObject())
+                        {
+                            if (changeToolToggle.isOn && hitColliders.Length > 0 && hitColliders[0].gameObject.GetComponent<SelectSprite>().selected)
+                            {
+                                movingSelection = true;
+                            }
+                            changeToolToggle = GameObject.FindGameObjectWithTag("changeTool").GetComponent<Toggle>();
+                            if (!changeToolToggle.isOn)
+                            {
+                                foreach (var i in hitColliders)
+                                {
+                                    Destroy(i.gameObject);
+                                }
+
+                                if (selectedObject.CompareTag("1"))
+                                {
+                                    Destroy(GameObject.FindGameObjectWithTag("1"));
+                                }
+
+                                if (!selectedObject.CompareTag("0"))
+                                {
+                                    Instantiate(selectedObject, mousePosition, Quaternion.identity);
+                                    placeSound.Play();
+                                }
+                            }
+                        }
+                    }
+                }
+
+            if (Input.GetMouseButton(0))
+            {
+                if (movingSelection)
+                {
+                    var levelEdgeA = new Vector2(-levelRows / 2, -levelColumns / 2);
+                    var levelEdgeB = new Vector2(levelRows / 2, levelColumns / 2);
+                    var allSprites = Physics2D.OverlapAreaAll(levelEdgeA, levelEdgeB);
+                    mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    float dist;
+                    if (mouseHitPlane.Raycast(mousePositionRay, out dist))
+                    {
+                        newMousePosition = mousePositionRay.GetPoint(dist);
+                        newMousePosition.x = (float) Math.Round(newMousePosition.x);
+                        newMousePosition.y = (float) Math.Round(newMousePosition.y);
+                        newMousePosition.z = (float) Math.Round(newMousePosition.z);
+                    }
+
+                    if (Vector3.Distance(mousePosition, newMousePosition) > mouseThreshold)
+                    {
+                        if (mousePosition.y > newMousePosition.y)
+                        {
+                            foreach (var i in allSprites)
+                            {
+                                if (i.GetComponent<SelectSprite>().selected)
+                                {
+                                    i.transform.position += Vector3.down;
+                                }
+                            }
+
+                            mousePosition.y -= 1;
+                        }
+
+                        if (mousePosition.y < newMousePosition.y)
+                        {
+                            foreach (var i in allSprites)
+                            {
+                                if (i.GetComponent<SelectSprite>().selected)
+                                {
+                                    i.transform.position += Vector3.up;
+                                }
+                            }
+                            mousePosition.y += 1;
+                        }
+
+                        if (mousePosition.x > newMousePosition.x)
+                        {
+                            foreach (var i in allSprites)
+                            {
+                                if (i.GetComponent<SelectSprite>().selected)
+                                {
+                                    i.transform.position += Vector3.left;
+                                }
+                            }
+                            mousePosition.x -= 1;
+                        }
+
+                        if (mousePosition.x < newMousePosition.x)
+                        {
+                            foreach (var i in allSprites)
+                            {
+                                if (i.GetComponent<SelectSprite>().selected)
+                                {
+                                    i.transform.position += Vector3.right;
+                                }
+                            }
+                            mousePosition.x += 1;
+                        }
+                    }
+                }
+            }
+            
+            
+
+            if (EditorInitialized && Input.GetKeyDown(KeyCode.Delete))
+            {
+                if (selectedColliders != null)
+                {
+                    foreach (var i in selectedColliders)
+                    {
+                        if (i != null)
                         {
                             Destroy(i.gameObject);
-                        }
-
-                        if (selectedObject.CompareTag("1"))
-                        {
-                            Destroy(GameObject.FindGameObjectWithTag("1"));
-                        }
-
-                        if (!selectedObject.CompareTag("0"))
-                        {
-                            Instantiate(selectedObject, mousePosition, Quaternion.identity);
-                            placeSound.Play();
                         }
                     }
                 }
             }
 
-            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended && tap)
+            if (EditorInitialized && Input.GetMouseButtonUp(0) && tap)
             {
-                Touch touch = Input.GetTouch(0);
-                touchPositionRay = Camera.main.ScreenPointToRay(touch.position);
-                float dist;
-                if (mouseHitPlane.Raycast(touchPositionRay, out dist))
+                isPointerOverGameObject = true;
+                changeToolToggle = GameObject.FindGameObjectWithTag("changeTool").GetComponent<Toggle>();
+                if (!movingSelection && changeToolToggle.isOn)
                 {
-                    Vector3 mousePosition = touchPositionRay.GetPoint(dist);
-                    mousePosition.x = (float) Math.Round(mousePosition.x);
-                    mousePosition.y = (float) Math.Round(mousePosition.y);
-                    mousePosition.z = (float) Math.Round(mousePosition.z);
-                    hitColliders = Physics2D.OverlapCircleAll(mousePosition, 0.3f);
-                    if (!EventSystem.current.IsPointerOverGameObject())
+                    mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    float dist;
+                    if (mouseHitPlane.Raycast(mousePositionRay, out dist))
                     {
-                        foreach (var i in hitColliders)
+                        mouseEndPosition = mousePositionRay.GetPoint(dist);
+                        mouseEndPosition.x = (float) Math.Round(mouseEndPosition.x);
+                        mouseEndPosition.y = (float) Math.Round(mouseEndPosition.y);
+                        mouseEndPosition.z = (float) Math.Round(mouseEndPosition.z);
+                        if (selectedColliders != null)
                         {
-                            Destroy(i.gameObject);
+                            foreach (var i in selectedColliders)
+                            {
+                                if (i != null)
+                                {
+                                    i.GetComponent<SelectSprite>().selected = false;
+                                    i.GetComponent<SpriteRenderer>().color = Color.white;
+                                }
+                            }
                         }
-
-                        if (selectedObject.CompareTag("1"))
+                        selectedColliders = Physics2D.OverlapAreaAll(mousePosition, mouseEndPosition);
+                        foreach (var i in selectedColliders)
                         {
-                            Destroy(GameObject.FindGameObjectWithTag("1"));
-                        }
-
-                        if (!selectedObject.CompareTag("0"))
-                        {
-                            Instantiate(selectedObject, mousePosition, Quaternion.identity);
-                            placeSound.Play();
+                            i.GetComponent<SelectSprite>().Select();
+                            i.GetComponent<SpriteRenderer>().color = Color.grey;
                         }
                     }
                 }
+                movingSelection = false;
             }
+
+                if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended && tap)
+                {
+                    Touch touch = Input.GetTouch(0);
+                    touchPositionRay = Camera.main.ScreenPointToRay(touch.position);
+                    float dist;
+                    if (mouseHitPlane.Raycast(touchPositionRay, out dist))
+                    {
+                        Vector3 mousePosition = touchPositionRay.GetPoint(dist);
+                        mousePosition.x = (float) Math.Round(mousePosition.x);
+                        mousePosition.y = (float) Math.Round(mousePosition.y);
+                        mousePosition.z = (float) Math.Round(mousePosition.z);
+                        hitColliders = Physics2D.OverlapCircleAll(mousePosition, 0.3f);
+                        if (!EventSystem.current.IsPointerOverGameObject())
+                        {
+                            foreach (var i in hitColliders)
+                            {
+                                Destroy(i.gameObject);
+                            }
+
+                            if (selectedObject.CompareTag("1"))
+                            {
+                                Destroy(GameObject.FindGameObjectWithTag("1"));
+                            }
+
+                            if (!selectedObject.CompareTag("0"))
+                            {
+                                Instantiate(selectedObject, mousePosition, Quaternion.identity);
+                                placeSound.Play();
+                            }
+                        }
+                    }
+                }
 
             if (Swipe.SwipeUp && !blockImageImage.raycastTarget)
             {
@@ -264,19 +464,45 @@ public class EditorHandler : MonoBehaviour
         }
     }
 
+    private void OnGUI()
+    {
+        if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0))
+        {
+            mousePosition1 = Input.mousePosition;
+            isPointerOverGameObject = false;
+        }
+        
+        if (!isPointerOverGameObject && Input.GetMouseButton(0))
+        {
+            if (changeToolToggle != null && changeToolToggle.isOn)
+            {
+                var rect = Swipe.GetScreenRect(mousePosition1, Input.mousePosition);
+                Swipe.DrawScreenRect(rect, new Color(0.3f, 0.29f, 0.29f, 0.25f));
+                Swipe.DrawScreenRectBorder(rect, 2, new Color(0.3f, 0.29f, 0.29f, 0.95f));
+
+            }
+        }
+    }
+
 
     private void PlayMode()
     {
+        Swipe.delay = true;
+        GameObject.Find("EditorHandler").GetComponent<Swipe>().Initiate();
         GameOver = false;
         playButtonRenderer.sprite = pauseSprite;
         backButton.enabled = false;
         blockToggle.enabled = false;
+        helpButton.enabled = false;
         saveButton.enabled = false;
         //publishButton.enabled = false;
         shareButton.enabled = false;
+        changeToolToggle.enabled = false;
+        changeToolAnimator.Play("InversePopupAnimation");
         shareButtonAnimator.Play("GorightAnimation");
         animatorToggle.Play("GoleftAnimation");
         animatorBack.Play("GorightAnimation");
+        helpButtonAnimator.Play("GoleftAnimation");
         loadButtonAnimator.Play("PopupAnimation");
         saveButtonAnimator.Play("PopupAnimation");
         //publishButtonAnimator.Play("PopupAnimation");
@@ -312,12 +538,16 @@ public class EditorHandler : MonoBehaviour
         playButtonRenderer.sprite = playSprite;
         backButton.enabled = true;
         blockToggle.enabled = true;
+        helpButton.enabled = true;
         saveButton.enabled = true;
         //publishButton.enabled = true;
         shareButton.enabled = true;
+        changeToolToggle.enabled = true;
+        changeToolAnimator.Play("InversePopdownAnimation");
         shareButtonAnimator.Play("GoleftbackAnimation");
         animatorToggle.Play("GorightbackAnimation");
         animatorBack.Play("GoleftbackAnimation");
+        helpButtonAnimator.Play("GorightAnimation");
         loadButtonAnimator.Play("PopdownAnimation");
         saveButtonAnimator.Play("PopdownAnimation");
         //publishButtonAnimator.Play("PopdownAnimation");
@@ -359,7 +589,7 @@ public class EditorHandler : MonoBehaviour
         return levelString;
     }
 
-    private void ClearEditor(bool sparePlayer = false)
+    public void ClearEditor(bool sparePlayer = false)
     {
         var levelEdgeA = new Vector2(-levelRows / 2, -levelColumns / 2);
         var levelEdgeB = new Vector2(levelRows / 2, levelColumns / 2);
@@ -378,7 +608,7 @@ public class EditorHandler : MonoBehaviour
         }
     }
 
-    private void LoadLevel(string level, bool sparePlayer = false)
+    public void LoadLevel(string level, bool sparePlayer = false)
     {
         var levelStrings = level.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
 
@@ -443,6 +673,8 @@ public class EditorHandler : MonoBehaviour
 
     public void RestartLevel()
     {
+        Swipe.delay = true;
+        GameObject.Find("EditorHandler").GetComponent<Swipe>().Initiate();
         if (GameObject.FindGameObjectWithTag("playerSpawn") != null)
         {
             Destroy(GameObject.FindGameObjectWithTag("playerSpawn"));
@@ -457,6 +689,8 @@ public class EditorHandler : MonoBehaviour
         {
             if (GameObject.FindGameObjectWithTag("playerSpawn"))
             {
+                Swipe.delay = true;
+                GameObject.Find("EditorHandler").GetComponent<Swipe>().Initiate();
                 ClearEditor(true);
                 LoadLevel(savedLevel, true);
                 playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -470,6 +704,8 @@ public class EditorHandler : MonoBehaviour
         }
         else
         {
+            Swipe.delay = true;
+            GameObject.Find("EditorHandler").GetComponent<Swipe>().Initiate();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             if (GameObject.FindGameObjectWithTag("playerSpawn"))
             {
@@ -491,6 +727,99 @@ public class EditorHandler : MonoBehaviour
         if (GameObject.FindGameObjectWithTag("playerSpawn") != null)
         {
             Destroy(GameObject.FindGameObjectWithTag("playerSpawn"));
+        }
+    }
+
+    private void EditorFirstTime()
+    {
+        isNotFirstTimeEditor = true;
+        EditorGuide();
+        SaveToFile(beatenLevelNumber, isNotFirstTimeEditor);
+    }
+
+    public void EditorGuide()
+    {
+        EditorInitialize();
+        tutorialText.text = editorTutorialText[0];
+        tutorialProgress = 0;
+        blockImage.GetComponent<Image>().raycastTarget = true;
+        blockImage.GetComponent<Animator>().Play("BlockImageTransparent");
+        helpWindow.GetComponent<Animator>().Play("TopCanvasDown");
+    }
+    
+    public void GuideCancel()
+    {
+        EditorInitialize();
+        blockImage.GetComponent<Image>().raycastTarget = false;
+        blockImage.GetComponent<Animator>().Play("BlockImageTransparentReverse");
+        helpWindow.GetComponent<Animator>().Play("TopCanvasUp");
+        blockToggle.transform.SetAsFirstSibling();
+        playButtonToggle.transform.SetAsFirstSibling();
+        saveButton.transform.SetAsFirstSibling();
+        loadButtonAnimator.transform.SetAsFirstSibling();
+        shareButton.transform.SetAsFirstSibling();
+        changeToolToggle.transform.SetAsFirstSibling();
+        saveButton.enabled = true;
+        loadButtonAnimator.GetComponent<Button>().enabled = true;
+        shareButton.enabled = true;
+        helpButton.enabled = true;
+    }
+
+    public void GuideProgress()
+    {
+        EditorInitialize();
+        tutorialProgress++;
+        if (tutorialProgress < 7)
+        {
+            tutorialText.text = editorTutorialText[tutorialProgress];
+        }
+        else
+        {
+            GuideCancel();
+        }
+
+        if (tutorialProgress == 1)
+        {
+            blockToggle.transform.SetAsLastSibling();
+        }
+        if (tutorialProgress == 2)
+        {
+            blockToggle.transform.SetAsFirstSibling();
+            playButtonToggle.transform.SetAsLastSibling();
+        }
+        if (tutorialProgress == 3)
+        {
+            playButtonToggle.transform.SetAsFirstSibling();
+            saveButton.enabled = false;
+            saveButton.transform.SetAsLastSibling();
+            loadButtonAnimator.GetComponent<Button>().enabled = false;
+            loadButtonAnimator.transform.SetAsLastSibling();
+        }
+        if (tutorialProgress == 4)
+        {
+            saveButton.transform.SetAsFirstSibling();
+            saveButton.enabled = true;
+            loadButtonAnimator.transform.SetAsFirstSibling();
+            loadButtonAnimator.GetComponent<Button>().enabled = true;
+            shareButton.enabled = false;
+            shareButton.transform.SetAsLastSibling();
+        }
+        if (tutorialProgress == 5)
+        {
+            shareButton.transform.SetAsFirstSibling();
+            shareButton.enabled = true;
+            changeToolToggle.transform.SetAsLastSibling();
+        }
+        if (tutorialProgress == 6)
+        {
+            changeToolToggle.transform.SetAsFirstSibling();
+            helpButton.enabled = false;
+            helpButton.transform.SetAsLastSibling();
+        }
+        if (tutorialProgress == 7)
+        {
+            helpButton.transform.SetAsFirstSibling();
+            helpButton.enabled = true;
         }
     }
 
@@ -658,6 +987,102 @@ public class EditorHandler : MonoBehaviour
     public void Exit()
     {
         Application.Quit();
+    }
+
+    public void LoadNormalLevelInLevelScene(int levelNumber = 0)
+    {
+        savedLevel = Decompress(Convert.FromBase64String(levels[levelNumber]));
+        currentLevelNumber = levelNumber;
+        SceneManager.LoadScene(3);
+    }
+
+    public void RestartNormalLevelInLevelScene()
+    {
+        savedLevel = Decompress(Convert.FromBase64String(levels[currentLevelNumber]));
+        SceneManager.LoadScene(3);
+    }
+
+    public void LoadOnlineLevelInLevelScene(string level)
+    {
+        savedLevel = Decompress(Convert.FromBase64String(level));
+        SceneManager.LoadScene(3);
+    }
+
+    public void ShowLevels()
+    {
+        GameObject.Find("MainCanvas").GetComponent<Animator>().Play("CanvasOpacity0");
+        GameObject.Find("LevelCanvas").GetComponent<Animator>().Play("CanvasOpacity100");
+    }
+
+    public void HideLevels()
+    {
+        GameObject.Find("MainCanvas").GetComponent<Animator>().Play("CanvasOpacity100");
+        GameObject.Find("LevelCanvas").GetComponent<Animator>().Play("CanvasOpacity0");
+    }
+
+    public static void SaveToFile(int unlockedLevelNumber, bool firstTimeEditor)
+    {
+        string destination = Application.persistentDataPath + "/save.lk";
+        FileStream file;
+
+        if (File.Exists(destination)) file = File.OpenWrite(destination);
+        else file = File.Create(destination);
+
+        GameData data = new GameData(unlockedLevelNumber, firstTimeEditor);
+        BinaryFormatter bf = new BinaryFormatter();
+        bf.Serialize(file, data);
+        file.Close();
+    }
+
+    public static void LoadToFile()
+    {
+        string destination = Application.persistentDataPath + "/save.lk";
+        FileStream file;
+
+        if (File.Exists(destination)) file = File.OpenRead(destination);
+        else
+        {
+            return;
+        }
+
+        BinaryFormatter bf = new BinaryFormatter();
+        GameData data = (GameData) bf.Deserialize(file);
+        file.Close();
+
+        beatenLevelNumber = data.unlockedLevelsInt;
+        isNotFirstTimeEditor = data.firstTimeEditorBool;
+    }
+
+    public void ClearData()
+    {
+        SaveToFile(0, isNotFirstTimeEditor);
+        LoadToFile();
+        LevelButtonsInitialize();
+    }
+
+    public void ChangeTool()
+    {
+        EditorInitialize();
+        if (!changeToolToggle.isOn)
+        {
+            changeToolToggle.GetComponentInChildren<Image>().sprite = selectionSprite;
+            var levelEdgeA = new Vector2(-levelRows / 2, -levelColumns / 2);
+            var levelEdgeB = new Vector2(levelRows / 2, levelColumns / 2);
+            var allSprites = Physics2D.OverlapAreaAll(levelEdgeA, levelEdgeB);
+                foreach (var i in allSprites)
+                {
+                    if (i.GetComponent<SelectSprite>() != null && i.GetComponent<SelectSprite>().selected)
+                    {
+                        i.GetComponent<SelectSprite>().selected = false;
+                        i.GetComponent<SpriteRenderer>().color = Color.white;
+                    }
+                }
+            selectedColliders = null;
+        }
+        else
+        {
+            changeToolToggle.GetComponentInChildren<Image>().sprite = mouseSprite;
+        }
     }
 
 
