@@ -525,6 +525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedObject: {fileID: 1824743360916568, guid: b656334d9269b4304a015181a0a797e6,
     type: 2}
+  GridSprite: {fileID: 1449965816380582, guid: 3ca74cb4e9510489382d303d53824db5, type: 2}
   EditorMusic: {fileID: 82415827176198800}
   blocks:
   - {fileID: 1824743360916568, guid: b656334d9269b4304a015181a0a797e6, type: 2}
@@ -560,6 +561,39 @@ MonoBehaviour:
   - {fileID: 1992484965616930, guid: 4a5b1aec677c84a758c3550ddf229985, type: 2}
   - {fileID: 1916506199341882, guid: 63461f857d8e6458192257a3f54a197d, type: 2}
   - {fileID: 1248265138960440, guid: 23902a2f0686e43d997e29d71f7c0a00, type: 2}
+  - {fileID: 1558254850754806, guid: 5df0f255e7e6442ca9755481a72013fd, type: 2}
+  - {fileID: 1961738246559576, guid: 25a548eefa79a43b4a70ce87de41bc34, type: 2}
+  randomSpawnableBlocks:
+  - {fileID: 1558254850754806, guid: 5df0f255e7e6442ca9755481a72013fd, type: 2}
+  - {fileID: 1048526459740734, guid: d18f895fa9c4f42769d8be6ee832c949, type: 2}
+  - {fileID: 1645918641443784, guid: 0f51f2b15363f49919b2bcf916243f07, type: 2}
+  - {fileID: 1025936974678484, guid: aa41141bf565a4f32bab4288ab370406, type: 2}
+  - {fileID: 1046664668982832, guid: 0f4938f3409564225b7387f8cbd128ce, type: 2}
+  - {fileID: 1631116705688936, guid: 35b19b71bdcd1400f888e70734874449, type: 2}
+  - {fileID: 1231632882926366, guid: e5d756d3018794ef1a8094c45921c864, type: 2}
+  - {fileID: 1160061646432402, guid: 328c1194f33ce4019b4026e80a13e6bd, type: 2}
+  - {fileID: 1026334342368450, guid: d8ad8f6e89b8c4a7eb8593911de8392e, type: 2}
+  - {fileID: 1505790564219090, guid: 52ed1dc4314e84a96a00d3552ee8c223, type: 2}
+  - {fileID: 1793411180257222, guid: 20fb2c46bb23241b6887d0cfc7d8e14d, type: 2}
+  - {fileID: 1531074527902304, guid: 4a83dc96e7f1446518e7195c9792f643, type: 2}
+  - {fileID: 1186496656885516, guid: c2672656259b74fa6b0a14aebbb630f3, type: 2}
+  - {fileID: 1148697349987744, guid: 5b2411eabaf964152b381066bb4a526d, type: 2}
+  - {fileID: 1520846771506000, guid: 90a1033a4ca204ddfb208a01188c8ccb, type: 2}
+  - {fileID: 1021680628884530, guid: f84458f4b8e4d4b27b9a935e5b0cff9b, type: 2}
+  - {fileID: 1707908575718582, guid: 9742d1da1a144450ebf2df266a2be55d, type: 2}
+  - {fileID: 1001733508885264, guid: 1b321758954b647608dfb78ca62f42d9, type: 2}
+  - {fileID: 1175066375363152, guid: b93e6602ef07f433c94c3f4b8ad58f8c, type: 2}
+  - {fileID: 1027930294398780, guid: fb21cfc0b043b460b8d216bf35de6aac, type: 2}
+  - {fileID: 1015945661882972, guid: db2ed6a037e82421eb8d8fdfe119ff06, type: 2}
+  - {fileID: 1628106005010792, guid: 5fd9ee51f3d034353a66bb677f758219, type: 2}
+  - {fileID: 1756424791114376, guid: c1df3fabeb7894f349408a280e1fb539, type: 2}
+  - {fileID: 1422991762740898, guid: 48d106c9c24a94c0d9176c92c0255b17, type: 2}
+  - {fileID: 1255687477583996, guid: 3b0e97c9c38824ac69aa35fcbd0cd368, type: 2}
+  - {fileID: 1824994155587476, guid: dc18a5e9ea9374130a1ac76a5ba73c61, type: 2}
+  - {fileID: 1593192299473846, guid: b88e41468cccc4785b67e54763d3b63a, type: 2}
+  - {fileID: 1542248390126128, guid: e71562573a36f4ab692bed57798427c8, type: 2}
+  - {fileID: 1202399617979180, guid: 240377efb4800435db295297e8042d5d, type: 2}
+  - {fileID: 1248265138960440, guid: 23902a2f0686e43d997e29d71f7c0a00, type: 2}
   editorBlocks:
   - {fileID: 1824743360916568, guid: b656334d9269b4304a015181a0a797e6, type: 2}
   - {fileID: 1824743360916568, guid: 348df6e8c70a2430e904a53945742e0a, type: 2}
@@ -594,6 +628,8 @@ MonoBehaviour:
   - {fileID: 1824743360916568, guid: 48ad5787bc30a45a8b3fe97669e21a87, type: 2}
   - {fileID: 1824743360916568, guid: 4152f915e62264093995d3125c1a4033, type: 2}
   - {fileID: 1824743360916568, guid: 7678d3323fc7341b79313430ee35d8f0, type: 2}
+  - {fileID: 1824743360916568, guid: 33b96e7f657d14a22b99874f68e7b0b7, type: 2}
+  - {fileID: 1824743360916568, guid: a353e9d5650d04036bb139349e3a1eb7, type: 2}
   levelButtons:
   - {fileID: 0}
   - {fileID: 0}

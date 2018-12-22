@@ -80,6 +80,9 @@ TagManager:
   - 31
   - 32
   - changeTool
+  - 33
+  - 34
+  - grid
   layers:
   - Default
   - TransparentFX

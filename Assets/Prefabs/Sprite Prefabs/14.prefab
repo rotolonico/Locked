@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb68cbf1309ff4f14b3fc43c29f2534a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteGameObjectId: 14
   selected: 0
 --- !u!212 &212099618440422494
 SpriteRenderer:

@@ -4,13 +4,47 @@ using UnityEngine;
 
 public class SelectSprite : MonoBehaviour
 {
+	public int spriteGameObjectId;
 	public bool selected;
-	private static int maxSortingLayer;
+	private EditorHandler editorHandler;
 
-	public void Select ()
+	private void Start()
+	{
+		editorHandler = GameObject.Find("EditorHandler").GetComponent<EditorHandler>();
+	}
+
+	public void Select()
 	{
 		selected = true;
-		gameObject.GetComponent<SpriteRenderer>().sortingOrder = maxSortingLayer+1;
-		maxSortingLayer += 1;
+		gameObject.GetComponent<SpriteRenderer>().sortingOrder = 1;
+	}
+	public void Deselect()
+	{
+		selected = false;
+		var overlappingGameObjects = Physics2D.OverlapCircleAll(transform.position, 0.3f);
+		foreach (var i in overlappingGameObjects)
+		{
+			if (i != gameObject.GetComponent<Collider2D>())
+			{
+				Destroy(i.gameObject);
+			}
+		}
+		gameObject.GetComponent<SpriteRenderer>().sortingOrder = 0;
+	}
+
+	public void Duplicate()
+	{
+		if (spriteGameObjectId != 1)
+		{
+			var overlappingGameObjects = Physics2D.OverlapCircleAll(transform.position, 0.3f);
+			foreach (var i in overlappingGameObjects)
+			{
+				if (i != gameObject.GetComponent<Collider2D>())
+				{
+					Destroy(i.gameObject);
+				}
+			}
+			Instantiate(editorHandler.editorBlocks[spriteGameObjectId], transform.position, Quaternion.identity);
+		}
 	}
 }

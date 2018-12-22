@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
 
     public void IsBackToCheckpoint()
     {
+        EditorHandler.GameOver = false;
         var playerSpawn = GameObject.FindGameObjectWithTag("playerSpawn");
         transform.position = playerSpawn.transform.position;
         EditorHandler.isBackToCheckpoint = false;
@@ -182,12 +183,12 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if (EditorHandler.currentLevelNumber != 0)
+                if (EditorHandler.currentLevelNumber != 0 && EditorHandler.currentLevelNumber < EditorHandler.maxLevelNumber)
                 {
                     if (EditorHandler.beatenLevelNumber < EditorHandler.currentLevelNumber)
                     {
                         EditorHandler.beatenLevelNumber = EditorHandler.currentLevelNumber;
-                        EditorHandler.SaveToFile(EditorHandler.beatenLevelNumber, EditorHandler.isNotFirstTimeEditor);
+                        EditorHandler.SaveToFile(EditorHandler.beatenLevelNumber, EditorHandler.isNotFirstTimeEditor, EditorHandler.isFirstSelectTime);
                     }
                     editorHandler.LoadNormalLevelInLevelScene(EditorHandler.currentLevelNumber+1);
                 }
@@ -202,11 +203,6 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("checkpoint"))
         {
             CheckpointTouched();
-        }
-
-        if (other.gameObject.CompareTag("Restart"))
-        {
-            editorHandler.RestartLevelFromCp();
         }
     }
 
