@@ -9,6 +9,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.EventSystems;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = System.Random;
@@ -18,6 +19,7 @@ public class EditorHandler : MonoBehaviour
     public GameObject selectedObject;
     public GameObject GridSprite;
     public AudioSource EditorMusic;
+    public AudioSource MenuMusic;
 
     private Plane mouseHitPlane;
     private Ray mousePositionRay;
@@ -31,8 +33,8 @@ public class EditorHandler : MonoBehaviour
     private Button backButton;
     private bool musicOn;
 
-    private int levelRows = 96;
-    private int levelColumns = 96;
+    public int levelRows = 96;
+    public int levelColumns = 96;
     readonly float mouseThreshold = 0.2f;
 
     public static string savedLevel;
@@ -50,9 +52,9 @@ public class EditorHandler : MonoBehaviour
     public static bool GameOver;
     public static bool isBackToCheckpoint;
 
-    private AudioSource placeSound;
-    private AudioSource noSound;
-    private AudioSource yesSound;
+    public AudioSource placeSound;
+    public AudioSource noSound;
+    public AudioSource yesSound;
     private bool EditorInitialized;
     private Toggle playButtonToggle;
     private Animator loadButtonAnimator;
@@ -103,7 +105,7 @@ public class EditorHandler : MonoBehaviour
     public static bool isNotFirstTimeEditor;
     public static bool isFirstSelectTime = true;
     public static int currentLevelNumber;
-    public static int maxLevelNumber = 9;
+    public static int maxLevelNumber = 14;
     
     private Vector3 mousePosition;
     private Vector3 mouseEndPosition;
@@ -127,12 +129,14 @@ public class EditorHandler : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(GetDataFromFirebase());
         DontDestroyOnLoad(gameObject);
         LoadToFile();
         mouseHitPlane = new Plane(Vector3.forward, transform.position);
         playMode = true;
         GameOver = false;
         LevelButtonsInitialize();
+        MenuMusic.Play();
     }
 
     private void LevelButtonsInitialize()
@@ -297,7 +301,6 @@ public class EditorHandler : MonoBehaviour
                                 if (!selectedObject.CompareTag("0"))
                                 {
                                     Instantiate(selectedObject, mousePosition, Quaternion.identity);
-                                    placeSound.Play();
                                 }
                             }
                         }
@@ -330,6 +333,7 @@ public class EditorHandler : MonoBehaviour
                                 if (i.GetComponent<SelectSprite>().selected)
                                 {
                                     i.transform.position += Vector3.down;
+                                    i.GetComponent<SelectSprite>().CheckPosition();
                                 }
                             }
 
@@ -343,6 +347,7 @@ public class EditorHandler : MonoBehaviour
                                 if (i.GetComponent<SelectSprite>().selected)
                                 {
                                     i.transform.position += Vector3.up;
+                                    i.GetComponent<SelectSprite>().CheckPosition();
                                 }
                             }
                             mousePosition.y += 1;
@@ -355,6 +360,7 @@ public class EditorHandler : MonoBehaviour
                                 if (i.GetComponent<SelectSprite>().selected)
                                 {
                                     i.transform.position += Vector3.left;
+                                    i.GetComponent<SelectSprite>().CheckPosition();
                                 }
                             }
                             mousePosition.x -= 1;
@@ -367,6 +373,7 @@ public class EditorHandler : MonoBehaviour
                                 if (i.GetComponent<SelectSprite>().selected)
                                 {
                                     i.transform.position += Vector3.right;
+                                    i.GetComponent<SelectSprite>().CheckPosition();
                                 }
                             }
                             mousePosition.x += 1;
@@ -516,6 +523,10 @@ public class EditorHandler : MonoBehaviour
             {
                 tap = true;
             }
+        }
+        if (Input.GetKeyDown(KeyCode.R) && playMode)
+        {
+            RestartLevelFromCp();
         }
     }
     
@@ -804,12 +815,14 @@ public class EditorHandler : MonoBehaviour
     public void EditorScene()
     {
         SceneManager.LoadScene(1);
+        MenuMusic.Stop();
         playMode = false;
     }
 
     public void LeaveEditorScene()
     {
         SceneManager.LoadScene(0);
+        Destroy(GameObject.FindGameObjectWithTag("playerSpawn"));
         Destroy(GameObject.FindGameObjectWithTag("EditorHandler"));
         if (GameObject.FindGameObjectWithTag("playerSpawn") != null)
         {
@@ -1037,8 +1050,8 @@ public class EditorHandler : MonoBehaviour
 
     public void ShareLevelWindow()
     {
-        shareInputField.text = "";
         EditorInitialize();
+        shareInputField.text = "";
         blockImage.GetComponent<Image>().raycastTarget = true;
         blockImage.GetComponent<Animator>().Play("BlockImageTransparent");
         shareLevelWindow.GetComponent<Animator>().Play("TopCanvasDown");
@@ -1163,10 +1176,12 @@ public class EditorHandler : MonoBehaviour
         savedLevel = Decompress(Convert.FromBase64String(levels[levelNumber]));
         currentLevelNumber = levelNumber;
         SceneManager.LoadScene(3);
+        MenuMusic.Stop();
     }
 
     public void RestartNormalLevelInLevelScene()
     {
+        Destroy(GameObject.FindGameObjectWithTag("playerSpawn"));
         savedLevel = Decompress(Convert.FromBase64String(levels[currentLevelNumber]));
         SceneManager.LoadScene(3);
     }
@@ -1347,6 +1362,30 @@ public class EditorHandler : MonoBehaviour
         catch
         {
             return null;
+        }
+    }
+    
+    IEnumerator GetDataFromFirebase()
+    {
+
+        string userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36";
+        string URL = "https://locked-3426c.firebaseio.com/levels.json";
+
+        Dictionary<string, string> headers = new Dictionary<string, string>();
+        headers.Add("User-Agent", userAgent);
+
+        WWW www = new WWW(URL, null, headers);
+        yield return www;
+
+
+        if (string.IsNullOrEmpty(www.error))
+        {
+            //myText.text = www.text.Length.ToString();
+            Debug.Log("Got: " + www.text);
+        }
+        else
+        {
+            Debug.Log("Error: " + www.error);
         }
     }
 }

@@ -5,15 +5,15 @@ using UnityEngine;
 public class BlockSelector : MonoBehaviour
 {
     public GameObject Selectable;
-    private EditorHandler playerController;
+    private EditorHandler editorHandler;
 
     private void Start()
     {
-        playerController = GameObject.FindGameObjectWithTag("EditorHandler").GetComponent<EditorHandler>();
+        editorHandler = GameObject.FindGameObjectWithTag("EditorHandler").GetComponent<EditorHandler>();
     }
 
     public void OnClick()
     {
-        playerController.selectedObject = Selectable;
+        editorHandler.selectedObject = Selectable;
     }
 }

@@ -15,11 +15,14 @@ public class ClearInventoryController : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		Transform keyInventory = GameObject.Find("KeyListContent").transform;
-		if (keyInventory.childCount > 0)
+		if (other.CompareTag("Player"))
 		{
-			playerController.ClearKeys();
-			NoSound.Play();
+			Transform keyInventory = GameObject.Find("KeyListContent").transform;
+			if (keyInventory.childCount > 0)
+			{
+				playerController.ClearKeys();
+				NoSound.Play();
+			}
 		}
 	}
 }
