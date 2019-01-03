@@ -14,7 +14,7 @@ public class RandomSpriteSpawn : MonoBehaviour
 		editorHandler = GameObject.Find("EditorHandler").GetComponent<EditorHandler>();
 		randomSpawnableBlocks = editorHandler.randomSpawnableBlocks;
 		
-		GameObject randomBlock = randomSpawnableBlocks[editorHandler.Random.Next(randomSpawnableBlocks.Length)];
+		GameObject randomBlock = randomSpawnableBlocks[EditorHandler.Random.Next(randomSpawnableBlocks.Length)];
 		Instantiate(randomBlock, transform.position, Quaternion.identity);
 		Destroy(gameObject);
 	}

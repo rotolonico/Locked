@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SelectSprite : MonoBehaviour
 {
 	public int spriteGameObjectId;
+	
 	public bool selected;
 	private EditorHandler editorHandler;
-
+	 
+	public int limitedStep;
+	public int movesLimit;
+		
 	private void Start()
 	{
 		editorHandler = GameObject.Find("EditorHandler").GetComponent<EditorHandler>();
@@ -42,15 +48,12 @@ public class SelectSprite : MonoBehaviour
 
 	public bool CheckPosition()
 	{
-		if (Mathf.Abs(transform.position.x) > editorHandler.levelColumns/2 || Mathf.Abs(transform.position.y) > editorHandler.levelRows/2)
+		if (EditorHandler.levelColumns % 2 != 0 && Mathf.Abs(transform.position.x-1) > EditorHandler.levelColumns/2 || EditorHandler.levelRows % 2 != 0 && Mathf.Abs(transform.position.y) > EditorHandler.levelRows/2 || EditorHandler.levelColumns % 2 == 0 && transform.position.x < -EditorHandler.levelColumns/2 +1 || EditorHandler.levelRows % 2 == 0 && transform.position.y < -EditorHandler.levelRows/2 +1 || EditorHandler.levelColumns % 2 == 0 && Mathf.Abs(transform.position.x) > EditorHandler.levelColumns/2 || EditorHandler.levelRows % 2 == 0 && Mathf.Abs(transform.position.y) > EditorHandler.levelRows/2)
 		{
 			Destroy(gameObject);
 			return false;
 		}
-		else
-		{
 			return true;
-		}
 	}
 
 	public void Select()
@@ -79,12 +82,28 @@ public class SelectSprite : MonoBehaviour
 			var overlappingGameObjects = Physics2D.OverlapCircleAll(transform.position, 0.3f);
 			foreach (var i in overlappingGameObjects)
 			{
-				if (i != gameObject.GetComponent<Collider2D>())
+				if (i != gameObject.GetComponent<Collider2D>() && i.GetComponent<SelectSprite>() != null)
 				{
 					Destroy(i.gameObject);
 				}
 			}
-			Instantiate(editorHandler.editorBlocks[spriteGameObjectId], transform.position, Quaternion.identity);
+			var duplicatedSprite = Instantiate(gameObject, transform.position, Quaternion.identity);
+			duplicatedSprite.GetComponent<SelectSprite>().selected = false;
+			duplicatedSprite.GetComponent<SelectSprite>().gameObject.GetComponent<SpriteRenderer>().sortingOrder = 0;
+			duplicatedSprite.GetComponent<SpriteRenderer>().color = Color.white;
+		}
+	}
+
+	public void ApplyProprieties()
+	{
+		if (limitedStep != 0)
+		{
+			gameObject.GetComponent<SpriteRenderer>().sprite = editorHandler.LimitedSprites[limitedStep-1];
+		}
+
+		if (movesLimit < 1)
+		{
+			GameObject.Find("PlayerText").GetComponent<Text>().text = movesLimit.ToString(); 
 		}
 	}
 }

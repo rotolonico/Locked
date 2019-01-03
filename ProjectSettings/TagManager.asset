@@ -83,6 +83,8 @@ TagManager:
   - 33
   - 34
   - grid
+  - LevelWall
+  - BlockSettings
   layers:
   - Default
   - TransparentFX

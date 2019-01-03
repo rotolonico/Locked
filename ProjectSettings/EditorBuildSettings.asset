@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Generic Level Scene.unity
     guid: 9f661720fe5bd456da7d75348a704d86
+  - enabled: 1
+    path: Assets/Scenes/Online Levels.unity
+    guid: 466b440585166e00eaa59283a67244a2
   m_configObjects: {}

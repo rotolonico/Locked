@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="$APPLICATION_CONFIG_DIR$/extensions" t="IncludeRecursive" />
-    <e p="$USER_HOME$/.Rider2018.2/system/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/.Rider2018.2/system/resharper-host/local/Transient/ReSharperHost/v182/SolutionCaches/_Locked.20948706.00" t="ExcludeRecursive" />
+    <e p="$USER_HOME$/.Rider2018.3/system/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/.Rider2018.3/system/resharper-host/local/Transient/ReSharperHost/v183/SolutionCaches/_Locked.20948706.00" t="ExcludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="7zip" t="Include">
@@ -35,6 +36,13 @@
           <e p="ICoder.cs" t="Include" />
         </e>
         <e p="Firebase" t="Include">
+          <e p="Editor" t="Include">
+            <e p="AppDependencies.xml" t="Include" />
+            <e p="AuthDependencies.xml" t="Include" />
+            <e p="DatabaseDependencies.xml" t="Include" />
+            <e p="FirebaseAuth_v1.1.2_manifest.txt" t="Include" />
+            <e p="FirebaseDatabase_version-5.4.2_manifest.txt" t="Include" />
+          </e>
           <e p="Plugins" t="Include">
             <e p="Http" t="Include">
               <e p="link.xml" t="Include" />
@@ -59,10 +67,34 @@
             </e>
           </e>
         </e>
+        <e p="PlayServicesResolver" t="Include">
+          <e p="Editor" t="Include">
+            <e p="play-services-resolver_v1.2.95.0.txt" t="Include" />
+          </e>
+        </e>
+        <e p="Resources" t="Include">
+          <e p="Levels" t="Include">
+            <e p="level1.txt" t="Include" />
+            <e p="level10.txt" t="Include" />
+            <e p="level11.txt" t="Include" />
+            <e p="level12.txt" t="Include" />
+            <e p="level13.txt" t="Include" />
+            <e p="level14.txt" t="Include" />
+            <e p="level2.txt" t="Include" />
+            <e p="level3.txt" t="Include" />
+            <e p="level4.txt" t="Include" />
+            <e p="level5.txt" t="Include" />
+            <e p="level6.txt" t="Include" />
+            <e p="level7.txt" t="Include" />
+            <e p="level8.txt" t="Include" />
+            <e p="level9.txt" t="Include" />
+          </e>
+        </e>
         <e p="Scripts" t="Include">
           <e p="AuthHandler.cs" t="Include" />
           <e p="BlockBotController.cs" t="Include" />
           <e p="BlockLeftController.cs" t="Include" />
+          <e p="BlockProprieties.cs" t="Include" />
           <e p="BlockRightController.cs" t="Include" />
           <e p="BlockSelector.cs" t="Include" />
           <e p="BlockSelectorToggle.cs" t="Include" />
@@ -70,6 +102,7 @@
           <e p="BlueLockController.cs" t="Include" />
           <e p="BotController.cs" t="Include" />
           <e p="CameraController.cs" t="Include" />
+          <e p="Cell.cs" t="Include" />
           <e p="ClearInventoryController.cs" t="Include" />
           <e p="DatabaseHandler.cs" t="Include" />
           <e p="DestroySprite.cs" t="Include" />
@@ -78,6 +111,10 @@
           <e p="GenericLevelController.cs" t="Include" />
           <e p="GreenLockController.cs" t="Include" />
           <e p="LeftController.cs" t="Include" />
+          <e p="Level.cs" t="Include" />
+          <e p="LevelHandler.cs" t="Include" />
+          <e p="LevelMetadata.cs" t="Include" />
+          <e p="LevelMetadataHolder.cs" t="Include" />
           <e p="LimitedBlockController.cs" t="Include" />
           <e p="LockController.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
@@ -90,7 +127,78 @@
           <e p="Swipe.cs" t="Include" />
           <e p="TeleporterController.cs" t="Include" />
           <e p="TopController.cs" t="Include" />
+          <e p="User.cs" t="Include" />
           <e p="VoidController.cs" t="Include" />
+        </e>
+        <e p="Source" t="Include">
+          <e p="Aot" t="Include">
+            <e p="Editor" t="Include">
+              <e p="fsAotConfigurationEditor.cs" t="Include" />
+            </e>
+            <e p="fsAotCompilationManager.cs" t="Include" />
+            <e p="fsAotConfiguration.cs" t="Include" />
+            <e p="fsAotVersionInfo.cs" t="Include" />
+            <e p="fsIAotConverter.cs" t="Include" />
+          </e>
+          <e p="Converters" t="Include">
+            <e p="Unity" t="Include">
+              <e p="AnimationCurve_DirectConverter.cs" t="Include" />
+              <e p="Bounds_DirectConverter.cs" t="Include" />
+              <e p="GUIStyleState_DirectConverter.cs" t="Include" />
+              <e p="GUIStyle_DirectConverter.cs" t="Include" />
+              <e p="Gradient_DirectConverter.cs" t="Include" />
+              <e p="Keyframe_DirectConverter.cs" t="Include" />
+              <e p="LayerMask_DirectConverter.cs" t="Include" />
+              <e p="RectOffset_DirectConverter.cs" t="Include" />
+              <e p="Rect_DirectConverter.cs" t="Include" />
+              <e p="UnityEvent_Converter.cs" t="Include" />
+            </e>
+            <e p="fsArrayConverter.cs" t="Include" />
+            <e p="fsDateConverter.cs" t="Include" />
+            <e p="fsDictionaryConverter.cs" t="Include" />
+            <e p="fsEnumConverter.cs" t="Include" />
+            <e p="fsForwardConverter.cs" t="Include" />
+            <e p="fsGuidConverter.cs" t="Include" />
+            <e p="fsIEnumerableConverter.cs" t="Include" />
+            <e p="fsKeyValuePairConverter.cs" t="Include" />
+            <e p="fsNullableConverter.cs" t="Include" />
+            <e p="fsPrimitiveConverter.cs" t="Include" />
+            <e p="fsReflectedConverter.cs" t="Include" />
+            <e p="fsTypeConverter.cs" t="Include" />
+            <e p="fsWeakReferenceConverter.cs" t="Include" />
+          </e>
+          <e p="Internal" t="Include">
+            <e p="fsCyclicReferenceManager.cs" t="Include" />
+            <e p="fsOption.cs" t="Include" />
+            <e p="fsPortableReflection.cs" t="Include" />
+            <e p="fsTypeExtensions.cs" t="Include" />
+            <e p="fsVersionManager.cs" t="Include" />
+            <e p="fsVersionedType.cs" t="Include" />
+          </e>
+          <e p="Reflection" t="Include">
+            <e p="fsMetaProperty.cs" t="Include" />
+            <e p="fsMetaType.cs" t="Include" />
+            <e p="fsReflectionUtility.cs" t="Include" />
+            <e p="fsTypeCache.cs" t="Include" />
+          </e>
+          <e p="fsBaseConverter.cs" t="Include" />
+          <e p="fsConfig.cs" t="Include" />
+          <e p="fsContext.cs" t="Include" />
+          <e p="fsConverter.cs" t="Include" />
+          <e p="fsConverterRegistrar.cs" t="Include" />
+          <e p="fsData.cs" t="Include" />
+          <e p="fsDirectConverter.cs" t="Include" />
+          <e p="fsExceptions.cs" t="Include" />
+          <e p="fsISerializationCallbacks.cs" t="Include" />
+          <e p="fsIgnoreAttribute.cs" t="Include" />
+          <e p="fsJsonParser.cs" t="Include" />
+          <e p="fsJsonPrinter.cs" t="Include" />
+          <e p="fsMemberSerialization.cs" t="Include" />
+          <e p="fsObjectAttribute.cs" t="Include" />
+          <e p="fsObjectProcessor.cs" t="Include" />
+          <e p="fsPropertyAttribute.cs" t="Include" />
+          <e p="fsResult.cs" t="Include" />
+          <e p="fsSerializer.cs" t="Include" />
         </e>
       </e>
       <e p="Library" t="ExcludeRecursive" />

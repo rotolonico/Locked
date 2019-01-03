@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LeftController : MonoBehaviour
 {
-    private readonly string[] unpassableBlocksTags = {"Wall", "Hole", "Lock", "UpOnly", "DownOnly", "RightOnly"};
+    private readonly string[] unpassableBlocksTags = {"Wall", "Hole", "Lock", "UpOnly", "DownOnly", "RightOnly", "LevelWall"};
     private readonly string[] movableBlocksTags = {"block"};
     public bool Movable = true;
     private bool blocked;

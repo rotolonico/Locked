@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class BlockBotController : MonoBehaviour
 {
-    private readonly String[] unpassableBlocksTags = {"Wall", "Lock", "block", "UpOnly", "RightOnly", "LeftOnly"};
+    private readonly String[] unpassableBlocksTags = {"Wall", "Lock", "block", "UpOnly", "RightOnly", "LeftOnly", "LevelWall"};
     public bool movable = true;
     private bool blocked;
     private bool playerTouch;
     private GameObject block;
     private GameObject player;
-    private Transform antiBlock;
+    private BlockTopController antiBlock;
     private TopController playerMovement;
     private BoxCollider2D collider;
+    private PlayerController playerController;
 
     public AudioSource HitWall;
     public AudioSource MoveSound;
@@ -21,28 +22,31 @@ public class BlockBotController : MonoBehaviour
     void Start()
     {
         block = transform.parent.gameObject;
-        antiBlock = transform.parent.GetChild(0);
+        antiBlock = transform.parent.GetChild(0).GetComponent<BlockTopController>();
         player = GameObject.FindGameObjectWithTag("Player");
+        playerController = player.GetComponent<PlayerController>();
         playerMovement = player.transform.GetChild(1).GetComponent<TopController>();
         collider = gameObject.GetComponent<BoxCollider2D>();
     }
 
     void Update()
     {
-        if (Swipe.SwipeUp && movable && playerTouch && playerMovement.Movable)
+        if (Swipe.SwipeUp && playerTouch && playerMovement.Movable && antiBlock.CheckMovement())
         {
             block.transform.position += Vector3.up;
             player.transform.position += Vector3.up;
             MoveSound.Play();
             blocked = false;
             Swipe.SwipeUp = false;
+            if (playerController.hasLimitedMoves)
+            {
+                playerController.movesLimit--;
+            }
         }
         else if (Swipe.SwipeUp && !movable && playerTouch)
         {
             HitWall.Play();
         }
-
-        antiBlock.GetComponent<BlockTopController>().movable = !blocked;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -75,5 +79,22 @@ public class BlockBotController : MonoBehaviour
         }
         collider.enabled = false;
         collider.enabled = true;
+    }
+
+    public bool CheckMovement()
+    {
+        var hitColliders = Physics2D.OverlapCircleAll(block.transform.position + Vector3.down, 0.1f);
+        foreach (var collider in hitColliders)
+        {
+            foreach (var i in unpassableBlocksTags)
+            {
+                if (collider.CompareTag(i))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }

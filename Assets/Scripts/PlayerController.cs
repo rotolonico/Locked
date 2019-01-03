@@ -27,8 +27,10 @@ public class PlayerController : MonoBehaviour
     private EditorHandler editorHandler;
     private Toggle playToggle;
     private GameObject currentPlayerSpawn;
+    public bool hasLimitedMoves;
     public bool isKeyListUp;
 
+    public int movesLimit;
 
     public int HasKey;
     public int HasRedKey;
@@ -39,6 +41,12 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        if (movesLimit > 0)
+        {
+            GameObject.Find("PlayerText").GetComponent<Text>().text = movesLimit.ToString();
+            hasLimitedMoves = true;
+        }
+
         if (EditorHandler.isBackToCheckpoint)
         {
             IsBackToCheckpoint();
@@ -123,7 +131,6 @@ public class PlayerController : MonoBehaviour
 
         if (isKeyListUp && HasKey == 0 && HasRedKey == 0 && HasGreenKey == 0 && HasBlueKey == 0)
         {
-            Debug.Log("TEST");
             keyHolderAnimator.Play("PopdownAnimation");
             isKeyListUp = false;
         }
@@ -170,10 +177,13 @@ public class PlayerController : MonoBehaviour
             GetKeySound.Play();
         }
 
-        if (other.gameObject.CompareTag("end") && !EditorHandler.PublishMode)
+        if (other.gameObject.CompareTag("end"))
         {
             if (EditorHandler.PublishMode)
             {
+                DatabaseHandler.PostLevel(EditorHandler.objectSavedLevel);
+                EditorHandler.PublishMode = false;
+                editorHandler.LeaveEditorScene();
             }
             else if (EditorHandler.playMode && EditorHandler.inEditor)
             {
@@ -188,7 +198,7 @@ public class PlayerController : MonoBehaviour
                     if (EditorHandler.beatenLevelNumber < EditorHandler.currentLevelNumber)
                     {
                         EditorHandler.beatenLevelNumber = EditorHandler.currentLevelNumber;
-                        EditorHandler.SaveToFile(EditorHandler.beatenLevelNumber, EditorHandler.isNotFirstTimeEditor, EditorHandler.isFirstSelectTime);
+                        EditorHandler.SaveToFile(EditorHandler.beatenLevelNumber, EditorHandler.isNotFirstTimeEditor, EditorHandler.isFirstSelectTime, EditorHandler.isFirstPlaceTime);
                     }
                     editorHandler.LoadNormalLevelInLevelScene(EditorHandler.currentLevelNumber+1);
                 }

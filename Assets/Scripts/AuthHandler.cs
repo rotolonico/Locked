@@ -1,88 +1,46 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using FullSerializer;
+using Proyecto26;
+using UnityEngine;
 
 public class AuthHandler : MonoBehaviour
 {
-/*
-private static FirebaseAuth authInstance;
-private static FirebaseApp app;
-
-
-public static void RegisterUser(String email, String password)
-{
-    initFirebase();
-    FirebaseAuth.GetAuth(app).CreateUserWithEmailAndPasswordAsync(email, password).ContinueWith(task =>
-    {
-        if (task.IsCompleted)
-        {
-            if (task.IsFaulted)
-            {
-                if (task.Exception != null) Debug.Log(task.Exception);
-                AggregateException ex = task.Exception as AggregateException;
-                if (ex != null) {
-                    Firebase.FirebaseException fbEx = null;
-                    foreach (Exception e in ex.InnerExceptions) {
-                        fbEx = e as Firebase.FirebaseException;
-                        if (fbEx != null)
-                            break;
-                    }
-
-                    if (fbEx != null) {
-                        Debug.Log("Encountered a FirebaseException:" + fbEx.Message);
-                    }
-                }
-            }
-            else
-            {
-                Debug.Log("Successfully registered");
-                LoginUser(email, password);
-            }
-        }
-    });
-}
-
-public static void LoginUser(String email, String password)
-{
-    initFirebase();
-    FirebaseAuth.GetAuth(app).SignInWithEmailAndPasswordAsync(email, password).ContinueWith(task =>
-    {
-        if (task.IsCompleted)
-        {
-            if (task.IsFaulted)
-            {
-               if (task.Exception != null) Debug.Log(task.Exception.Message);
-                
-                AggregateException ex = task.Exception as AggregateException;
-                if (ex != null) {
-                    Firebase.FirebaseException fbEx = null;
-                    foreach (Exception e in ex.InnerExceptions) {
-                        fbEx = e as Firebase.FirebaseException;
-                        if (fbEx != null)
-                            break;
-                    }
-
-                    if (fbEx != null) {
-                        Debug.Log("Encountered a FirebaseException:" + fbEx.Message);
-                    }
-                }
-            }
-            else
-            {
-                Debug.Log("Successfully login");
-            }
-        }
-    });
-}
-
-private static void initFirebase()
-{
-    AppOptions ops = new Firebase.AppOptions();
+    public static readonly fsSerializer serializer = new fsSerializer();
+    public static string userId;
+    private static readonly string AuthSignupURL = "hidden";
+    private static readonly string AuthSigninURL = "hidden";
     
-    app = FirebaseApp.Create(ops, "Secondary");
-
-    // NOTE: You'll need to replace this url with your Firebase App's database
-    // path in order for the database connection to work correctly in editor.
-    app.SetEditorDatabaseUrl("https://locked-3426c.firebaseio.com/");
-    if (app.Options.DatabaseUrl != null) app.SetEditorDatabaseUrl(app.Options.DatabaseUrl);
-}
-*/
+    
+    public static void SignupUser(string email, string password)
+    {
+        string payLoad = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\",\"returnSecureToken\":true}";
+        RestClient.Post(AuthSignupURL, payLoad).Then(response =>
+        {
+            fsData data = fsJsonParser.Parse(response.Text);
+            Debug.Log(response.Text);
+            Dictionary<string, string> userInfo = null;
+            serializer.TryDeserialize(data, ref userInfo).AssertSuccessWithoutWarnings();
+            userId = userInfo["localId"];
+        }).Catch(error =>
+        {
+            Debug.Log(error.Message);
+        });
+    }
+    
+    public static void SigninUser(string email, string password)
+    {
+        string payLoad = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\",\"returnSecureToken\":true}";
+        RestClient.Post(AuthSigninURL, payLoad).Then(response =>
+        {
+            fsData data = fsJsonParser.Parse(response.Text);
+            Debug.Log(response.Text);
+            Dictionary<string, string> userInfo = null;
+            serializer.TryDeserialize(data, ref userInfo).AssertSuccessWithoutWarnings();
+            userId = userInfo["localId"];
+        }).Catch(error =>
+        {
+            Debug.Log(error.Message);
+        });
+    }
 }

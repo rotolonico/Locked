@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BotController : MonoBehaviour
 {
-    private readonly string[] unpassableBlocksTags = {"Wall", "Hole", "Lock", "UpOnly", "LeftOnly", "RightOnly"};
+    private readonly string[] unpassableBlocksTags = {"Wall", "Hole", "Lock", "UpOnly", "LeftOnly", "RightOnly", "LevelWall"};
     private readonly string[] movableBlocksTags = {"block"};
     public bool Movable = true;
     private bool blocked;
