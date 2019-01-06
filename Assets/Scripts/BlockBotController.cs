@@ -41,6 +41,7 @@ public class BlockBotController : MonoBehaviour
             if (playerController.hasLimitedMoves)
             {
                 playerController.movesLimit--;
+                playerController.ReloadMoves();
             }
         }
         else if (Swipe.SwipeUp && !movable && playerTouch)

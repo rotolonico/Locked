@@ -21,10 +21,10 @@ public class LevelHandler : MonoBehaviour
             levelsHolder = levelHolder;
             foreach (var level in levelHolder)
             {
-                var levelDisplay = Instantiate(LevelDisplayPrefab);
-                levelDisplay.transform.SetParent(GameObject.Find("LevelList").transform);
+                var levelDisplay = Instantiate(LevelDisplayPrefab, GameObject.Find("LevelListContent").transform, false);
+                levelDisplay.GetComponent<OnlineLevelButton>().levelId = level.Value.id;
                 levelDisplay.transform.GetChild(0).GetComponent<Text>().text = level.Value.name;
-                levelDisplay.transform.GetChild(1).GetComponent<Text>().text = level.Value.author;
+                levelDisplay.transform.GetChild(1).GetComponent<Text>().text = "Created by: " + level.Value.author;
             }
             EnableStuff();
         });

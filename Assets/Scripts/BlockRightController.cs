@@ -41,6 +41,7 @@ public class BlockRightController : MonoBehaviour
             if (playerController.hasLimitedMoves)
             {
                 playerController.movesLimit--;
+                playerController.ReloadMoves();
             }
         }
         else if (Swipe.SwipeLeft && !movable && playerTouch)

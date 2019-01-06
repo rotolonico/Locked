@@ -137,6 +137,7 @@ public class EditorHandler : MonoBehaviour
     private bool hittingGUI;
     private GameObject[] grid;
     private InputField email;
+    private InputField username;
     private InputField password;
     private Animator authWindowAnimator;
     private Text levelNameHint;
@@ -145,11 +146,14 @@ public class EditorHandler : MonoBehaviour
     private Text levelAuthor;
     private Text levelColumnsHint;
     private Text levelRowsHint;
-    private InputField levelColumnsText;
-    private InputField levelRowsText;
+    public InputField levelColumnsText;
+    public InputField levelRowsText;
     private GameObject blockSettings;
     private GameObject buttonProprietiesListContent;
     private SelectSprite hitColliderProprieties;
+    private Button signupButton;
+    private Button signinButton;
+    private Button backFromAuthButton;
 
     public static string levelNameString;
     public static string levelAuthorString;
@@ -166,38 +170,107 @@ public class EditorHandler : MonoBehaviour
         LevelButtonsInitialize();
         menuMusic = GameObject.Find("MenuMusic").GetComponent<AudioSource>();
         menuMusic.Play();
+        currentLevelNumber = 0;
+        placeSound = GameObject.Find("PlaceSound").GetComponent<AudioSource>();
+        noSound = GameObject.Find("NoSound").GetComponent<AudioSource>();
+        yesSound = GameObject.Find("YesSound").GetComponent<AudioSource>();
         InitializeButtons();
     }
 
     private void InitializeButtons()
     {
+        username = GameObject.Find("Username").GetComponent<InputField>();
         email = GameObject.Find("Email").GetComponent<InputField>();
-        password = GameObject.Find("Email").GetComponent<InputField>();
+        password = GameObject.Find("Password").GetComponent<InputField>();
         authWindowAnimator = GameObject.Find("AuthenticationWindow").GetComponent<Animator>();
+        signinButton = GameObject.Find("Signin").GetComponent<Button>();
+        signupButton = GameObject.Find("Signup").GetComponent<Button>();
+        backFromAuthButton = GameObject.Find("BackFromLogin").GetComponent<Button>();
+    }
+
+    private void AuthPlaceHoldersReset()
+    {
+        username.placeholder.GetComponent<Text>().text = "Username";
+        email.placeholder.GetComponent<Text>().text = "Email";
+        password.placeholder.GetComponent<Text>().text = "Password";
     }
 
     public void SignupUser()
     {
         InitializeButtons();
-        AuthHandler.SignupUser(email.text, password.text);
+        AuthHandler.SignupUser(email.text, username.text, password.text);
+        
+        signinButton.enabled = true;
+        signupButton.enabled = true;
+        backFromAuthButton.enabled = true;
+        AuthPlaceHoldersReset();
     }
 
     public void SigninUser()
     {
         InitializeButtons();
         AuthHandler.SigninUser(email.text, password.text);
+        
+        signinButton.enabled = false;
+        signupButton.enabled = false;
+        backFromAuthButton.enabled = false;
+        AuthPlaceHoldersReset();
+    }
+    
+    public void SigninSucceded()
+    {
+        InitializeButtons();
+        BackFromAuthWindow();
+        email.text = "";
+        password.text = "";
+        yesSound.Play();
+    }
+
+    public void SigninFailed()
+    {
+        InitializeButtons();
+        email.text = "";
+        password.text = "";
+        email.placeholder.GetComponent<Text>().text = "wrong email";
+        password.placeholder.GetComponent<Text>().text = "or password";
+        noSound.Play();
+        
+        signinButton.enabled = true;
+        signupButton.enabled = true;
+        backFromAuthButton.enabled = true;
+    }
+    
+    public void SignupFailed()
+    {
+        InitializeButtons();
+        username.text = "";
+        email.text = "";
+        password.text = "";
+        username.placeholder.GetComponent<Text>().text = "username or";
+        email.placeholder.GetComponent<Text>().text = "email or";
+        password.placeholder.GetComponent<Text>().text = "password is/are invalid";
+        noSound.Play();
+        
+        signinButton.enabled = true;
+        signupButton.enabled = true;
+        backFromAuthButton.enabled = true;
     }
 
     public void AuthWindow()
     {
         InitializeButtons();
-        authWindowAnimator.Play("CanvasDown");
+        var mainCanvas = GameObject.Find("MainCanvas");
+        mainCanvas.GetComponent<Animator>().Play("CanvasOpacity0");
+        authWindowAnimator.Play("TopCanvasDown");
     }
 
-    public void BackFromAuth()
+    public void BackFromAuthWindow()
     {
         InitializeButtons();
-        authWindowAnimator.Play("CanvasUp");
+        authWindowAnimator.Play("TopCanvasUp");
+        var mainCanvas = GameObject.Find("MainCanvas");
+        mainCanvas.GetComponent<Animator>().Play("CanvasOpacity100");
+        AuthPlaceHoldersReset();
     }
 
     private void LevelButtonsInitialize()
@@ -279,7 +352,7 @@ public class EditorHandler : MonoBehaviour
         editorTutorialText[0] =
             "Welcome to the game\'s editor!\nHere is where the magic happens\nDo you want to learn how it works?";
         editorTutorialText[1] =
-            "Click the \"block button\" to get a list of all available blocks\nClick anywhere on the screen to place the block you selected";
+            "Click the \"block button\" to get a list of all available blocks\nClick anywhere on the screen to place the block you selected! \nYou can \"right-click\" some blocks to change their proprieties";
         editorTutorialText[2] = "Click the \"play button\" to test your awesome level";
         editorTutorialText[3] =
             "The \"save button\" will make you able to save the level you are\ncreating\nGive the save a name and then use the \"load button\" to load it back in";
@@ -757,7 +830,7 @@ public class EditorHandler : MonoBehaviour
             if (GameObject.Find("MovesLimitIF") != null)
             {
                 var movesLimitIF = GameObject.Find("MovesLimitIF").GetComponent<InputField>();
-                if (movesLimitIF.text != "" && movesLimitIF.text != "-1" && movesLimitIF.text != "-")
+                if (movesLimitIF.text != "" && Int32.Parse(movesLimitIF.text) > -1 && movesLimitIF.text != "-")
                 {
                     hitColliderProprieties.movesLimit = Int32.Parse(movesLimitIF.text);
                 }
@@ -995,6 +1068,9 @@ public class EditorHandler : MonoBehaviour
     {
         for (var i = 0; i < level.level.Length; i++)
         {
+            levelRows = level.levelRows;
+            levelColumns = level.levelColumns;
+            
             var x = level.level[i].position % levelColumns;
             var y = (int) Math.Truncate((double) (level.level[i].position / levelColumns));
             Vector2 spawnPosition = new Vector2(-levelColumns / 2 + x + 1, levelRows / 2 - y);
@@ -1055,17 +1131,17 @@ public class EditorHandler : MonoBehaviour
         {
             var levelStrings = level.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
 
-            for (var i = 0; i < levelColumns; i++)
+            for (var i = 0; i < 96; i++)
             {
-                for (var j = 0; j < levelRows; j++)
+                for (var j = 0; j < 96; j++)
                 {
                     int k;
-                    if (j + i * levelRows < levelRows * levelColumns &&
-                        Int32.TryParse(levelStrings[i + j * levelRows], out k))
+                    if (j + i * 96 < 96 * 96 &&
+                        Int32.TryParse(levelStrings[i + j * 96], out k))
                     {
                         if (k != 0)
                         {
-                            var blockPosition = new Vector2(-levelRows / 2 + j + 1, -levelColumns / 2 + i + 1);
+                            var blockPosition = new Vector2(-96 / 2 + j, -96 / 2 + i);
                             Instantiate(editorBlocks[k], blockPosition, Quaternion.identity);
                         }
                     }
@@ -1447,27 +1523,43 @@ public class EditorHandler : MonoBehaviour
         levelSizeWindow.GetComponent<Animator>().Play("TopCanvasDown");
     }
 
-    public void ChangeSize(bool hidden = false)
+    public void ChangeSizeOnClick()
     {
-        if (Int32.Parse(levelColumnsText.text) < 1 || Int32.Parse(levelColumnsText.text) > 100 ||
-            Int32.Parse(levelRowsText.text) < 1 || Int32.Parse(levelRowsText.text) > 100)
+        ChangeSize();
+    }
+
+    public void ChangeSize(bool hidden = false, int ilevelRows = 0, int ilevelColumns = 0)
+    {
+        if (ilevelRows == 0 && ilevelColumns == 0)
         {
-            if (Int32.Parse(levelRowsText.text) < 1 || Int32.Parse(levelRowsText.text) > 100)
+            if (Int32.Parse(levelColumnsText.text) < 1 || Int32.Parse(levelColumnsText.text) > 100 ||
+                Int32.Parse(levelRowsText.text) < 1 || Int32.Parse(levelRowsText.text) > 100)
             {
-                levelRowsHint.text = "Must be a number from 1 to 100";
-                levelRowsText.text = "";
+                if (Int32.Parse(levelRowsText.text) < 1 || Int32.Parse(levelRowsText.text) > 100)
+                {
+                    levelRowsHint.text = "Must be a number from 1 to 100";
+                    levelRowsText.text = "";
+                }
+
+                if (Int32.Parse(levelColumnsText.text) < 1 || Int32.Parse(levelColumnsText.text) > 100)
+                {
+                    levelColumnsHint.text = "Must be a number from 1 to 100";
+                    levelColumnsText.text = "";
+                }
+
+                noSound.Play();
+                return;
             }
 
-            if (Int32.Parse(levelColumnsText.text) < 1 || Int32.Parse(levelColumnsText.text) > 100)
-            {
-                levelColumnsHint.text = "Must be a number from 1 to 100";
-                levelColumnsText.text = "";
-            }
-            noSound.Play();
-            return;
+            levelRows = Int32.Parse(levelRowsText.text);
+            levelColumns = Int32.Parse(levelColumnsText.text);
         }
-        levelRows = Int32.Parse(levelRowsText.text);
-        levelColumns = Int32.Parse(levelColumnsText.text);
+        else
+        {
+            levelRows = ilevelRows;
+            levelColumns = ilevelColumns;
+        }
+
         var levelWalls = GameObject.FindGameObjectsWithTag("LevelWall");
         foreach (var levelWall in levelWalls)
         {
@@ -1635,15 +1727,20 @@ public class EditorHandler : MonoBehaviour
 
     public void LoadLevelFromShare()
     {
+        levelRows = 96;
+        levelColumns = 96;
+        
         EditorInitialize();
         shareInputField.characterLimit = 10000;
         ClearEditor();
         levelCodeHint.text = "Level successfully loaded";
         try
         {
-            DatabaseHandler.GetLevel(shareInputField.text, level => { objectSavedLevel = level; });
-            LoadLevelInEditor();
-            BackFromShareMainCanvas();
+            LoadLevelInEditor1(Decompress(Convert.FromBase64String(shareInputField.text)));
+            ChangeSize(true);
+//          DatabaseHandler.GetLevel(shareInputField.text, level => { objectSavedLevel = level; });
+//          LoadLevelInEditor();
+//          BackFromShareMainCanvas();
         }
         catch
         {
@@ -1685,7 +1782,7 @@ public class EditorHandler : MonoBehaviour
         Destroy(GameObject.FindGameObjectWithTag("playerSpawn"));
         if (!PublishMode)
         {
-            objectSavedLevel = FromJsonToLevel(levels[currentLevelNumber]);
+            objectSavedLevel = FromJsonToLevel(Resources.Load<TextAsset>("Levels/level" + currentLevelNumber).text);
         }
 
         SceneManager.LoadScene(3);
@@ -1803,7 +1900,7 @@ public class EditorHandler : MonoBehaviour
         SceneManager.LoadScene(3);
     }
 
-
+    
     static int dictionary = 1 << 23; // 1 << 23;
     static bool eos = false;
 

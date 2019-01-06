@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GenericLevelController : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GenericLevelController : MonoBehaviour
 	public void Initialize()
 	{
 		editorHandler.ClearEditor();
+		editorHandler.ChangeSize(true, EditorHandler.objectSavedLevel.levelRows, EditorHandler.objectSavedLevel.levelColumns);
 		editorHandler.LoadLevel(EditorHandler.objectSavedLevel);
 	}
 }

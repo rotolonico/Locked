@@ -101,6 +101,7 @@
     <Compile Include="Assets\Scripts\LevelMetadataHolder.cs" />
     <Compile Include="Assets\Scripts\LimitedBlockController.cs" />
     <Compile Include="Assets\Scripts\LockController.cs" />
+    <Compile Include="Assets\Scripts\OnlineLevelButton.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlayerSpawnController.cs" />
     <Compile Include="Assets\Scripts\RandomSpriteSpawn.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Assets\Scripts\RedLockController.cs" />
     <Compile Include="Assets\Scripts\RightController.cs" />
     <Compile Include="Assets\Scripts\SelectSprite.cs" />
+    <Compile Include="Assets\Scripts\SigninResponse.cs" />
     <Compile Include="Assets\Scripts\Swipe.cs" />
     <Compile Include="Assets\Scripts\TeleporterController.cs" />
     <Compile Include="Assets\Scripts\TopController.cs" />

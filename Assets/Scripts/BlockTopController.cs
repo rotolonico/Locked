@@ -41,6 +41,7 @@ public class BlockTopController : MonoBehaviour
             if (playerController.hasLimitedMoves)
             {
                 playerController.movesLimit--;
+                playerController.ReloadMoves();
             }
         }
         else if (Swipe.SwipeDown && !movable && playerTouch)

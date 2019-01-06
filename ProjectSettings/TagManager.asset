@@ -85,6 +85,7 @@ TagManager:
   - grid
   - LevelWall
   - BlockSettings
+  - GenericLevelButton
   layers:
   - Default
   - TransparentFX

@@ -41,12 +41,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        if (movesLimit > 0)
-        {
-            GameObject.Find("PlayerText").GetComponent<Text>().text = movesLimit.ToString();
-            hasLimitedMoves = true;
-        }
-
+        StartCoroutine(ReloadMovesCoroutine());
         if (EditorHandler.isBackToCheckpoint)
         {
             IsBackToCheckpoint();
@@ -55,6 +50,21 @@ public class PlayerController : MonoBehaviour
         editorHandler = GameObject.FindGameObjectWithTag("EditorHandler").GetComponent<EditorHandler>();
         keyHolder = GameObject.FindGameObjectWithTag("keyList").transform;
         keyHolderAnimator = GameObject.FindGameObjectWithTag("keyInventory").GetComponent<Animator>();
+    }
+
+    private IEnumerator ReloadMovesCoroutine()
+    {
+        yield return new WaitForSeconds(0);
+        ReloadMoves();
+    }
+
+    public void ReloadMoves()
+    {
+        if (movesLimit > 0)
+        {
+            GameObject.Find("PlayerText").GetComponent<Text>().text = movesLimit.ToString();
+            hasLimitedMoves = true;
+        }
     }
 
     public void IsBackToCheckpoint()
@@ -201,10 +211,12 @@ public class PlayerController : MonoBehaviour
                         EditorHandler.SaveToFile(EditorHandler.beatenLevelNumber, EditorHandler.isNotFirstTimeEditor, EditorHandler.isFirstSelectTime, EditorHandler.isFirstPlaceTime);
                     }
                     editorHandler.LoadNormalLevelInLevelScene(EditorHandler.currentLevelNumber+1);
+                    Destroy(GameObject.FindGameObjectWithTag("playerSpawn"));
                 }
                 else
                 {
                     Destroy(GameObject.Find("EditorHandler"));
+                    Destroy(GameObject.FindGameObjectWithTag("playerSpawn"));
                     SceneManager.LoadScene(0);
                 }
             }

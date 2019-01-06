@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TopController : MonoBehaviour
 {
@@ -11,7 +12,9 @@ public class TopController : MonoBehaviour
     private bool blocked;
     private bool moveBlock;
     private GameObject Player;
+    private bool outOfMoves;
     List<Collider2D> collider = new List<Collider2D>();
+    PlayerController playerController;
 
     public AudioSource HitWall;
     public AudioSource MoveSound;
@@ -19,6 +22,7 @@ public class TopController : MonoBehaviour
     private void Start()
     {
         Player = transform.parent.gameObject;
+        playerController = Player.GetComponent<PlayerController>();
     }
 
     private void Update()
@@ -37,13 +41,27 @@ public class TopController : MonoBehaviour
             blocked = false;
             moveBlock = false;
             Swipe.SwipeUp = false;
+            if (playerController.hasLimitedMoves)
+            {
+                playerController.movesLimit--;
+                playerController.ReloadMoves();
+            }
         }
         else if (Swipe.SwipeUp && !moveBlock)
         {
             HitWall.Play();
         }
 
-        Movable = !blocked;
+        if (!outOfMoves)
+        {
+            Movable = !blocked;
+            if (playerController.hasLimitedMoves && playerController.movesLimit < 1)
+            {
+                Movable = false;
+                GameObject.Find("PlayerText").GetComponent<Text>().text = "0";
+                outOfMoves = true;
+            }
+        }
     }
 
     private void CheckCollider()
