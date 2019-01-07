@@ -193,7 +193,10 @@ public class PlayerController : MonoBehaviour
             {
                 DatabaseHandler.PostLevel(EditorHandler.objectSavedLevel);
                 EditorHandler.PublishMode = false;
-                editorHandler.LeaveEditorScene();
+                EditorHandler.PublishMode = false;
+                EditorHandler.playMode = false;
+                EditorHandler.reloadLevel = true;
+                SceneManager.LoadScene(4);
             }
             else if (EditorHandler.playMode && EditorHandler.inEditor)
             {

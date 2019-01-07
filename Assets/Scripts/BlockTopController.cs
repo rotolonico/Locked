@@ -44,7 +44,7 @@ public class BlockTopController : MonoBehaviour
                 playerController.ReloadMoves();
             }
         }
-        else if (Swipe.SwipeDown && !movable && playerTouch)
+        else if (Swipe.SwipeDown && playerMovement.Movable && playerTouch)
         {
             HitWall.Play();
         }

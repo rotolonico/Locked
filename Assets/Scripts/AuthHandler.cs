@@ -19,13 +19,13 @@ public class AuthHandler : MonoBehaviour
         RestClient.Post(AuthSignupURL, payLoad).Then(response =>
         {
             fsData data = fsJsonParser.Parse(response.Text);
-            Debug.Log(response.Text);
             Dictionary<string, string> userInfo = null;
             serializer.TryDeserialize(data, ref userInfo).AssertSuccessWithoutWarnings();
             
             userId = userInfo["localId"];
+            idToken = userInfo["idToken"];
             User user = new User(username, userId);
-            RestClient.Put<User>(DatabaseHandler.DatabaseURL + "users/" + userId + ".json", user);
+            RestClient.Put<User>(DatabaseHandler.DatabaseURL + "users/" + userId + ".json?auth=" + idToken, user);
             
             SigninUser(email, password);
             
@@ -38,14 +38,12 @@ public class AuthHandler : MonoBehaviour
     public static void SigninUser(string email, string password)
     {
         string payLoad = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\",\"returnSecureToken\":true}";
-        Debug.Log(payLoad);
         RestClient.Post(AuthSigninURL, payLoad).Then(response =>
         {
             fsData data = fsJsonParser.Parse(response.Text);
             SigninResponse signinResponse = new SigninResponse();
             serializer.TryDeserialize(data, ref signinResponse).AssertSuccessWithoutWarnings();
             userId = signinResponse.localId;
-            Debug.Log("test");
             idToken = signinResponse.idToken;
             GameObject.FindGameObjectWithTag("EditorHandler").GetComponent<EditorHandler>().SigninSucceded();
 

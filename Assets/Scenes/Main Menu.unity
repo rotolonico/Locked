@@ -1731,7 +1731,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Username
+  m_Text: Username (signup only)
 --- !u!222 &591520741
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2039,8 +2039,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 624096847}
   m_TextComponent: {fileID: 147003004}
   m_Placeholder: {fileID: 1612561702}
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
@@ -4171,7 +4171,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Signup/login to play and publish online levels
+  m_Text: Signup/in to play and publish online levels
 --- !u!222 &1104382161
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5010,7 +5010,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1496112142}
   m_HandleRect: {fileID: 1496112141}
   m_Direction: 0
-  m_Value: 0.0003774849
+  m_Value: 0.00037743675
   m_Size: 0.45652097
   m_NumberOfSteps: 0
   m_OnValueChanged:

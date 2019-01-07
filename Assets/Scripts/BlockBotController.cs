@@ -44,7 +44,7 @@ public class BlockBotController : MonoBehaviour
                 playerController.ReloadMoves();
             }
         }
-        else if (Swipe.SwipeUp && !movable && playerTouch)
+        else if (Swipe.SwipeUp && playerMovement.Movable && playerTouch)
         {
             HitWall.Play();
         }

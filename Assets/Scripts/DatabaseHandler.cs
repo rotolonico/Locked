@@ -13,15 +13,13 @@ public class DatabaseHandler
     
     public static void PostLevel(Level level)
     {
-        //level.authorId = AuthHandler.idToken;
-        Debug.Log(AuthHandler.idToken);
+        level.authorId = AuthHandler.userId;
         level.id = ((long) (DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds).ToString();
 
         RestClient.Put<Level>(DatabaseURL + "levels/" + level.id + ".json?auth=" + AuthHandler.idToken, level).Then(response => {
             
         }).Catch(error =>
         {
-            Debug.Log(error.Message);
         });
     }
     

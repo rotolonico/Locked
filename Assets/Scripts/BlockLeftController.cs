@@ -44,7 +44,7 @@ public class BlockLeftController : MonoBehaviour
                 playerController.ReloadMoves();
             }
         }
-        else if (Swipe.SwipeRight && !movable && playerTouch)
+        else if (Swipe.SwipeRight && playerMovement.Movable && playerTouch)
         {
             HitWall.Play();
         }

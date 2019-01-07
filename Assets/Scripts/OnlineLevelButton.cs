@@ -19,6 +19,7 @@ public class OnlineLevelButton : MonoBehaviour
         DatabaseHandler.GetLevel(levelId, level =>
         {
             GameObject.FindGameObjectWithTag("EditorHandler").GetComponent<EditorHandler>().LoadOnlineLevelInLevelScene(level);
+            EditorHandler.playingOnlineLevel = true;
         });
     }
 }

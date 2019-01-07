@@ -55,6 +55,7 @@ public class EditorHandler : MonoBehaviour
     public static bool inEditor;
     public static bool GameOver;
     public static bool isBackToCheckpoint;
+    public static bool playingOnlineLevel;
 
     public Sprite[] LimitedSprites;
 
@@ -141,9 +142,7 @@ public class EditorHandler : MonoBehaviour
     private InputField password;
     private Animator authWindowAnimator;
     private Text levelNameHint;
-    private Text levelAuthorHint;
-    private Text levelName;
-    private Text levelAuthor;
+    private InputField levelName;
     private Text levelColumnsHint;
     private Text levelRowsHint;
     public InputField levelColumnsText;
@@ -154,6 +153,8 @@ public class EditorHandler : MonoBehaviour
     private Button signupButton;
     private Button signinButton;
     private Button backFromAuthButton;
+    private Button verifyLevel;
+    private Button backFromPublish;
 
     public static string levelNameString;
     public static string levelAuthorString;
@@ -171,6 +172,7 @@ public class EditorHandler : MonoBehaviour
         menuMusic = GameObject.Find("MenuMusic").GetComponent<AudioSource>();
         menuMusic.Play();
         currentLevelNumber = 0;
+        playingOnlineLevel = false;
         placeSound = GameObject.Find("PlaceSound").GetComponent<AudioSource>();
         noSound = GameObject.Find("NoSound").GetComponent<AudioSource>();
         yesSound = GameObject.Find("YesSound").GetComponent<AudioSource>();
@@ -188,11 +190,14 @@ public class EditorHandler : MonoBehaviour
         backFromAuthButton = GameObject.Find("BackFromLogin").GetComponent<Button>();
     }
 
-    private void AuthPlaceHoldersReset()
+    private void AuthWindowReset()
     {
-        username.placeholder.GetComponent<Text>().text = "Username";
+        username.placeholder.GetComponent<Text>().text = "Username (signup only)";
         email.placeholder.GetComponent<Text>().text = "Email";
         password.placeholder.GetComponent<Text>().text = "Password";
+        username.text = "";
+        email.text = "";
+        password.text = "";
     }
 
     public void SignupUser()
@@ -203,7 +208,7 @@ public class EditorHandler : MonoBehaviour
         signinButton.enabled = true;
         signupButton.enabled = true;
         backFromAuthButton.enabled = true;
-        AuthPlaceHoldersReset();
+        AuthWindowReset();
     }
 
     public void SigninUser()
@@ -214,15 +219,13 @@ public class EditorHandler : MonoBehaviour
         signinButton.enabled = false;
         signupButton.enabled = false;
         backFromAuthButton.enabled = false;
-        AuthPlaceHoldersReset();
+        AuthWindowReset();
     }
     
     public void SigninSucceded()
     {
         InitializeButtons();
         BackFromAuthWindow();
-        email.text = "";
-        password.text = "";
         yesSound.Play();
     }
 
@@ -270,7 +273,7 @@ public class EditorHandler : MonoBehaviour
         authWindowAnimator.Play("TopCanvasUp");
         var mainCanvas = GameObject.Find("MainCanvas");
         mainCanvas.GetComponent<Animator>().Play("CanvasOpacity100");
-        AuthPlaceHoldersReset();
+        AuthWindowReset();
     }
 
     private void LevelButtonsInitialize()
@@ -300,10 +303,8 @@ public class EditorHandler : MonoBehaviour
         levelRowsText = GameObject.Find("LevelRows").GetComponent<InputField>();
         levelColumnsHint = GameObject.Find("LevelColumnsHint").GetComponent<Text>();
         levelRowsHint = GameObject.Find("LevelRowsHint").GetComponent<Text>();
-        levelName = GameObject.Find("LevelNameText").GetComponent<Text>();
-        levelAuthor = GameObject.Find("LevelAuthorText").GetComponent<Text>();
-        levelNameHint = GameObject.Find("LevelNameHint").GetComponent<Text>();
-        levelAuthorHint = GameObject.Find("LevelAuthorHint").GetComponent<Text>();
+        levelName = GameObject.Find("LevelNamePublish").GetComponent<InputField>();
+        levelNameHint = levelName.placeholder.GetComponent<Text>();
         saveButton = GameObject.FindGameObjectWithTag("saveButton").GetComponent<Button>();
         helpButton = GameObject.Find("HelpButton").GetComponent<Button>();
         helpButtonAnimator = GameObject.Find("HelpButton").GetComponent<Animator>();
@@ -349,6 +350,8 @@ public class EditorHandler : MonoBehaviour
         publishLevelWindowAnimator = GameObject.Find("PublishLevelWindow").GetComponent<Animator>();
         settingsButton = GameObject.Find("SettingsButton").GetComponent<Button>();
         settingsButtonAnimator = GameObject.Find("SettingsButton").GetComponent<Animator>();
+        verifyLevel = GameObject.Find("VerifyLevel").GetComponent<Button>();
+        backFromPublish = GameObject.Find("BackFromPublish").GetComponent<Button>();
         editorTutorialText[0] =
             "Welcome to the game\'s editor!\nHere is where the magic happens\nDo you want to learn how it works?";
         editorTutorialText[1] =
@@ -867,7 +870,24 @@ public class EditorHandler : MonoBehaviour
         {
             i.GetComponent<SpriteRenderer>().enabled = false;
         }
+        
+            changeToolToggle.GetComponentInChildren<Image>().sprite = selectionSprite;
+            var levelEdgeA = new Vector2(-levelRows / 2 + 1, -levelColumns / 2 + 1);
+            var levelEdgeB = new Vector2(levelRows / 2 + 1, levelColumns / 2 + 1);
+            var allSprites = Physics2D.OverlapAreaAll(levelEdgeA, levelEdgeB);
+            foreach (var i in allSprites)
+            {
+                if (i.GetComponent<SelectSprite>() != null && i.GetComponent<SelectSprite>().selected)
+                {
+                    i.GetComponent<SelectSprite>().Deselect();
+                    i.GetComponent<SpriteRenderer>().color = Color.white;
+                }
+            }
 
+            changeToolToggle.isOn = false;
+
+            selectedColliders = null;
+        
         Swipe.delay = true;
         GameObject.Find("EditorHandler").GetComponent<Swipe>().Initiate();
         GameOver = false;
@@ -1493,7 +1513,7 @@ public class EditorHandler : MonoBehaviour
     {
         EditorInitialize();
         levelName.text = "";
-        levelAuthor.text = "";
+        levelNameHint.text = "Level name";
         blockImage.GetComponent<Image>().raycastTarget = true;
         blockImage.GetComponent<Animator>().Play("BlockImageTransparent");
         publishLevelWindow.GetComponent<Animator>().Play("TopCanvasDown");
@@ -1760,7 +1780,13 @@ public class EditorHandler : MonoBehaviour
 
     public void OnlineLevels()
     {
-        SceneManager.LoadScene(4);
+        if (AuthHandler.userId != null){
+            SceneManager.LoadScene(4);
+        }
+        else
+        {
+            AuthWindow();
+        }
     }
 
     public void Exit()
@@ -1780,7 +1806,7 @@ public class EditorHandler : MonoBehaviour
     public void RestartNormalLevelInLevelScene()
     {
         Destroy(GameObject.FindGameObjectWithTag("playerSpawn"));
-        if (!PublishMode)
+        if (!PublishMode && !playingOnlineLevel)
         {
             objectSavedLevel = FromJsonToLevel(Resources.Load<TextAsset>("Levels/level" + currentLevelNumber).text);
         }
@@ -1791,6 +1817,8 @@ public class EditorHandler : MonoBehaviour
     public void LoadOnlineLevelInLevelScene(Level level)
     {
         objectSavedLevel = level;
+        menuMusic = GameObject.Find("MenuMusic").GetComponent<AudioSource>();
+        menuMusic.Stop();
         SceneManager.LoadScene(3);
     }
 
@@ -1892,12 +1920,28 @@ public class EditorHandler : MonoBehaviour
     public void VerifyLevel()
     {
         EditorInitialize();
-        levelNameString = levelName.text;
-        levelAuthorString = levelAuthor.text;
-        objectSavedLevel = new Level();
-        PublishMode = true;
-        SaveLevel();
-        SceneManager.LoadScene(3);
+        verifyLevel.enabled = false;
+        backFromPublish.enabled = false;
+        if (AuthHandler.userId != null)
+        {
+            RestClient.Get<User>(DatabaseHandler.DatabaseURL + "users/" + AuthHandler.userId + ".json?auth=" + AuthHandler.idToken).Then(user =>
+            {
+                levelNameString = levelName.text;
+                levelAuthorString = user.userName;
+                objectSavedLevel = new Level();
+                PublishMode = true;
+                SaveLevel();
+                SceneManager.LoadScene(3);
+            });
+        }
+        else
+        {
+            levelName.text = "";
+            levelNameHint.text = "You are not signed in!";
+            noSound.Play();
+            verifyLevel.enabled = true;
+            backFromPublish.enabled = true;
+        }
     }
 
     
