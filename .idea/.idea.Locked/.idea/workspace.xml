@@ -368,8 +368,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/DatabaseHandler.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="16" column="75" selection-start-line="16" selection-start-column="75" selection-end-line="16" selection-end-column="75" />
+            <state relative-caret-position="199">
+              <caret line="19" column="12" lean-forward="true" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
               <folding>
                 <marker date="1546879212660" expanded="false" signature="7:142" ph="..." />
                 <marker date="1546879212660" expanded="true" signature="172:1500" ph="{...}" />
@@ -933,12 +933,12 @@
       <workItem from="1546771626406" duration="4729000" />
       <workItem from="1546792639004" duration="11188000" />
       <workItem from="1546806376122" duration="216000" />
-      <workItem from="1546870153577" duration="7974000" />
+      <workItem from="1546870153577" duration="8579000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="553426000" />
+    <option name="totallyTimeSpent" value="554031000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -951,7 +951,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-1" width="1600" height="874" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17503217" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -2015,8 +2014,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/DatabaseHandler.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="16" column="75" selection-start-line="16" selection-start-column="75" selection-end-line="16" selection-end-column="75" />
+        <state relative-caret-position="199">
+          <caret line="19" column="12" lean-forward="true" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
           <folding>
             <marker date="1546879212660" expanded="false" signature="7:142" ph="..." />
             <marker date="1546879212660" expanded="true" signature="172:1500" ph="{...}" />

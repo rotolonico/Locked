@@ -511,14 +511,14 @@ MonoBehaviour:
   - {fileID: 1824743360916568, guid: adb35f328015741abbde8d1c42fe064c, type: 3}
   - {fileID: 1824743360916568, guid: 9abe899c8960a4c57adbf42cd38fd526, type: 3}
   - {fileID: 1824743360916568, guid: 3f4115aedd8404bb596e51339cf04ba0, type: 3}
-  - {fileID: 1824743360916568, guid: 348df6e8c70a2430e904a53945742e0a, type: 3}
-  - {fileID: 1824743360916568, guid: aadfd39a26c85470383aaac251923d02, type: 3}
-  - {fileID: 1824743360916568, guid: 6e01f35b6aaa64a9b9f963b635edb6f9, type: 3}
-  - {fileID: 1824743360916568, guid: 150b58a8d9a884ea88b201887e15e58d, type: 3}
-  - {fileID: 1824743360916568, guid: 0bd952d20a3e749a39ecac9b4d33adef, type: 3}
-  - {fileID: 1824743360916568, guid: 2fe5892c8e83b4c8c9e26379144deea4, type: 3}
-  - {fileID: 1824743360916568, guid: e9101bfdb93eb41c3be72346efa75362, type: 3}
-  - {fileID: 1824743360916568, guid: a3ad06c7ed7044c68804ad6494100f20, type: 3}
+  - {fileID: 1824743360916568, guid: 3ac9e7e25985f3757b9d5df736ae932c, type: 3}
+  - {fileID: 1824743360916568, guid: af9906d146067d1c899adbe7791a8acf, type: 3}
+  - {fileID: 1824743360916568, guid: f32caf81f2e7b6115ae2d4e490899f5f, type: 3}
+  - {fileID: 1824743360916568, guid: 25db4b910b4c1e454a21475f106bf980, type: 3}
+  - {fileID: 1824743360916568, guid: d52b102686b392b4d827526cdd2524d8, type: 3}
+  - {fileID: 1824743360916568, guid: 8a8108038dfc7cd6e96871c17bbac4b4, type: 3}
+  - {fileID: 1824743360916568, guid: 72c1bba66dc200ba9b6cbd99fb087c08, type: 3}
+  - {fileID: 1824743360916568, guid: 4ab19b463f739f5c68b11f04c3791594, type: 3}
   - {fileID: 1824743360916568, guid: 2d5b4e50a220944ca951b4db5f09adbb, type: 3}
   - {fileID: 1824743360916568, guid: 3710f0a49bce24eca87dff04a55a1d92, type: 3}
   - {fileID: 1824743360916568, guid: fe79f7859dbbc4baba11bd9dc4aa6b63, type: 3}
@@ -565,6 +565,8 @@ MonoBehaviour:
   LevelWall: {fileID: 1531074527902304, guid: b86b80d679dd01956af82992645a1dbc, type: 3}
   BlockSettings: {fileID: 1086475035074616, guid: d9412dd2b10829cd980f871e089aa40c,
     type: 3}
+  levelColumnsText: {fileID: 0}
+  levelRowsText: {fileID: 0}
   tap: 1
 --- !u!82 &82415827176198800
 AudioSource:
