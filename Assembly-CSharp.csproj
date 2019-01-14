@@ -105,7 +105,6 @@
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlayerSpawnController.cs" />
     <Compile Include="Assets\Scripts\RandomSpriteSpawn.cs" />
-    <Compile Include="Assets\Scripts\RealtimeDbHandler.cs" />
     <Compile Include="Assets\Scripts\RedLockController.cs" />
     <Compile Include="Assets\Scripts\RightController.cs" />
     <Compile Include="Assets\Scripts\SelectSprite.cs" />
@@ -175,20 +174,15 @@
     <None Include="Assets\Resources\Levels\level14.txt" />
     <None Include="Assets\Resources\Levels\level10.txt" />
     <None Include="Assets\Resources\Levels\level2.txt" />
-    <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-app-unity\maven-metadata.xml" />
     <None Include="Assets\Resources\Levels\level1.txt" />
     <None Include="Assets\Resources\Levels\level9.txt" />
     <None Include="Assets\Resources\Levels\level7.txt" />
     <None Include="Assets\Resources\Levels\level5.txt" />
-    <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-database-unity\maven-metadata.xml" />
     <None Include="Assets\Resources\Levels\level4.txt" />
     <None Include="Assets\Resources\Levels\level8.txt" />
-    <None Include="Assets\Firebase\Plugins\link.xml" />
     <None Include="Assets\Resources\Levels\level3.txt" />
-    <None Include="Assets\Firebase\Plugins\Http\link.xml" />
     <None Include="Assets\Resources\Levels\level11.txt" />
     <None Include="Assets\Resources\Levels\level12.txt" />
-    <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-auth-unity\maven-metadata.xml" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/home/nico/unityprojects/Locked/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
@@ -410,24 +404,6 @@
     </Reference>
     <Reference Include="Proyecto26.RestClient">
       <HintPath>/home/nico/unityprojects/Locked/Assets/RestClient/Packages/Proyecto26.RestClient.dll</HintPath>
-    </Reference>
-    <Reference Include="Firebase.App">
-      <HintPath>/home/nico/unityprojects/Locked/Assets/Firebase/Plugins/Firebase.App.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Sharpen">
-      <HintPath>/home/nico/unityprojects/Locked/Assets/Firebase/Plugins/Google.Sharpen.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.MiniJson">
-      <HintPath>/home/nico/unityprojects/Locked/Assets/Firebase/Plugins/Google.MiniJson.dll</HintPath>
-    </Reference>
-    <Reference Include="Firebase.Platform">
-      <HintPath>/home/nico/unityprojects/Locked/Assets/Firebase/Plugins/Firebase.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="Firebase.Auth">
-      <HintPath>/home/nico/unityprojects/Locked/Assets/Firebase/Plugins/Firebase.Auth.dll</HintPath>
-    </Reference>
-    <Reference Include="Firebase.Database">
-      <HintPath>/home/nico/unityprojects/Locked/Assets/Firebase/Plugins/Mono/Firebase.Database.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Tasks">
       <HintPath>/home/nico/unityprojects/Locked/Assets/Parse/Plugins/dotNet45/Unity.Tasks.dll</HintPath>

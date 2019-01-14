@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using FullSerializer;
 using Proyecto26;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 public class DatabaseHandler
 {    
@@ -26,6 +25,7 @@ public class DatabaseHandler
 
     public static void GetAllLevelsMetadata(LevelHandler.OnLevelsMetadataDownloadCompleted callback)
     {
+        
         RestClient.Get(DatabaseURL + "levels.json?auth=" + AuthHandler.idToken).Then(response =>
         {
             fsData data = fsJsonParser.Parse(response.Text);
@@ -42,4 +42,33 @@ public class DatabaseHandler
             callback(response);
         });
     }
+    
+    public static void CheckVersion(string version)
+    {
+        RestClient.Get(DatabaseURL + "gamedata/version.json").Then(response =>
+        {
+            version = "\"" + version + "\"";
+            if (response.Text != version)
+            {
+                EditorHandler.CheckVersionOutdated();
+            }
+            else
+            {
+                EditorHandler.OnlineMode();
+                GameObject.Find("MainCanvas").GetComponent<Canvas>().enabled = true;
+            }
+
+            EditorHandler.checkVersion = true;
+        }).Catch(error =>
+        {
+            EditorHandler.CheckVersionFailed();
+            EditorHandler.checkVersion = true;
+        });
+    }
+    
+    public static void GetNews()
+    {
+        RestClient.Get(DatabaseURL + "gamedata/news.json").Then(response => { EditorHandler.News = response.Text; });
+    }
+    
 }

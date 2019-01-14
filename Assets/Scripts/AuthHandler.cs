@@ -10,8 +10,9 @@ public class AuthHandler : MonoBehaviour
     public static string userId;
     public static string idToken;
     public User user;
-    private static readonly string AuthSignupURL = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=api_key";
-    private static readonly string AuthSigninURL = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=api_key";
+    private static readonly string ApiKey = "api_key";
+    private static readonly string AuthSignupURL = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + ApiKey;
+    private static readonly string AuthSigninURL = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" + ApiKey;
 
     public static void SignupUser(string email, string username, string password)
     {

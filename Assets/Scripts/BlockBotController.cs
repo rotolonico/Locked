@@ -35,6 +35,7 @@ public class BlockBotController : MonoBehaviour
         {
             block.transform.position += Vector3.up;
             player.transform.position += Vector3.up;
+            
             MoveSound.Play();
             blocked = false;
             Swipe.SwipeUp = false;

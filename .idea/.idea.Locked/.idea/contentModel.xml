@@ -35,38 +35,6 @@
           </e>
           <e p="ICoder.cs" t="Include" />
         </e>
-        <e p="Firebase" t="Include">
-          <e p="Editor" t="Include">
-            <e p="AppDependencies.xml" t="Include" />
-            <e p="AuthDependencies.xml" t="Include" />
-            <e p="DatabaseDependencies.xml" t="Include" />
-            <e p="FirebaseAuth_v1.1.2_manifest.txt" t="Include" />
-            <e p="FirebaseDatabase_version-5.4.2_manifest.txt" t="Include" />
-          </e>
-          <e p="Plugins" t="Include">
-            <e p="Http" t="Include">
-              <e p="link.xml" t="Include" />
-            </e>
-            <e p="link.xml" t="Include" />
-          </e>
-          <e p="m2repository" t="Include">
-            <e p="com" t="Include">
-              <e p="google" t="Include">
-                <e p="firebase" t="Include">
-                  <e p="firebase-app-unity" t="Include">
-                    <e p="maven-metadata.xml" t="Include" />
-                  </e>
-                  <e p="firebase-auth-unity" t="Include">
-                    <e p="maven-metadata.xml" t="Include" />
-                  </e>
-                  <e p="firebase-database-unity" t="Include">
-                    <e p="maven-metadata.xml" t="Include" />
-                  </e>
-                </e>
-              </e>
-            </e>
-          </e>
-        </e>
         <e p="PlayServicesResolver" t="Include">
           <e p="Editor" t="Include">
             <e p="play-services-resolver_v1.2.95.0.txt" t="Include" />
@@ -121,7 +89,6 @@
           <e p="PlayerController.cs" t="Include" />
           <e p="PlayerSpawnController.cs" t="Include" />
           <e p="RandomSpriteSpawn.cs" t="Include" />
-          <e p="RealtimeDbHandler.cs" t="Include" />
           <e p="RedLockController.cs" t="Include" />
           <e p="RightController.cs" t="Include" />
           <e p="SelectSprite.cs" t="Include" />

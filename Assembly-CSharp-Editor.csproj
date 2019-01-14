@@ -61,12 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Source\Aot\Editor\fsAotConfigurationEditor.cs" />
-    <None Include="Assets\Firebase\Editor\AppDependencies.xml" />
-    <None Include="Assets\Firebase\Editor\FirebaseAuth_v1.1.2_manifest.txt" />
-    <None Include="Assets\Firebase\Editor\AuthDependencies.xml" />
-    <None Include="Assets\Firebase\Editor\DatabaseDependencies.xml" />
     <None Include="Assets\PlayServicesResolver\Editor\play-services-resolver_v1.2.95.0.txt" />
-    <None Include="Assets\Firebase\Editor\FirebaseDatabase_version-5.4.2_manifest.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/home/nico/unityprojects/Locked/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
@@ -327,27 +322,6 @@
     </Reference>
     <Reference Include="Proyecto26.RestClient">
       <HintPath>/home/nico/unityprojects/Locked/Assets/RestClient/Packages/Proyecto26.RestClient.dll</HintPath>
-    </Reference>
-    <Reference Include="Firebase.Editor">
-      <HintPath>/home/nico/unityprojects/Locked/Assets/Firebase/Editor/Firebase.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Firebase.App">
-      <HintPath>/home/nico/unityprojects/Locked/Assets/Firebase/Plugins/Firebase.App.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Sharpen">
-      <HintPath>/home/nico/unityprojects/Locked/Assets/Firebase/Plugins/Google.Sharpen.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.MiniJson">
-      <HintPath>/home/nico/unityprojects/Locked/Assets/Firebase/Plugins/Google.MiniJson.dll</HintPath>
-    </Reference>
-    <Reference Include="Firebase.Platform">
-      <HintPath>/home/nico/unityprojects/Locked/Assets/Firebase/Plugins/Firebase.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="Firebase.Auth">
-      <HintPath>/home/nico/unityprojects/Locked/Assets/Firebase/Plugins/Firebase.Auth.dll</HintPath>
-    </Reference>
-    <Reference Include="Firebase.Database">
-      <HintPath>/home/nico/unityprojects/Locked/Assets/Firebase/Plugins/Mono/Firebase.Database.dll</HintPath>
     </Reference>
     <Reference Include="Google.VersionHandler">
       <HintPath>/home/nico/unityprojects/Locked/Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll</HintPath>

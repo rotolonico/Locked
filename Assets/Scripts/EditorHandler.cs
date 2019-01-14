@@ -17,9 +17,12 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = System.Random;
+using Version = System.Version;
 
 public class EditorHandler : MonoBehaviour
 {
+    public string Version = "v0.5.2-alpha"; 
+    
     public GameObject selectedObject;
     public GameObject GridSprite;
     public AudioSource EditorMusic;
@@ -120,6 +123,9 @@ public class EditorHandler : MonoBehaviour
     public static bool isFirstPlaceTime = true;
     public static int currentLevelNumber;
     public static int maxLevelNumber = 14;
+    public static bool isOnline;
+    public static bool checkVersion;
+    public static string News;
 
     private Vector3 mousePosition;
     private Vector3 mouseEndPosition;
@@ -141,6 +147,7 @@ public class EditorHandler : MonoBehaviour
     private InputField username;
     private InputField password;
     private Animator authWindowAnimator;
+    private Animator newsWindowAnimator;
     private Text levelNameHint;
     private InputField levelName;
     private Text levelColumnsHint;
@@ -155,6 +162,7 @@ public class EditorHandler : MonoBehaviour
     private Button backFromAuthButton;
     private Button verifyLevel;
     private Button backFromPublish;
+    private Text newsText;
 
     public static string levelNameString;
     public static string levelAuthorString;
@@ -165,6 +173,7 @@ public class EditorHandler : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         LoadToFile();
+        GameObject.Find("Version").GetComponent<Text>().text = "Version " + Version;
         mouseHitPlane = new Plane(Vector3.forward, transform.position);
         playMode = true;
         GameOver = false;
@@ -177,14 +186,80 @@ public class EditorHandler : MonoBehaviour
         noSound = GameObject.Find("NoSound").GetComponent<AudioSource>();
         yesSound = GameObject.Find("YesSound").GetComponent<AudioSource>();
         InitializeButtons();
+        if (isOnline)
+        {
+            OnlineMode();
+        }
+        if (!checkVersion)
+        {
+            GameObject.Find("MainCanvas").GetComponent<Canvas>().enabled = false;
+            DatabaseHandler.CheckVersion(Version);
+            DatabaseHandler.GetNews();
+        }
     }
 
+    public static void CheckVersionFailed()
+    {
+        var mainCanvas = GameObject.Find("MainCanvas");
+        mainCanvas.GetComponent<Animator>().Play("CanvasOpacity0");
+        GameObject.Find("OfflineMessage").GetComponent<Animator>().Play("TopCanvasDown");
+    }
+    
+    public static void CheckVersionOutdated()
+    {
+        var mainCanvas = GameObject.Find("MainCanvas");
+        mainCanvas.GetComponent<Animator>().Play("CanvasOpacity0");
+        GameObject.Find("OutdatedMessage").GetComponent<Animator>().Play("TopCanvasDown");
+    }
+    
+    public void BackFromFailed()
+    {
+        GameObject.Find("OfflineMessage").GetComponent<Animator>().Play("TopCanvasUp");
+        var mainCanvas = GameObject.Find("MainCanvas");
+        mainCanvas.GetComponent<Animator>().Play("CanvasOpacity100");
+        mainCanvas.GetComponent<Canvas>().enabled = true;
+        
+    }
+
+    public void BackFromOutdated()
+    {
+        GameObject.Find("OutdatedMessage").GetComponent<Animator>().Play("TopCanvasUp");
+        var mainCanvas = GameObject.Find("MainCanvas");
+        mainCanvas.GetComponent<Animator>().Play("CanvasOpacity100");
+        mainCanvas.GetComponent<Canvas>().enabled = true;
+    }
+    
+    public void NewsWindow()
+    {
+        var mainCanvas = GameObject.Find("MainCanvas");
+        mainCanvas.GetComponent<Animator>().Play("CanvasOpacity0");
+        newsWindowAnimator.Play("TopCanvasDown");
+        newsText.text = News.Replace ("\\n", "\n").Trim('"');
+    }
+    
+    public void BackFromNews()
+    {
+        GameObject.Find("NewsWindow").GetComponent<Animator>().Play("TopCanvasUp");
+        var mainCanvas = GameObject.Find("MainCanvas");
+        mainCanvas.GetComponent<Animator>().Play("CanvasOpacity100");
+    }
+
+    public static void OnlineMode()
+    {
+        isOnline = true;
+        GameObject.Find("NewsButton").GetComponent<Button>().interactable = true;
+        GameObject.Find("Authentication").GetComponent<Button>().interactable = true;
+        GameObject.Find("Online Levels").GetComponent<Button>().interactable = true;
+    }
+    
     private void InitializeButtons()
     {
         username = GameObject.Find("Username").GetComponent<InputField>();
         email = GameObject.Find("Email").GetComponent<InputField>();
         password = GameObject.Find("Password").GetComponent<InputField>();
         authWindowAnimator = GameObject.Find("AuthenticationWindow").GetComponent<Animator>();
+        newsText = GameObject.Find("News").GetComponent<Text>();
+        newsWindowAnimator = GameObject.Find("NewsWindow").GetComponent<Animator>();
         signinButton = GameObject.Find("Signin").GetComponent<Button>();
         signupButton = GameObject.Find("Signup").GetComponent<Button>();
         backFromAuthButton = GameObject.Find("BackFromLogin").GetComponent<Button>();
@@ -1922,22 +1997,34 @@ public class EditorHandler : MonoBehaviour
         EditorInitialize();
         verifyLevel.enabled = false;
         backFromPublish.enabled = false;
-        if (AuthHandler.userId != null)
+        if (isOnline)
         {
-            RestClient.Get<User>(DatabaseHandler.DatabaseURL + "users/" + AuthHandler.userId + ".json?auth=" + AuthHandler.idToken).Then(user =>
+            if (AuthHandler.userId != null)
             {
-                levelNameString = levelName.text;
-                levelAuthorString = user.userName;
-                objectSavedLevel = new Level();
-                PublishMode = true;
-                SaveLevel();
-                SceneManager.LoadScene(3);
-            });
+                RestClient.Get<User>(DatabaseHandler.DatabaseURL + "users/" + AuthHandler.userId + ".json?auth=" +
+                                     AuthHandler.idToken).Then(user =>
+                {
+                    levelNameString = levelName.text;
+                    levelAuthorString = user.userName;
+                    objectSavedLevel = new Level();
+                    PublishMode = true;
+                    SaveLevel();
+                    SceneManager.LoadScene(3);
+                });
+            }
+            else
+            {
+                levelName.text = "";
+                levelNameHint.text = "You are not signed in!";
+                noSound.Play();
+                verifyLevel.enabled = true;
+                backFromPublish.enabled = true;
+            }
         }
         else
         {
             levelName.text = "";
-            levelNameHint.text = "You are not signed in!";
+            levelNameHint.text = "You are in offline-mode!";
             noSound.Play();
             verifyLevel.enabled = true;
             backFromPublish.enabled = true;

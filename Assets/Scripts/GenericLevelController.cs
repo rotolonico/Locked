@@ -18,5 +18,6 @@ public class GenericLevelController : MonoBehaviour
 		editorHandler.ClearEditor();
 		editorHandler.ChangeSize(true, EditorHandler.objectSavedLevel.levelRows, EditorHandler.objectSavedLevel.levelColumns);
 		editorHandler.LoadLevel(EditorHandler.objectSavedLevel);
+		EditorHandler.GameOver = false;
 	}
 }

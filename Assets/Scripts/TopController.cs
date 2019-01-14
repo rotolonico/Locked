@@ -13,7 +13,7 @@ public class TopController : MonoBehaviour
     private bool moveBlock;
     private GameObject Player;
     private bool outOfMoves;
-    List<Collider2D> collider = new List<Collider2D>();
+    public List<Collider2D> colliders = new List<Collider2D>();
     PlayerController playerController;
 
     public AudioSource HitWall;
@@ -29,7 +29,7 @@ public class TopController : MonoBehaviour
     {
         blocked = false;
         moveBlock = false;
-        if (collider != null)
+        if (colliders != null)
         {
             CheckCollider();
         }
@@ -68,7 +68,7 @@ public class TopController : MonoBehaviour
     {
         foreach (var i in unpassableBlocksTags)
         {
-            foreach (var j in collider)
+            foreach (var j in colliders)
             {
                 if (j != null && j.CompareTag(i))
                 {
@@ -79,7 +79,7 @@ public class TopController : MonoBehaviour
 
         foreach (var i in movableBlocksTags)
         {
-            foreach (var j in collider)
+            foreach (var j in colliders)
             {
                 if (j != null && j.CompareTag(i))
                 {
@@ -91,12 +91,12 @@ public class TopController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (collider.Count < 3)
-            collider.Add(other);
+        if (colliders.Count < 3)
+            colliders.Add(other);
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        collider.Clear();
+        colliders.Clear();
     }
 }

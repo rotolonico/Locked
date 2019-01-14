@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09ad9ddc0e5b942a98ec392b434d39bd, type: 3}
+  m_Name: FabricSettings
+  m_EditorClassIdentifier: 
+  email: rotolonico@gmail.com
+  rawToken: '{"access_token":"12c8a9a67560b10680ab6a59ce5be0c833f959dcc934687eccaa957fb4660957","refresh_token":"8c402e124e1fcb5370190ea602339d46488e2fb55349c088d4a8ace5e1e52c9a","token_type":"bearer","expires_in":86400}'
+  organization:
+    Name: Locked
+    Id: 5c33bf678b15daa8b2000023
+    ApiKey: b8b7f3b651eb7558699717f0d622b7d9a6f2b109
+    BuildSecret: 3c82ccb3b18e0effe07b139a3c4c6dd930f75cceea5c4843fc448ae0ba8355b7
+  iconUrl: 
+  dashboardUrl: 
+  initialization: 1
+  flowSequence: 200
+  conflict: 
+  kit: Crashlytics
+  installedKits: []
