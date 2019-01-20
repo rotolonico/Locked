@@ -11,6 +11,7 @@ public class LevelHandler : MonoBehaviour
 
     public delegate void OnLevelsMetadataDownloadCompleted(Dictionary<string, LevelMetadata> levels);
     public delegate void OnLevelDownloadCompleted(Level level);
+    public delegate void OnCheckLikeCompleted(bool isLiked);
 
     private Button randomLevel;
     
@@ -25,6 +26,9 @@ public class LevelHandler : MonoBehaviour
                 levelDisplay.GetComponent<OnlineLevelButton>().levelId = level.Value.id;
                 levelDisplay.transform.GetChild(0).GetComponent<Text>().text = level.Value.name;
                 levelDisplay.transform.GetChild(1).GetComponent<Text>().text = "Created by: " + level.Value.author;
+                levelDisplay.transform.GetChild(2).GetChild(0).GetComponent<Text>().text = level.Value.likes.ToString();
+                levelDisplay.transform.GetChild(3).GetChild(0).GetComponent<Text>().text = level.Value.wins.ToString();
+                levelDisplay.transform.GetChild(4).GetChild(0).GetComponent<Text>().text = level.Value.restarts.ToString();
             }
             EnableStuff();
         });

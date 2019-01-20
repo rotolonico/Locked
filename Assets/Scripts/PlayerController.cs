@@ -189,40 +189,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.CompareTag("end"))
         {
-            if (EditorHandler.PublishMode)
-            {
-                DatabaseHandler.PostLevel(EditorHandler.objectSavedLevel);
-                EditorHandler.PublishMode = false;
-                EditorHandler.PublishMode = false;
-                EditorHandler.playMode = false;
-                EditorHandler.reloadLevel = true;
-                SceneManager.LoadScene(4);
-            }
-            else if (EditorHandler.playMode && EditorHandler.inEditor)
-            {
-                playToggle = GameObject.FindGameObjectWithTag("PlayButton").GetComponent<Toggle>();
-                playToggle.isOn = false;
-                editorHandler.EditorMode();
-            }
-            else
-            {
-                if (EditorHandler.currentLevelNumber != 0 && EditorHandler.currentLevelNumber < EditorHandler.maxLevelNumber)
-                {
-                    if (EditorHandler.beatenLevelNumber < EditorHandler.currentLevelNumber)
-                    {
-                        EditorHandler.beatenLevelNumber = EditorHandler.currentLevelNumber;
-                        EditorHandler.SaveToFile(EditorHandler.beatenLevelNumber, EditorHandler.isNotFirstTimeEditor, EditorHandler.isFirstSelectTime, EditorHandler.isFirstPlaceTime);
-                    }
-                    editorHandler.LoadNormalLevelInLevelScene(EditorHandler.currentLevelNumber+1);
-                    Destroy(GameObject.FindGameObjectWithTag("playerSpawn"));
-                }
-                else
-                {
-                    Destroy(GameObject.Find("EditorHandler"));
-                    Destroy(GameObject.FindGameObjectWithTag("playerSpawn"));
-                    SceneManager.LoadScene(0);
-                }
-            }
+            EndLevel();
         }
 
         if (other.gameObject.CompareTag("checkpoint"))
@@ -275,6 +242,48 @@ public class PlayerController : MonoBehaviour
         for (var i = 0; i < keyImages.Length - HasBlueKey; i++)
         {
             Destroy(keyImages[i]);
+        }
+    }
+    
+    public void EndLevel()
+    {
+        if (EditorHandler.playingOnlineLevel)
+        {
+            DatabaseHandler.WinLevel(EditorHandler.onlineLevelId);
+        }
+        if (EditorHandler.PublishMode)
+        {
+            DatabaseHandler.PostLevel(EditorHandler.objectSavedLevel);
+            EditorHandler.PublishMode = false;
+            EditorHandler.PublishMode = false;
+            EditorHandler.playMode = false;
+            EditorHandler.reloadLevel = true;
+            SceneManager.LoadScene(4);
+        }
+        else if (EditorHandler.playMode && EditorHandler.inEditor)
+        {
+            playToggle = GameObject.FindGameObjectWithTag("PlayButton").GetComponent<Toggle>();
+            playToggle.isOn = false;
+            editorHandler.EditorMode();
+        }
+        else
+        {
+            if (EditorHandler.currentLevelNumber != 0 && EditorHandler.currentLevelNumber < EditorHandler.maxLevelNumber)
+            {
+                if (EditorHandler.beatenLevelNumber < EditorHandler.currentLevelNumber)
+                {
+                    EditorHandler.beatenLevelNumber = EditorHandler.currentLevelNumber;
+                    EditorHandler.SaveToFile(EditorHandler.beatenLevelNumber, EditorHandler.isnotFirstTimeEditor, !EditorHandler.isnotFirstSelectTime, !EditorHandler.isnotFirstPlaceTime, EditorHandler.isnotFirstSokobanPlaceTime);
+                }
+                editorHandler.LoadNormalLevelInLevelScene(EditorHandler.currentLevelNumber+1);
+                Destroy(GameObject.FindGameObjectWithTag("playerSpawn"));
+            }
+            else
+            {
+                Destroy(GameObject.Find("EditorHandler"));
+                Destroy(GameObject.FindGameObjectWithTag("playerSpawn"));
+                SceneManager.LoadScene(0);
+            }
         }
     }
 }

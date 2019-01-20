@@ -86,6 +86,10 @@ TagManager:
   - LevelWall
   - BlockSettings
   - GenericLevelButton
+  - SokobanTrigger
+  - SokobanBlock
+  - 35
+  - 36
   layers:
   - Default
   - TransparentFX

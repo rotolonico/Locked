@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using FullSerializer;
 using Proyecto26;
 using UnityEngine;
+using UnityScript.Steps;
 
 public class DatabaseHandler
 {    
@@ -15,10 +16,113 @@ public class DatabaseHandler
         level.authorId = AuthHandler.userId;
         level.id = ((long) (DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds).ToString();
 
-        RestClient.Put<Level>(DatabaseURL + "levels/" + level.id + ".json?auth=" + AuthHandler.idToken, level).Then(response => {
-            
+        RestClient.Put<Level>(DatabaseURL + "levels/" + level.id + ".json?auth=" + AuthHandler.idToken, level);
+    }
+    
+    public static void LikeLevel(string levelId)
+    {
+        string likes = "1";
+        string liked = "1";
+        
+        RestClient.Put<string>(DatabaseURL + "users/" + AuthHandler.userId + "/stats/levels/" + levelId + "/liked.json?auth=" + AuthHandler.idToken,
+            liked).Catch(error =>
+        {
+            Debug.Log(error);
+        });
+        
+        RestClient.Get(DatabaseURL + "levels/" + levelId + "/likes.json?auth=" + AuthHandler.idToken).Then(response =>
+            {
+                if (response.Text != "null")
+                {
+                    likes = (int.Parse(likes) + int.Parse(response.Text)).ToString();
+                }
+
+                    RestClient.Put<string>(DatabaseURL + "levels/" + levelId + "/likes.json?auth=" + AuthHandler.idToken, likes).Then(
+                        response2 =>
+                        {
+                            
+                        }).Catch(error =>
+                    {
+                        Debug.Log(error);
+                    });
+            }).Catch(error =>
+        {
+            Debug.Log(error);
+        });
+    }
+    
+    public static void CheckLike(string levelId, LevelHandler.OnCheckLikeCompleted callback)
+    {   
+        RestClient.Get(DatabaseURL + "users/" + AuthHandler.userId + "/stats/levels/" + levelId + "/liked.json?auth=" + AuthHandler.idToken).Then(response =>
+            {
+                if (response.Text != "null")
+                {
+                    callback(true);
+                }
+                else
+                {
+                    callback(false);
+                }
+            }).Catch(error =>
+        {
+            Debug.Log(error);
+        });
+    }
+    
+    public static void WinLevel(string levelId)
+    {
+        string wins = "1";
+        string won = "1";
+        
+        RestClient.Put<string>(DatabaseURL + "users/" + AuthHandler.userId + "/stats/levels/" + levelId + "/won.json?auth=" + AuthHandler.idToken,
+            won).Catch(error =>
+        {
+            Debug.Log(error);
+        });
+        
+        RestClient.Get(DatabaseURL + "levels/" + levelId + "/wins.json?auth=" + AuthHandler.idToken).Then(response =>
+        {
+            if (response.Text != "null")
+            {
+                wins = (int.Parse(wins) + int.Parse(response.Text)).ToString();
+            }
+
+            RestClient.Put<string>(DatabaseURL + "levels/" + levelId + "/wins.json?auth=" + AuthHandler.idToken, wins).Then(
+                response2 =>
+                {
+                            
+                }).Catch(error =>
+            {
+                Debug.Log(error);
+            });
         }).Catch(error =>
         {
+            Debug.Log(error);
+        });
+    }
+    
+    public static void RestartLevel(string levelId)
+    {
+        string restarts = "1";
+        
+        RestClient.Get(DatabaseURL + "levels/" + levelId + "/restarts.json?auth=" + AuthHandler.idToken).Then(response =>
+        {
+            if (response.Text != "null")
+            {
+                restarts = (int.Parse(restarts) + int.Parse(response.Text)).ToString();
+            }
+
+            RestClient.Put<string>(DatabaseURL + "levels/" + levelId + "/restarts.json?auth=" + AuthHandler.idToken, restarts).Then(
+                response2 =>
+                {
+                            
+                }).Catch(error =>
+            {
+                Debug.Log(error);
+            });
+        }).Catch(error =>
+        {
+            Debug.Log(error);
         });
     }
     

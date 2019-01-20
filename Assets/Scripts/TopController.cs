@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class TopController : MonoBehaviour
 {
     private readonly string[] unpassableBlocksTags = {"Wall", "Hole", "Lock", "LeftOnly", "DownOnly", "RightOnly", "LevelWall"};
-    private readonly string[] movableBlocksTags = {"block"};
+    private readonly string[] movableBlocksTags = {"block", "SokobanBlock"};
     public bool Movable = true;
     private bool blocked;
     private bool moveBlock;

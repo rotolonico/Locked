@@ -21,7 +21,7 @@ using Version = System.Version;
 
 public class EditorHandler : MonoBehaviour
 {
-    public string Version = "v0.5.2-alpha"; 
+    public string Version = "v0.6-alpha"; 
     
     public GameObject selectedObject;
     public GameObject GridSprite;
@@ -46,9 +46,13 @@ public class EditorHandler : MonoBehaviour
 
     public static Level objectSavedLevel;
 
-    public GameObject[] blocks = new GameObject[34];
+    public Sprite likedSprite;
     public GameObject[] randomSpawnableBlocks = new GameObject[34];
-    public GameObject[] editorBlocks = new GameObject[34];
+    public GameObject[] randomSpawnablePortals = new GameObject[4];
+    public GameObject[] randomSpawnableOther = new GameObject[21];
+    public GameObject randomSpawnableLimitedBlock;
+    public GameObject[] blocks = new GameObject[36];
+    public GameObject[] editorBlocks = new GameObject[36];
 
     public Button[] levelButtons = new Button[10];
     private string[] levels;
@@ -87,6 +91,7 @@ public class EditorHandler : MonoBehaviour
     private GameObject helpWindow;
     private GameObject helpWindow2;
     private GameObject helpWindow3;
+    private GameObject helpWindow4;
     private GameObject quitLevelWindow;
     private GameObject publishLevelWindow;
     private GameObject newLevelWindow;
@@ -118,14 +123,16 @@ public class EditorHandler : MonoBehaviour
     public static Random Random = new Random();
 
     public static int beatenLevelNumber;
-    public static bool isNotFirstTimeEditor;
-    public static bool isFirstSelectTime = true;
-    public static bool isFirstPlaceTime = true;
+    public static bool isnotFirstTimeEditor;
+    public static bool isnotFirstSelectTime;
+    public static bool isnotFirstPlaceTime;
+    public static bool isnotFirstSokobanPlaceTime;
     public static int currentLevelNumber;
     public static int maxLevelNumber = 14;
     public static bool isOnline;
     public static bool checkVersion;
     public static string News;
+    public static string onlineLevelId;
 
     private Vector3 mousePosition;
     private Vector3 mouseEndPosition;
@@ -147,6 +154,7 @@ public class EditorHandler : MonoBehaviour
     private InputField username;
     private InputField password;
     private Animator authWindowAnimator;
+    private Animator clearDataWindowAnimator;
     private Animator newsWindowAnimator;
     private Text levelNameHint;
     private InputField levelName;
@@ -162,6 +170,8 @@ public class EditorHandler : MonoBehaviour
     private Button backFromAuthButton;
     private Button verifyLevel;
     private Button backFromPublish;
+    private Canvas levelCanvas;
+    private Canvas mainCanvas;
     private Text newsText;
 
     public static string levelNameString;
@@ -173,6 +183,8 @@ public class EditorHandler : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         LoadToFile();
+        levelCanvas = GameObject.Find("LevelCanvas").GetComponent<Canvas>();
+        mainCanvas = GameObject.Find("MainCanvas").GetComponent<Canvas>();
         GameObject.Find("Version").GetComponent<Text>().text = "Version " + Version;
         mouseHitPlane = new Plane(Vector3.forward, transform.position);
         playMode = true;
@@ -231,7 +243,6 @@ public class EditorHandler : MonoBehaviour
     
     public void NewsWindow()
     {
-        var mainCanvas = GameObject.Find("MainCanvas");
         mainCanvas.GetComponent<Animator>().Play("CanvasOpacity0");
         newsWindowAnimator.Play("TopCanvasDown");
         newsText.text = News.Replace ("\\n", "\n").Trim('"');
@@ -258,6 +269,7 @@ public class EditorHandler : MonoBehaviour
         email = GameObject.Find("Email").GetComponent<InputField>();
         password = GameObject.Find("Password").GetComponent<InputField>();
         authWindowAnimator = GameObject.Find("AuthenticationWindow").GetComponent<Animator>();
+        clearDataWindowAnimator = GameObject.Find("ClearDataWindow").GetComponent<Animator>();
         newsText = GameObject.Find("News").GetComponent<Text>();
         newsWindowAnimator = GameObject.Find("NewsWindow").GetComponent<Animator>();
         signinButton = GameObject.Find("Signin").GetComponent<Button>();
@@ -273,6 +285,14 @@ public class EditorHandler : MonoBehaviour
         username.text = "";
         email.text = "";
         password.text = "";
+    }
+
+    public void LikeLevel()
+    {
+       DatabaseHandler.LikeLevel(onlineLevelId);
+       var likeButton = GameObject.Find("LikeButton").GetComponent<Button>();
+       likeButton.enabled = false;
+       likeButton.GetComponent<Image>().sprite = likedSprite;
     }
 
     public void SignupUser()
@@ -337,7 +357,6 @@ public class EditorHandler : MonoBehaviour
     public void AuthWindow()
     {
         InitializeButtons();
-        var mainCanvas = GameObject.Find("MainCanvas");
         mainCanvas.GetComponent<Animator>().Play("CanvasOpacity0");
         authWindowAnimator.Play("TopCanvasDown");
     }
@@ -350,9 +369,25 @@ public class EditorHandler : MonoBehaviour
         mainCanvas.GetComponent<Animator>().Play("CanvasOpacity100");
         AuthWindowReset();
     }
+    
+    public void ClearDataWindow()
+    {
+        InitializeButtons();
+        levelCanvas.GetComponent<Animator>().Play("CanvasOpacity0");
+        clearDataWindowAnimator.Play("TopCanvasDown");
+    }
+
+    public void BackFromClearDataWindow()
+    {
+        InitializeButtons();
+        clearDataWindowAnimator.Play("TopCanvasUp");
+        var levelCanvas = GameObject.Find("LevelCanvas");
+        levelCanvas.GetComponent<Animator>().Play("CanvasOpacity100");
+    }
 
     private void LevelButtonsInitialize()
     {
+        levelCanvas.GetComponent<CanvasGroup>().interactable = true;
         for (var i = 0; i < levelButtons.Length; i++)
         {
             if (beatenLevelNumber >= i)
@@ -405,6 +440,7 @@ public class EditorHandler : MonoBehaviour
         helpWindow = GameObject.Find("HelpWindow");
         helpWindow2 = GameObject.Find("HelpWindow 2");
         helpWindow3 = GameObject.Find("HelpWindow 3");
+        helpWindow4 = GameObject.Find("HelpWindow 4");
         quitLevelWindow = GameObject.Find("QuitLevelWindow");
         newLevelWindow = GameObject.Find("NewLevelWindow");
         levelSizeWindow = GameObject.Find("LevelSizeWindow");
@@ -460,12 +496,25 @@ public class EditorHandler : MonoBehaviour
         ChangeSize(true);
     }
 
+    public static void CheckSokobanBlocks()
+    {
+        var sokobanBlocks = GameObject.FindGameObjectsWithTag("SokobanTrigger");
+        foreach (var block in sokobanBlocks)
+        {
+            if (block.GetComponent<SokobanTriggerController>() != null && !block.GetComponent<SokobanTriggerController>().isActive)
+            {
+                return;
+            }
+        }
+        PlayerController playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        playerController.EndLevel();
+    }
 
     void Update()
     {
         if (!EditorInitialized && SceneManager.GetActiveScene().buildIndex == 1)
         {
-            if (!isNotFirstTimeEditor)
+            if (!isnotFirstTimeEditor)
             {
                 EditorFirstTime();
             }
@@ -559,9 +608,13 @@ public class EditorHandler : MonoBehaviour
                                 if (!selectedObject.CompareTag("0"))
                                 {
                                     Instantiate(selectedObject, mousePosition, Quaternion.identity);
-                                    if (isFirstPlaceTime)
+                                    if (!isnotFirstPlaceTime)
                                     {
                                         HelpWindow3();
+                                    }
+                                    if (!isnotFirstSokobanPlaceTime && (selectedObject.CompareTag("35") || selectedObject.CompareTag("36")))
+                                    {
+                                        HelpWindow4();
                                     }
                                 }
                             }
@@ -707,7 +760,7 @@ public class EditorHandler : MonoBehaviour
                         selectedColliders = Physics2D.OverlapAreaAll(mousePosition, mouseEndPosition);
                         foreach (var i in selectedColliders)
                         {
-                            if (isFirstSelectTime)
+                            if (!isnotFirstSelectTime)
                             {
                                 HelpWindow2();
                             }
@@ -822,7 +875,12 @@ public class EditorHandler : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1) && SceneManager.GetActiveScene().buildIndex == 1)
         {
-            ApplySettings();
+            if (GameObject.FindGameObjectWithTag("BlockSettings") != null)
+            {
+                ApplySettings();
+            }
+            else
+            {            
             mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             float dist;
             if (mouseHitPlane.Raycast(mousePositionRay, out dist))
@@ -855,11 +913,21 @@ public class EditorHandler : MonoBehaviour
                     movesLimitIF.placeholder.GetComponent<Text>().text = hitColliderProprieties.movesLimit.ToString();
                     isEmpty = false;
                 }
-                
+
+                if (hitColliderProprieties.randomType != "")
+                {
+                    buttonProprietiesListContent.transform.GetChild(2).gameObject.SetActive(true);
+                    var randomTypeButton = GameObject.Find("RandomTypeButton");
+                    randomTypeButton.transform.GetChild(0).GetComponent<Text>().text =
+                        hitColliderProprieties.randomType;
+                    isEmpty = false;
+                }
+
                 if (isEmpty)
                 {
                     Destroy(blockSettings);
                 }
+            }
             }
         }
     }
@@ -912,6 +980,12 @@ public class EditorHandler : MonoBehaviour
                 {
                     hitColliderProprieties.movesLimit = Int32.Parse(movesLimitIF.text);
                 }
+            }
+            
+            if (GameObject.Find("RandomType") != null)
+            {
+                var randomType = GameObject.Find("RandomTypeButton").transform.GetChild(0).GetComponent<Text>();
+                hitColliderProprieties.randomType = randomType.text;
             }
 
             hitColliderProprieties.ApplyProprieties();
@@ -1190,6 +1264,12 @@ public class EditorHandler : MonoBehaviour
                             newBlock.GetComponent<LimitedBlockController>().limit = block.limitedStep;
                             newBlock.GetComponent<SpriteRenderer>().sprite = LimitedSprites[block.limitedStep-1];
                         }
+                        
+                        // Random Block
+                        if (block.id == 34)
+                        {
+                            newBlock.GetComponent<RandomSpriteSpawn>().randomType = block.randomType;
+                        }
                     }
                     else
                     {
@@ -1207,6 +1287,11 @@ public class EditorHandler : MonoBehaviour
                         {
                             newBlock.GetComponent<SelectSprite>().limitedStep = block.limitedStep;
                             newBlock.GetComponent<SpriteRenderer>().sprite = LimitedSprites[block.limitedStep-1];
+                        }
+                        
+                        if (block.id == 34)
+                        {
+                            newBlock.GetComponent<SelectSprite>().randomType = block.randomType;
                         }
                     }
                 }
@@ -1267,6 +1352,10 @@ public class EditorHandler : MonoBehaviour
 
     public void RestartLevelFromCp()
     {
+        if (playingOnlineLevel)
+        {
+            DatabaseHandler.RestartLevel(onlineLevelId);
+        }
         if (inEditor)
         {
             GameOver = true;
@@ -1330,7 +1419,7 @@ public class EditorHandler : MonoBehaviour
 
     private void EditorFirstTime()
     {
-        isNotFirstTimeEditor = true;
+        isnotFirstTimeEditor = true;
         EditorGuide();
         SaveData();
     }
@@ -1717,7 +1806,7 @@ public class EditorHandler : MonoBehaviour
 
     private void HelpWindow2()
     {
-        isFirstSelectTime = false;
+        isnotFirstSelectTime = true;
         SaveData();
         EditorInitialize();
         blockImage.GetComponent<Image>().raycastTarget = true;
@@ -1727,12 +1816,22 @@ public class EditorHandler : MonoBehaviour
 
     private void HelpWindow3()
     {
-        isFirstPlaceTime = false;
+        isnotFirstPlaceTime = true;
         SaveData();
         EditorInitialize();
         blockImage.GetComponent<Image>().raycastTarget = true;
         blockImage.GetComponent<Animator>().Play("BlockImageTransparent");
         helpWindow3.GetComponent<Animator>().Play("TopCanvasDown");
+    }
+    
+    private void HelpWindow4()
+    {
+        isnotFirstSokobanPlaceTime = true;
+        SaveData();
+        EditorInitialize();
+        blockImage.GetComponent<Image>().raycastTarget = true;
+        blockImage.GetComponent<Animator>().Play("BlockImageTransparent");
+        helpWindow4.GetComponent<Animator>().Play("TopCanvasDown");
     }
 
     public void BackToMainCanvas()
@@ -1798,6 +1897,14 @@ public class EditorHandler : MonoBehaviour
         blockImage.GetComponent<Animator>().Play("BlockImageTransparentReverse");
         helpWindow3.GetComponent<Animator>().Play("TopCanvasUp");
     }
+    
+    public void BackFromHelpWindow4MainCanvas()
+    {
+        EditorInitialize();
+        blockImage.GetComponent<Image>().raycastTarget = false;
+        blockImage.GetComponent<Animator>().Play("BlockImageTransparentReverse");
+        helpWindow4.GetComponent<Animator>().Play("TopCanvasUp");
+    }
 
 
     public void CopyLevelToClipboard()
@@ -1833,9 +1940,6 @@ public class EditorHandler : MonoBehaviour
         {
             LoadLevelInEditor1(Decompress(Convert.FromBase64String(shareInputField.text)));
             ChangeSize(true);
-//          DatabaseHandler.GetLevel(shareInputField.text, level => { objectSavedLevel = level; });
-//          LoadLevelInEditor();
-//          BackFromShareMainCanvas();
         }
         catch
         {
@@ -1880,6 +1984,10 @@ public class EditorHandler : MonoBehaviour
 
     public void RestartNormalLevelInLevelScene()
     {
+        if (playingOnlineLevel)
+        {
+            DatabaseHandler.RestartLevel(onlineLevelId);
+        }
         Destroy(GameObject.FindGameObjectWithTag("playerSpawn"));
         if (!PublishMode && !playingOnlineLevel)
         {
@@ -1899,8 +2007,6 @@ public class EditorHandler : MonoBehaviour
 
     public void ShowLevels()
     {
-        var mainCanvas = GameObject.Find("MainCanvas");
-        var levelCanvas = GameObject.Find("LevelCanvas");
         mainCanvas.GetComponent<Animator>().Play("CanvasOpacity0");
         mainCanvas.GetComponent<Canvas>().sortingOrder = 0;
         levelCanvas.GetComponent<Animator>().Play("CanvasOpacity100");
@@ -1920,11 +2026,11 @@ public class EditorHandler : MonoBehaviour
 
     public static void SaveData()
     {
-        SaveToFile(beatenLevelNumber, isNotFirstTimeEditor, isFirstSelectTime, isFirstPlaceTime);
+        SaveToFile(beatenLevelNumber, isnotFirstTimeEditor, isnotFirstSelectTime, isnotFirstPlaceTime, isnotFirstSokobanPlaceTime);
     }
 
     public static void SaveToFile(int unlockedLevelNumber, bool firstTimeEditor, bool firstTimeSelectBool,
-        bool firstTimePlaceBool)
+        bool firstTimePlaceBool, bool firstTimeSokobanPlaceBool)
     {
         string destination = Application.persistentDataPath + "/save.lk";
         FileStream file;
@@ -1932,7 +2038,7 @@ public class EditorHandler : MonoBehaviour
         if (File.Exists(destination)) file = File.OpenWrite(destination);
         else file = File.Create(destination);
 
-        GameData data = new GameData(unlockedLevelNumber, firstTimeEditor, firstTimeSelectBool, firstTimePlaceBool);
+        GameData data = new GameData(unlockedLevelNumber, firstTimeEditor, firstTimeSelectBool, firstTimePlaceBool, firstTimeSokobanPlaceBool);
         BinaryFormatter bf = new BinaryFormatter();
         bf.Serialize(file, data);
         file.Close();
@@ -1954,16 +2060,17 @@ public class EditorHandler : MonoBehaviour
         file.Close();
 
         beatenLevelNumber = data.unlockedLevelsInt;
-        isNotFirstTimeEditor = data.firstTimeEditorBool;
-        isFirstSelectTime = data.firstTimeSelectBool;
-        isFirstPlaceTime = data.firstTimePlaceBool;
+        isnotFirstTimeEditor = data.firstTimeEditorBool;
+        isnotFirstSelectTime = data.firstTimeSelectBool;
+        isnotFirstPlaceTime = data.firstTimePlaceBool;
+        isnotFirstSokobanPlaceTime = data.firstTimeSokobanPlaceBool;
     }
 
     public void ClearData()
     {
-        SaveToFile(0, false, true, true);
+        SaveToFile(0, false, false, false, false);
         LoadToFile();
-        LevelButtonsInitialize();
+        BackFromClearDataWindow();
     }
 
     public void ChangeTool()

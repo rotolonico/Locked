@@ -12,4 +12,8 @@ public class LevelMetadata
     public string authorId;
     public int levelRows;
     public int levelColumns;
+    
+    public int likes;
+    public int wins;
+    public int restarts;
 }

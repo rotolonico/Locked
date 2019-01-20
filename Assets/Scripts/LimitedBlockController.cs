@@ -8,7 +8,7 @@ public class LimitedBlockController : MonoBehaviour
     public int limit = 1;
     public GameObject Hole;
 
-    public Sprite[] limitedSprites = new Sprite[9];
+    public Sprite[] limitedSprites = new Sprite[10];
     private SpriteRenderer sr;
 
     private void Start()

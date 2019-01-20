@@ -5,12 +5,14 @@ public class GameData
 	public bool firstTimeEditorBool;
 	public bool firstTimeSelectBool;
 	public bool firstTimePlaceBool;
+	public bool firstTimeSokobanPlaceBool;
  
-	public GameData(int unlockedLevels, bool firstTimeEditor, bool firstTimeSelect, bool firstTimePlace)
+	public GameData(int unlockedLevels, bool firstTimeEditor, bool firstTimeSelect, bool firstTimePlace, bool firstTimeSokobanPlace)
 	{
 		unlockedLevelsInt = unlockedLevels;
 		firstTimeEditorBool = firstTimeEditor;
 		firstTimeSelectBool = firstTimeSelect;
 		firstTimePlaceBool = firstTimePlace;
+		firstTimeSokobanPlaceBool = firstTimeSokobanPlace;
 	}
 }

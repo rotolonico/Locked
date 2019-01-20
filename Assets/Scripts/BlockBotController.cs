@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class BlockBotController : MonoBehaviour
 {
-    private readonly String[] unpassableBlocksTags = {"Wall", "Lock", "block", "UpOnly", "RightOnly", "LeftOnly", "LevelWall"};
+    private String[] unpassableBlocksTags = {"Wall", "Lock", "block", "UpOnly", "RightOnly", "LeftOnly", "LevelWall", "SokobanBlock"};
+    private readonly String[] unpassableSokobanBlocksTags = {"Wall", "Lock", "block", "UpOnly", "RightOnly", "LeftOnly", "LevelWall", "SokobanBlock", "Hole"};
     public bool movable = true;
     private bool blocked;
     private bool playerTouch;
@@ -21,6 +22,10 @@ public class BlockBotController : MonoBehaviour
 
     void Start()
     {
+        if (gameObject.transform.parent.CompareTag("SokobanBlock"))
+        {
+            unpassableBlocksTags = unpassableSokobanBlocksTags;
+        }
         block = transform.parent.gameObject;
         antiBlock = transform.parent.GetChild(0).GetComponent<BlockTopController>();
         player = GameObject.FindGameObjectWithTag("Player");

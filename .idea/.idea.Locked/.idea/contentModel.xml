@@ -83,16 +83,19 @@
           <e p="LevelHandler.cs" t="Include" />
           <e p="LevelMetadata.cs" t="Include" />
           <e p="LevelMetadataHolder.cs" t="Include" />
+          <e p="Like.cs" t="Include" />
           <e p="LimitedBlockController.cs" t="Include" />
           <e p="LockController.cs" t="Include" />
           <e p="OnlineLevelButton.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
           <e p="PlayerSpawnController.cs" t="Include" />
           <e p="RandomSpriteSpawn.cs" t="Include" />
+          <e p="RandomTypeButton.cs" t="Include" />
           <e p="RedLockController.cs" t="Include" />
           <e p="RightController.cs" t="Include" />
           <e p="SelectSprite.cs" t="Include" />
           <e p="SigninResponse.cs" t="Include" />
+          <e p="SokobanTriggerController.cs" t="Include" />
           <e p="Swipe.cs" t="Include" />
           <e p="TeleporterController.cs" t="Include" />
           <e p="TopController.cs" t="Include" />

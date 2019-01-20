@@ -9,4 +9,5 @@ public class BlockProprieties
     public int id;
     public int limitedStep;
     public int movesLimit;
+    public string randomType;
 }

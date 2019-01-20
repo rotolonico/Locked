@@ -15,6 +15,7 @@ public class SelectSprite : MonoBehaviour
 
     public int limitedStep;
     public int movesLimit;
+    public string randomType;
 
     private void Start()
     {
@@ -99,8 +100,11 @@ public class SelectSprite : MonoBehaviour
             }
 
             var duplicatedSprite = Instantiate(gameObject, transform.position, Quaternion.identity);
-            duplicatedSprite.GetComponent<SelectSprite>().selected = false;
-            duplicatedSprite.GetComponent<SelectSprite>().gameObject.GetComponent<SpriteRenderer>().sortingOrder = 0;
+
+            var duplicatedSpriteSelectSprite = duplicatedSprite.GetComponent<SelectSprite>();
+            
+            duplicatedSpriteSelectSprite.selected = false;
+            duplicatedSpriteSelectSprite.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 0;
             duplicatedSprite.GetComponent<SpriteRenderer>().color = Color.white;
         }
     }

@@ -55,6 +55,12 @@ public class Level
                         {
                             blocks[j].limitedStep = objectColliders[j].GetComponent<SelectSprite>().limitedStep;
                         }
+                        
+                        // Random Block
+                        if (blocks[j].id == 34)
+                        {
+                            blocks[j].randomType = objectColliders[j].GetComponent<SelectSprite>().randomType;
+                        }
                     }
                 }
 
