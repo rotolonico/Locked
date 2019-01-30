@@ -78,6 +78,8 @@
           <e p="GameData.cs" t="Include" />
           <e p="GenericLevelController.cs" t="Include" />
           <e p="GreenLockController.cs" t="Include" />
+          <e p="IceBlockController.cs" t="Include" />
+          <e p="LayerToggle.cs" t="Include" />
           <e p="LeftController.cs" t="Include" />
           <e p="Level.cs" t="Include" />
           <e p="LevelHandler.cs" t="Include" />

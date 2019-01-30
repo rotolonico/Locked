@@ -8,10 +8,12 @@ public class BlockBotController : MonoBehaviour
     private String[] unpassableBlocksTags = {"Wall", "Lock", "block", "UpOnly", "RightOnly", "LeftOnly", "LevelWall", "SokobanBlock"};
     private readonly String[] unpassableSokobanBlocksTags = {"Wall", "Lock", "block", "UpOnly", "RightOnly", "LeftOnly", "LevelWall", "SokobanBlock", "Hole"};
     public bool movable = true;
+    public bool iceBlock;
     private bool blocked;
     private bool playerTouch;
     private GameObject block;
     private GameObject player;
+    private IceBlockController iceBlockController;
     private BlockTopController antiBlock;
     private TopController playerMovement;
     private BoxCollider2D collider;
@@ -27,6 +29,7 @@ public class BlockBotController : MonoBehaviour
             unpassableBlocksTags = unpassableSokobanBlocksTags;
         }
         block = transform.parent.gameObject;
+        iceBlockController = block.GetComponent<IceBlockController>();
         antiBlock = transform.parent.GetChild(0).GetComponent<BlockTopController>();
         player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
@@ -38,12 +41,8 @@ public class BlockBotController : MonoBehaviour
     {
         if (Swipe.SwipeUp && playerTouch && playerMovement.Movable && antiBlock.CheckMovement())
         {
-            block.transform.position += Vector3.up;
+            Move();
             player.transform.position += Vector3.up;
-            
-            MoveSound.Play();
-            blocked = false;
-            Swipe.SwipeUp = false;
             if (playerController.hasLimitedMoves)
             {
                 playerController.movesLimit--;
@@ -53,6 +52,32 @@ public class BlockBotController : MonoBehaviour
         else if (Swipe.SwipeUp && playerMovement.Movable && playerTouch)
         {
             HitWall.Play();
+        }
+    }
+
+    private void Move()
+    {
+        block.transform.position += Vector3.up;
+        MoveSound.Play();
+        blocked = false;
+        Swipe.SwipeUp = false;
+        if (iceBlock)
+        {
+            StartCoroutine(MoveCoroutine());
+        }
+    }
+
+    private IEnumerator MoveCoroutine()
+    {
+        iceBlockController.sliding = true;
+        yield return new WaitForSeconds(0.1f);
+        if (antiBlock.CheckMovement())
+        {
+            Move();
+        }
+        else
+        {
+            iceBlockController.sliding = false;
         }
     }
 

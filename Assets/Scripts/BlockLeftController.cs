@@ -5,11 +5,17 @@ using UnityEngine;
 
 public class BlockLeftController : MonoBehaviour
 {
-    private String[] unpassableBlocksTags = {"Wall", "Lock", "block", "UpOnly", "DownOnly", "RightOnly", "LevelWall", "SokobanBlock"};
-    private readonly String[] unpassableSokobanBlocksTags = {"Wall", "Lock", "block", "UpOnly", "RightOnly", "LeftOnly", "LevelWall", "SokobanBlock", "Hole"};
+    private String[] unpassableBlocksTags =
+        {"Wall", "Lock", "block", "UpOnly", "DownOnly", "RightOnly", "LevelWall", "SokobanBlock"};
+
+    private readonly String[] unpassableSokobanBlocksTags =
+        {"Wall", "Lock", "block", "UpOnly", "RightOnly", "LeftOnly", "LevelWall", "SokobanBlock", "Hole"};
+
     public bool movable = true;
+    public bool iceBlock;
     private bool blocked;
     private bool playerTouch;
+    private IceBlockController iceBlockController;
     private GameObject block;
     private GameObject player;
     private BlockRightController antiBlock;
@@ -26,7 +32,9 @@ public class BlockLeftController : MonoBehaviour
         {
             unpassableBlocksTags = unpassableSokobanBlocksTags;
         }
+
         block = transform.parent.gameObject;
+        iceBlockController = block.GetComponent<IceBlockController>();
         antiBlock = transform.parent.GetChild(3).GetComponent<BlockRightController>();
         player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
@@ -38,11 +46,8 @@ public class BlockLeftController : MonoBehaviour
     {
         if (Swipe.SwipeRight && playerTouch && playerMovement.Movable && antiBlock.CheckMovement())
         {
-            block.transform.position += Vector3.right;
             player.transform.position += Vector3.right;
-            MoveSound.Play();
-            blocked = false;
-            Swipe.SwipeRight = false;
+            Move();
             if (playerController.hasLimitedMoves)
             {
                 playerController.movesLimit--;
@@ -52,6 +57,32 @@ public class BlockLeftController : MonoBehaviour
         else if (Swipe.SwipeRight && playerMovement.Movable && playerTouch)
         {
             HitWall.Play();
+        }
+    }
+
+    private void Move()
+    {
+        MoveSound.Play();
+        blocked = false;
+        Swipe.SwipeRight = false;
+        block.transform.position += Vector3.right;
+        if (iceBlock)
+        {
+            StartCoroutine(MoveCoroutine());
+        }
+    }
+
+    private IEnumerator MoveCoroutine()
+    {
+        iceBlockController.sliding = true;
+        yield return new WaitForSeconds(0.1f);
+        if (antiBlock.CheckMovement())
+        {
+            Move();
+        }
+        else
+        {
+            iceBlockController.sliding = false;
         }
     }
 
@@ -87,7 +118,7 @@ public class BlockLeftController : MonoBehaviour
         collider.enabled = false;
         collider.enabled = true;
     }
-    
+
     public bool CheckMovement()
     {
         var hitColliders = Physics2D.OverlapCircleAll(block.transform.position + Vector3.left, 0.1f);

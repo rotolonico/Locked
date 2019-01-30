@@ -29,7 +29,7 @@ public class DestroySprite : MonoBehaviour {
 		{
 			editorHandler.RestartLevelFromCp();
 		}
-		if (other.gameObject.CompareTag("block"))
+		if (other.gameObject.CompareTag("block") || other.gameObject.CompareTag("SokobanBlock"))
 		{
 			Destroy(other.gameObject);
 			fillSound.Play();

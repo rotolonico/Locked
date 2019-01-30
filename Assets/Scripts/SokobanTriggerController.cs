@@ -8,11 +8,26 @@ public class SokobanTriggerController : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("SokobanBlock"))
+        var iceBlockController = other.GetComponent<IceBlockController>();
+        if (other.CompareTag("SokobanBlock") && !iceBlockController.sliding)
         {
             isActive = true;
             EditorHandler.CheckSokobanBlocks();    
+        } else if (other.CompareTag("SokobanBlock") && iceBlockController.sliding)
+        {
+            StartCoroutine(CheckSliding(iceBlockController));
         }
+    }
+
+    private IEnumerator CheckSliding(IceBlockController iceBlockController)
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (!iceBlockController.sliding)
+        {
+            isActive = true;
+            EditorHandler.CheckSokobanBlocks();
+        }
+        
     }
     
     private void OnTriggerExit2D(Collider2D other)

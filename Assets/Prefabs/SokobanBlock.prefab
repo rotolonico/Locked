@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movable: 1
+  iceBlock: 0
   HitWall: {fileID: 6682855253967440273}
   MoveSound: {fileID: 6505904075959389873}
 --- !u!82 &6682855253967440273
@@ -384,6 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movable: 1
+  iceBlock: 0
   HitWall: {fileID: 2051428206783020101}
   MoveSound: {fileID: 3150882317033434484}
 --- !u!82 &2051428206783020101
@@ -673,6 +675,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movable: 1
+  iceBlock: 0
   HitWall: {fileID: 641354391204405754}
   MoveSound: {fileID: 14727155043738774}
 --- !u!82 &641354391204405754
@@ -962,6 +965,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movable: 1
+  iceBlock: 0
   HitWall: {fileID: 2184257691421803938}
   MoveSound: {fileID: 2684610196533790382}
 --- !u!82 &2184257691421803938
@@ -1168,6 +1172,7 @@ GameObject:
   - component: {fileID: 1287458156785688367}
   - component: {fileID: 1950689367965528548}
   - component: {fileID: 7085971106682653935}
+  - component: {fileID: 5175649727780256066}
   m_Layer: 0
   m_Name: SokobanBlock
   m_TagString: SokobanBlock
@@ -1183,7 +1188,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8905087895652090003}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.42, y: 0.197, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5946146659515706730}
@@ -1288,3 +1293,16 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5175649727780256066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8905087895652090003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d0a760c3ef15b1f1b60a98253e58f89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sliding: 0

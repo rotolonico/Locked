@@ -11,6 +11,7 @@ public class SelectSprite : MonoBehaviour
     public int spriteGameObjectId;
 
     public bool selected;
+    public bool hidden;
     private EditorHandler editorHandler;
 
     public int limitedStep;
@@ -79,7 +80,10 @@ public class SelectSprite : MonoBehaviour
         {
             if (i != gameObject.GetComponent<Collider2D>())
             {
-                Destroy(i.gameObject);
+                if (!i.gameObject.GetComponent<SelectSprite>().hidden)
+                {
+                    Destroy(i.gameObject);
+                }
             }
         }
 

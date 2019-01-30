@@ -101,6 +101,24 @@ public class DatabaseHandler
         });
     }
     
+    public static void CheckWin(string levelId, LevelHandler.OnCheckWinCompleted callback)
+    {   
+        RestClient.Get(DatabaseURL + "users/" + AuthHandler.userId + "/stats/levels/" + levelId + "/won.json?auth=" + AuthHandler.idToken).Then(response =>
+        {
+            if (response.Text != "null")
+            {
+                callback(true);
+            }
+            else
+            {
+                callback(false);
+            }
+        }).Catch(error =>
+        {
+            Debug.Log(error);
+        });
+    }
+    
     public static void RestartLevel(string levelId)
     {
         string restarts = "1";
@@ -129,13 +147,15 @@ public class DatabaseHandler
 
     public static void GetAllLevelsMetadata(LevelHandler.OnLevelsMetadataDownloadCompleted callback)
     {
-        
         RestClient.Get(DatabaseURL + "levels.json?auth=" + AuthHandler.idToken).Then(response =>
         {
             fsData data = fsJsonParser.Parse(response.Text);
             Dictionary<string, LevelMetadata> levels = null;
             serializer.TryDeserialize(data, ref levels).AssertSuccessWithoutWarnings();
             callback(levels);
+        }).Catch(error =>
+        {
+            Debug.Log(error);
         });
     }
 

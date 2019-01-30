@@ -9,6 +9,7 @@ public class RightController : MonoBehaviour
     private readonly string[] unpassableBlocksTags = {"Wall", "Hole", "Lock", "UpOnly", "DownOnly", "LeftOnly", "LevelWall"};
     private readonly string[] movableBlocksTags = {"block", "SokobanBlock"};
     public bool Movable = true;
+    public bool OnIce;
     private bool blocked;
     private bool moveBlock;
     private GameObject Player;
@@ -34,20 +35,16 @@ public class RightController : MonoBehaviour
             CheckCollider();
         }
 
-        if (Swipe.SwipeRight && Movable && !moveBlock)
+        if (Swipe.SwipeRight && Movable && !moveBlock && !playerController.sliding)
         {
-            Player.transform.position += Vector3.right;
-            MoveSound.Play();
-            blocked = false;
-            moveBlock = false;
-            Swipe.SwipeRight = false;
+            Move();
             if (playerController.hasLimitedMoves)
             {
                 playerController.movesLimit--;
                 playerController.ReloadMoves();
             }
         }
-        else if (Swipe.SwipeRight && !moveBlock)
+        else if (Swipe.SwipeRight && !moveBlock && !playerController.sliding)
         {
             HitWall.Play();
         }
@@ -61,6 +58,37 @@ public class RightController : MonoBehaviour
                 GameObject.Find("PlayerText").GetComponent<Text>().text = "0";
                 outOfMoves = true;
             }
+        }
+    }
+
+    IEnumerator MoveCoroutine()
+    {
+        playerController.sliding = true;
+        yield return new WaitForSeconds(0.1f);
+        CheckCollider();
+        if (!blocked && !moveBlock)
+        {
+            Move();
+        }
+        else
+        {
+            playerController.sliding = false;
+        }
+    }
+    private void Move()
+    {
+        Player.transform.position += Vector3.right;
+        MoveSound.Play();
+        blocked = false;
+        moveBlock = false;
+        Swipe.SwipeRight = false;
+        if (OnIce)
+        {
+            StartCoroutine(MoveCoroutine());
+        }
+        else
+        {
+            playerController.sliding = false;
         }
     }
 
@@ -87,6 +115,14 @@ public class RightController : MonoBehaviour
                 }
             }
         }
+        
+        foreach (var i in colliders)
+        {
+            if (i != null && i.CompareTag("ice"))
+            {
+                OnIce = true;
+            }
+        }
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -97,6 +133,13 @@ public class RightController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        foreach (var i in colliders)
+        {
+            if (i != null && i.CompareTag("ice"))
+            {
+                OnIce = false;
+            }
+        }
         colliders.Clear();
     }
 }

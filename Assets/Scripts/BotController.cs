@@ -6,9 +6,12 @@ using UnityEngine.UI;
 
 public class BotController : MonoBehaviour
 {
-    private readonly string[] unpassableBlocksTags = {"Wall", "Hole", "Lock", "UpOnly", "LeftOnly", "RightOnly", "LevelWall"};
+    private readonly string[] unpassableBlocksTags =
+        {"Wall", "Hole", "Lock", "UpOnly", "LeftOnly", "RightOnly", "LevelWall"};
+
     private readonly string[] movableBlocksTags = {"block", "SokobanBlock"};
     public bool Movable = true;
+    public bool OnIce;
     private bool blocked;
     private bool moveBlock;
     private GameObject Player;
@@ -34,20 +37,16 @@ public class BotController : MonoBehaviour
             CheckCollider();
         }
 
-        if (Swipe.SwipeDown && Movable && !moveBlock)
+        if (Swipe.SwipeDown && Movable && !moveBlock && !playerController.sliding)
         {
-            Player.transform.position += Vector3.down;
-            MoveSound.Play();
-            blocked = false;
-            moveBlock = false;
-            Swipe.SwipeDown = false;
+            Move();
             if (playerController.hasLimitedMoves)
             {
                 playerController.movesLimit--;
                 playerController.ReloadMoves();
             }
         }
-        else if (Swipe.SwipeDown && !moveBlock)
+        else if (Swipe.SwipeDown && !moveBlock && !playerController.sliding)
         {
             HitWall.Play();
         }
@@ -61,6 +60,38 @@ public class BotController : MonoBehaviour
                 GameObject.Find("PlayerText").GetComponent<Text>().text = "0";
                 outOfMoves = true;
             }
+        }
+    }
+
+    private void Move()
+    {
+        Player.transform.position += Vector3.down;
+        MoveSound.Play();
+        blocked = false;
+        moveBlock = false;
+        Swipe.SwipeDown = false;
+        if (OnIce)
+        {
+            StartCoroutine(MoveCoroutine());
+        }
+        else
+        {
+            playerController.sliding = false;
+        }
+    }
+
+    IEnumerator MoveCoroutine()
+    {
+        playerController.sliding = true;
+        yield return new WaitForSeconds(0.1f);
+        CheckCollider();
+        if (!blocked && !moveBlock)
+        {
+            Move();
+        }
+        else
+        {
+            playerController.sliding = false;
         }
     }
 
@@ -87,6 +118,14 @@ public class BotController : MonoBehaviour
                 }
             }
         }
+
+        foreach (var i in colliders)
+        {
+            if (i != null && i.CompareTag("ice"))
+            {
+                OnIce = true;
+            }
+        }
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -97,6 +136,14 @@ public class BotController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        foreach (var i in colliders)
+        {
+            if (i != null && i.CompareTag("ice"))
+            {
+                OnIce = false;
+            }
+        }
+
         colliders.Clear();
     }
 }

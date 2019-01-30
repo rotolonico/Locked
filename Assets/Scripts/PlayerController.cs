@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     private GameObject currentPlayerSpawn;
     public bool hasLimitedMoves;
     public bool isKeyListUp;
+    public bool sliding;
 
     public int movesLimit;
 
@@ -186,15 +187,15 @@ public class PlayerController : MonoBehaviour
                 Quaternion.identity).SetParent(keyHolder, false);
             GetKeySound.Play();
         }
+        
+        if (other.gameObject.CompareTag("checkpoint"))
+        {
+            CheckpointTouched();
+        }
 
         if (other.gameObject.CompareTag("end"))
         {
             EndLevel();
-        }
-
-        if (other.gameObject.CompareTag("checkpoint"))
-        {
-            CheckpointTouched();
         }
     }
 
@@ -273,16 +274,24 @@ public class PlayerController : MonoBehaviour
                 if (EditorHandler.beatenLevelNumber < EditorHandler.currentLevelNumber)
                 {
                     EditorHandler.beatenLevelNumber = EditorHandler.currentLevelNumber;
-                    EditorHandler.SaveToFile(EditorHandler.beatenLevelNumber, EditorHandler.isnotFirstTimeEditor, !EditorHandler.isnotFirstSelectTime, !EditorHandler.isnotFirstPlaceTime, EditorHandler.isnotFirstSokobanPlaceTime);
+                    EditorHandler.SaveToFile(EditorHandler.beatenLevelNumber, EditorHandler.isnotFirstTimeEditor, !EditorHandler.isnotFirstSelectTime, !EditorHandler.isnotFirstPlaceTime, EditorHandler.isnotFirstSokobanPlaceTime, EditorHandler.isnotFirstChangeLayerTime);
                 }
                 editorHandler.LoadNormalLevelInLevelScene(EditorHandler.currentLevelNumber+1);
                 Destroy(GameObject.FindGameObjectWithTag("playerSpawn"));
             }
             else
-            {
-                Destroy(GameObject.Find("EditorHandler"));
+            {   
                 Destroy(GameObject.FindGameObjectWithTag("playerSpawn"));
-                SceneManager.LoadScene(0);
+                
+                if (EditorHandler.playingOnlineLevel)
+                {
+                    editorHandler.OnlineLevelsRoom();
+                }
+                else
+                {
+                    SceneManager.LoadScene(0);
+                    Destroy(GameObject.Find("EditorHandler"));
+                }
             }
         }
     }

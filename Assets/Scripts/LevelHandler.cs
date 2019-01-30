@@ -12,6 +12,7 @@ public class LevelHandler : MonoBehaviour
     public delegate void OnLevelsMetadataDownloadCompleted(Dictionary<string, LevelMetadata> levels);
     public delegate void OnLevelDownloadCompleted(Level level);
     public delegate void OnCheckLikeCompleted(bool isLiked);
+    public delegate void OnCheckWinCompleted(bool isLiked);
 
     private Button randomLevel;
     

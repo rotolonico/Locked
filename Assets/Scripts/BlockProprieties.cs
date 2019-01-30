@@ -10,4 +10,5 @@ public class BlockProprieties
     public int limitedStep;
     public int movesLimit;
     public string randomType;
+    public bool hidden;
 }

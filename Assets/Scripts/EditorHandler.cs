@@ -21,12 +21,15 @@ using Version = System.Version;
 
 public class EditorHandler : MonoBehaviour
 {
-    public string Version = "v0.6-alpha"; 
+    public string Version = "v0.7-alpha"; 
     
     public GameObject selectedObject;
     public GameObject GridSprite;
     public AudioSource EditorMusic;
     private static AudioSource menuMusic;
+
+    public Color hiddenLayerColor;
+    public Color normalColor;
 
     private Plane mouseHitPlane;
     private Ray mousePositionRay;
@@ -63,6 +66,7 @@ public class EditorHandler : MonoBehaviour
     public static bool GameOver;
     public static bool isBackToCheckpoint;
     public static bool playingOnlineLevel;
+    public static bool loadOnlineLevel;
 
     public Sprite[] LimitedSprites;
 
@@ -87,11 +91,11 @@ public class EditorHandler : MonoBehaviour
 
     private GameObject blockImage;
     private GameObject saveLevelWindow;
-    private GameObject shareLevelWindow;
     private GameObject helpWindow;
     private GameObject helpWindow2;
     private GameObject helpWindow3;
     private GameObject helpWindow4;
+    private GameObject helpWindow5;
     private GameObject quitLevelWindow;
     private GameObject publishLevelWindow;
     private GameObject newLevelWindow;
@@ -101,9 +105,7 @@ public class EditorHandler : MonoBehaviour
     private GameObject loadLevel;
     private GameObject levelText;
     private GameObject levelTextHint;
-    private Animator shareButtonAnimator;
     private Animator helpButtonAnimator;
-    private Button shareButton;
     private Button newLevelButton;
     private Toggle gridToggle;
     private Animator newLevelButtonAnimator;
@@ -112,11 +114,12 @@ public class EditorHandler : MonoBehaviour
     private Button settingsButton;
     private Animator settingsButtonAnimator;
     private Text levelCodeHint;
-    private InputField shareInputField;
     private InputField inputField;
     private Animator keyHolderAnimator;
     private Toggle changeToolToggle;
     private Animator changeToolAnimator;
+    private Toggle changeLayerToggle;
+    private Animator changeLayerAnimator;
     private Image blockImageImage;
     private PlayerController playerController;
     public GameObject BlockSettings;
@@ -127,6 +130,7 @@ public class EditorHandler : MonoBehaviour
     public static bool isnotFirstSelectTime;
     public static bool isnotFirstPlaceTime;
     public static bool isnotFirstSokobanPlaceTime;
+    public static bool isnotFirstChangeLayerTime;
     public static int currentLevelNumber;
     public static int maxLevelNumber = 14;
     public static bool isOnline;
@@ -436,11 +440,11 @@ public class EditorHandler : MonoBehaviour
         blockImageImage = blockImage.GetComponent<Image>();
         saveLevelWindow = GameObject.Find("SaveLevelWindow");
         tutorialText = GameObject.Find("TutorialText").GetComponent<Text>();
-        shareLevelWindow = GameObject.Find("ShareLevelWindow");
         helpWindow = GameObject.Find("HelpWindow");
         helpWindow2 = GameObject.Find("HelpWindow 2");
         helpWindow3 = GameObject.Find("HelpWindow 3");
         helpWindow4 = GameObject.Find("HelpWindow 4");
+        helpWindow5 = GameObject.Find("HelpWindow 5");
         quitLevelWindow = GameObject.Find("QuitLevelWindow");
         newLevelWindow = GameObject.Find("NewLevelWindow");
         levelSizeWindow = GameObject.Find("LevelSizeWindow");
@@ -448,15 +452,12 @@ public class EditorHandler : MonoBehaviour
         saveLevel = GameObject.Find("SaveLevel");
         loadLevel = GameObject.Find("LoadLevel");
         levelText = GameObject.Find("LevelName");
-        levelTextHint = GameObject.Find("LevelNameHint");
-        shareButtonAnimator = GameObject.Find("ShareButton").GetComponent<Animator>();
-        shareButton = GameObject.Find("ShareButton").GetComponent<Button>();
-        levelCodeHint = GameObject.Find("LevelCodeHint").GetComponent<Text>();
-        shareInputField = GameObject.Find("ShareInputField").GetComponent<InputField>();
         inputField = GameObject.Find("InputField").GetComponent<InputField>();
         keyHolderAnimator = GameObject.FindGameObjectWithTag("keyInventory").GetComponent<Animator>();
         changeToolToggle = GameObject.FindGameObjectWithTag("changeTool").GetComponent<Toggle>();
+        changeLayerToggle = GameObject.Find("LayerToggle").GetComponent<Toggle>();
         changeToolAnimator = GameObject.FindGameObjectWithTag("changeTool").GetComponent<Animator>();
+        changeLayerAnimator = GameObject.Find("LayerToggle").GetComponent<Animator>();
         publishLevelWindow = GameObject.Find("PublishLevelWindow");
         publishLevelWindowAnimator = GameObject.Find("PublishLevelWindow").GetComponent<Animator>();
         settingsButton = GameObject.Find("SettingsButton").GetComponent<Button>();
@@ -471,11 +472,11 @@ public class EditorHandler : MonoBehaviour
         editorTutorialText[3] =
             "The \"save button\" will make you able to save the level you are\ncreating\nGive the save a name and then use the \"load button\" to load it back in";
         editorTutorialText[4] =
-            "Are you ready to share your level with the world?\nClick on the \"share button\" and the level code will be copied\ninto your clipboard\nYou can send the code to a friend or load in a level from a friend by clicking on the \"load button\" in the share level window";
+            "Are you ready to publish your level to the world?\nClick on the \"publish button\" and, after you verified it\nyour level will be visible to everyone in the online levels section!";
         editorTutorialText[5] =
-            "As of right now there are two different tools you can use to \nmake your levels:\n- The draw tool, that allows you to place blocks in your level\n- The selection tool, that allows you to select a group of blocks, move, clone (ctrl+c) or delete them (canc)\nUse the \"change tool button\" to switch between the tools";
+            "As of right now there are two different tools you can use to \nmake your levels:\n- The draw tool, that allows you to place blocks in your level\n- The selection tool, that allows you to select a group of blocks\nmove, clone (ctrl+c) or delete them (canc)\nUse the \"change tool button\" to switch between the tools";
         editorTutorialText[6] =
-            "Finally, you can click on the \"grid button\" to show/hide an useful grid that will indicate the rooms' borders";
+            "Finally, you can click on the \"grid button\" to show/hide\n an useful grid that will indicate the rooms' borders";
         editorTutorialText[7] = "You can access this tutorial at any time by clicking on the \"help button\"";
 
         if (GameObject.FindGameObjectWithTag("Player") != null)
@@ -483,7 +484,6 @@ public class EditorHandler : MonoBehaviour
             playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         }
 
-        shareInputField.characterValidation = InputField.CharacterValidation.EmailAddress;
         inputField.characterValidation = InputField.CharacterValidation.EmailAddress;
         levelRowsText.characterValidation = InputField.CharacterValidation.Integer;
         levelColumnsText.characterValidation = InputField.CharacterValidation.Integer;
@@ -511,9 +511,14 @@ public class EditorHandler : MonoBehaviour
     }
 
     void Update()
-    {
+    {        
         if (!EditorInitialized && SceneManager.GetActiveScene().buildIndex == 1)
         {
+            if (loadOnlineLevel)
+            {
+                LoadLevelInEditor(onlineLevel: true);
+            }
+
             if (!isnotFirstTimeEditor)
             {
                 EditorFirstTime();
@@ -596,7 +601,10 @@ public class EditorHandler : MonoBehaviour
                                 {
                                     if (!i.gameObject.CompareTag("LevelWall"))
                                     {
-                                        Destroy(i.gameObject);
+                                        if (!i.gameObject.GetComponent<SelectSprite>().hidden)
+                                        {
+                                            Destroy(i.gameObject);
+                                        }
                                     }
                                 }
 
@@ -627,8 +635,8 @@ public class EditorHandler : MonoBehaviour
             {
                 if (movingSelection)
                 {
-                    Vector2 levelEdgeA = new Vector2(-levelRows / 2 - 5, -levelColumns / 2 -5);
-                    Vector2 levelEdgeB = new Vector2(levelRows / 2 + 5, levelColumns / 2 + 5);
+                    Vector2 levelEdgeA = new Vector2(-levelColumns / 2 - 5, -levelRows / 2 -5);
+                    Vector2 levelEdgeB = new Vector2(levelColumns / 2 + 5, levelRows / 2 + 5);
                     
                     var allSprites = Physics2D.OverlapAreaAll(levelEdgeA, levelEdgeB);
                     mousePositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -709,7 +717,7 @@ public class EditorHandler : MonoBehaviour
                 {
                     foreach (var i in selectedColliders)
                     {
-                        if (i != null && i.GetComponent<SelectSprite>() != null)
+                        if (i != null && i.GetComponent<SelectSprite>() != null && !i.gameObject.GetComponent<SelectSprite>().hidden)
                         {
                             Destroy(i.gameObject);
                         }
@@ -749,7 +757,7 @@ public class EditorHandler : MonoBehaviour
                         {
                             foreach (var i in selectedColliders)
                             {
-                                if (i != null && i.GetComponent<SelectSprite>() != null)
+                                if (i != null && i.GetComponent<SelectSprite>() != null && !i.GetComponent<SelectSprite>().hidden)
                                 {
                                     i.GetComponent<SelectSprite>().Deselect();
                                     i.GetComponent<SpriteRenderer>().color = Color.white;
@@ -767,8 +775,11 @@ public class EditorHandler : MonoBehaviour
 
                             if (i.GetComponent<SelectSprite>() != null)
                             {
-                                i.GetComponent<SelectSprite>().Select();
-                                i.GetComponent<SpriteRenderer>().color = Color.grey;
+                                if (!i.GetComponent<SelectSprite>().hidden)
+                                {
+                                    i.GetComponent<SelectSprite>().Select();
+                                    i.GetComponent<SpriteRenderer>().color = Color.grey;
+                                }
                             }
                         }
                     }
@@ -793,7 +804,10 @@ public class EditorHandler : MonoBehaviour
                     {
                         foreach (var i in hitColliders)
                         {
-                            Destroy(i.gameObject);
+                            if (!i.gameObject.GetComponent<SelectSprite>().hidden)
+                            {
+                                Destroy(i.gameObject);
+                            }
                         }
 
                         if (selectedObject.CompareTag("1"))
@@ -1028,8 +1042,11 @@ public class EditorHandler : MonoBehaviour
             {
                 if (i.GetComponent<SelectSprite>() != null && i.GetComponent<SelectSprite>().selected)
                 {
-                    i.GetComponent<SelectSprite>().Deselect();
-                    i.GetComponent<SpriteRenderer>().color = Color.white;
+                    if (!i.GetComponent<SelectSprite>().hidden)
+                    {
+                        i.GetComponent<SelectSprite>().Deselect();
+                        i.GetComponent<SpriteRenderer>().color = Color.white;
+                    }
                 }
             }
 
@@ -1050,10 +1067,10 @@ public class EditorHandler : MonoBehaviour
         helpButton.enabled = false;
         saveButton.enabled = false;
         publishButton.enabled = false;
-        shareButton.enabled = false;
         changeToolToggle.enabled = false;
+        changeLayerToggle.enabled = false;
         changeToolAnimator.Play("InversePopupAnimation");
-        shareButtonAnimator.Play("GorightAnimation");
+        changeLayerAnimator.Play("InversePopupAnimation");
         animatorToggle.Play("GoleftAnimation");
         settingsButtonAnimator.Play("GoleftAnimation");
         animatorBack.Play("GorightAnimation");
@@ -1101,11 +1118,11 @@ public class EditorHandler : MonoBehaviour
         saveButton.enabled = true;
         publishButton.enabled = true;
         settingsButton.enabled = true;
-        shareButton.enabled = true;
         changeToolToggle.enabled = true;
+        changeLayerToggle.enabled = true;
         gridToggleAnimator.Play("InversePopdownAnimation");
         changeToolAnimator.Play("InversePopdownAnimation");
-        shareButtonAnimator.Play("GoleftbackAnimation");
+        changeLayerAnimator.Play("InversePopdownAnimation");
         animatorToggle.Play("GorightbackAnimation");
         settingsButtonAnimator.Play("GorightbackAnimation");
         animatorBack.Play("GoleftbackAnimation");
@@ -1128,7 +1145,12 @@ public class EditorHandler : MonoBehaviour
 
     public void LoadRandomLevel()
     {
-        DatabaseHandler.GetLevel(LevelHandler.GetRandomOnlineLevel(), level => { LoadOnlineLevelInLevelScene(level); });
+        DatabaseHandler.GetLevel(LevelHandler.GetRandomOnlineLevel(), level =>
+        {
+            onlineLevelId = level.id;
+            playingOnlineLevel = true;
+            LoadOnlineLevelInLevelScene(level);
+        });
     }
 
     private string SaveLevel1()
@@ -1218,7 +1240,13 @@ public class EditorHandler : MonoBehaviour
         Camera.main.GetComponent<CameraController>().Initialize();
     }
 
-    public void LoadLevelInEditor(Level level = null, bool sparePlayer = false)
+    public void LoadOnlineLevelInEditor()
+    {
+        EditorScene();
+        loadOnlineLevel = true;
+    }
+
+    public void LoadLevelInEditor(Level level = null, bool sparePlayer = false, bool onlineLevel = false)
     {
         EditorInitialize();
         if (level == null)
@@ -1231,6 +1259,20 @@ public class EditorHandler : MonoBehaviour
         LoadLevelGeneric(editorBlocks, level, true, sparePlayer);
         playMode = false;
         yesSound.Play();
+        loadOnlineLevel = false;
+        if (onlineLevel)
+        {
+            publishButtonAnimator.GetComponent<Button>().interactable = false;
+            saveButtonAnimator.GetComponent<Button>().interactable = false;
+            loadButtonAnimator.GetComponent<Button>().interactable = false;
+            newLevelButtonAnimator.GetComponent<Button>().interactable = false;
+            helpButtonAnimator.GetComponent<Button>().interactable = false;
+            Destroy(publishButtonAnimator.GetComponent<Image>());
+            Destroy(saveButtonAnimator.gameObject.GetComponent<Image>());
+            Destroy(loadButtonAnimator.gameObject.GetComponent<Image>());
+            Destroy(newLevelButtonAnimator.gameObject.GetComponent<Image>());
+            Destroy(helpButtonAnimator.gameObject.GetComponent<Image>());
+        }
     }
 
     private void LoadLevelGeneric(GameObject[] spawnableBlocks, Level level, bool editorLoad, bool sparePlayer = false)
@@ -1275,23 +1317,33 @@ public class EditorHandler : MonoBehaviour
                     {
                         var newBlockPosition = newBlock.transform.position;
                         newBlock.transform.position = new Vector3(newBlockPosition.x, newBlockPosition.y, 515);
+
+                        var newBlockSelectSprite = newBlock.GetComponent<SelectSprite>();
+                        var newBlockSpriteRenderer = newBlock.GetComponent<SpriteRenderer>();
+
+                        if (block.hidden)
+                        {
+                            newBlockSpriteRenderer.color = hiddenLayerColor;
+                            newBlockSpriteRenderer.sortingOrder -= 5;
+                            newBlockSelectSprite.hidden = true;
+                        }
                         
                         // Player
                         if (block.id == 1)
                         {
-                            newBlock.GetComponent<SelectSprite>().movesLimit = block.movesLimit;
+                            newBlockSelectSprite.movesLimit = block.movesLimit;
                         }
 
                         // Limited Block
                         if (block.id == 25)
                         {
-                            newBlock.GetComponent<SelectSprite>().limitedStep = block.limitedStep;
-                            newBlock.GetComponent<SpriteRenderer>().sprite = LimitedSprites[block.limitedStep-1];
+                            newBlockSelectSprite.limitedStep = block.limitedStep;
+                            newBlockSpriteRenderer.sprite = LimitedSprites[block.limitedStep-1];
                         }
                         
                         if (block.id == 34)
                         {
-                            newBlock.GetComponent<SelectSprite>().randomType = block.randomType;
+                            newBlockSelectSprite.randomType = block.randomType;
                         }
                     }
                 }
@@ -1403,6 +1455,9 @@ public class EditorHandler : MonoBehaviour
             playMode = false;
             reloadLevel = true;
             SceneManager.LoadScene(1);
+        } else if (playingOnlineLevel)
+        {
+            OnlineLevelsRoom();
         }
         else
         {
@@ -1452,12 +1507,11 @@ public class EditorHandler : MonoBehaviour
         playButtonToggle.transform.SetAsFirstSibling();
         saveButton.transform.SetAsFirstSibling();
         loadButtonAnimator.transform.SetAsFirstSibling();
-        shareButton.transform.SetAsFirstSibling();
         changeToolToggle.transform.SetAsFirstSibling();
         gridToggle.transform.SetAsFirstSibling();
         saveButton.enabled = true;
+        publishButton.enabled = true;
         loadButtonAnimator.GetComponent<Button>().enabled = true;
-        shareButton.enabled = true;
         helpButton.enabled = true;
         noSound.Play();
     }
@@ -1502,14 +1556,14 @@ public class EditorHandler : MonoBehaviour
             saveButton.enabled = true;
             loadButtonAnimator.transform.SetAsFirstSibling();
             loadButtonAnimator.GetComponent<Button>().enabled = true;
-            shareButton.enabled = false;
-            shareButton.transform.SetAsLastSibling();
+            publishButton.enabled = false;
+            publishButton.transform.SetAsLastSibling();
         }
 
         if (tutorialProgress == 5)
         {
-            shareButton.transform.SetAsFirstSibling();
-            shareButton.enabled = true;
+            publishButton.transform.SetAsFirstSibling();
+            publishButton.enabled = true;
             changeToolToggle.transform.SetAsLastSibling();
         }
 
@@ -1662,17 +1716,7 @@ public class EditorHandler : MonoBehaviour
         saveLevel.GetComponent<Image>().enabled = false;
         levelTextHint.GetComponent<Text>().text = "Level name";
     }
-
-    public void ShareLevelWindow()
-    {
-        EditorInitialize();
-        shareInputField.text = "";
-        blockImage.GetComponent<Image>().raycastTarget = true;
-        blockImage.GetComponent<Animator>().Play("BlockImageTransparent");
-        shareLevelWindow.GetComponent<Animator>().Play("TopCanvasDown");
-        levelCodeHint.text = "Level code";
-    }
-
+    
     public void PublishLevelWindow()
     {
         EditorInitialize();
@@ -1834,20 +1878,22 @@ public class EditorHandler : MonoBehaviour
         helpWindow4.GetComponent<Animator>().Play("TopCanvasDown");
     }
 
+    public void HelpWindow5()
+    {
+        isnotFirstChangeLayerTime = true;
+        SaveData();
+        EditorInitialize();
+        blockImage.GetComponent<Image>().raycastTarget = true;
+        blockImage.GetComponent<Animator>().Play("BlockImageTransparent");
+        helpWindow5.GetComponent<Animator>().Play("TopCanvasDown");
+    }
+
     public void BackToMainCanvas()
     {
         EditorInitialize();
         blockImage.GetComponent<Image>().raycastTarget = false;
         blockImage.GetComponent<Animator>().Play("BlockImageTransparentReverse");
         saveLevelWindow.GetComponent<Animator>().Play("CanvasDown");
-    }
-
-    public void BackFromShareMainCanvas()
-    {
-        EditorInitialize();
-        blockImage.GetComponent<Image>().raycastTarget = false;
-        blockImage.GetComponent<Animator>().Play("BlockImageTransparentReverse");
-        shareLevelWindow.GetComponent<Animator>().Play("TopCanvasUp");
     }
 
     public void BackFromQuitMainCanvas()
@@ -1905,6 +1951,14 @@ public class EditorHandler : MonoBehaviour
         blockImage.GetComponent<Animator>().Play("BlockImageTransparentReverse");
         helpWindow4.GetComponent<Animator>().Play("TopCanvasUp");
     }
+    
+    public void BackFromHelpWindow5MainCanvas()
+    {
+        EditorInitialize();
+        blockImage.GetComponent<Image>().raycastTarget = false;
+        blockImage.GetComponent<Animator>().Play("BlockImageTransparentReverse");
+        helpWindow5.GetComponent<Animator>().Play("TopCanvasUp");
+    }
 
 
     public void CopyLevelToClipboard()
@@ -1927,29 +1981,6 @@ public class EditorHandler : MonoBehaviour
         }
     }
 
-    public void LoadLevelFromShare()
-    {
-        levelRows = 96;
-        levelColumns = 96;
-        
-        EditorInitialize();
-        shareInputField.characterLimit = 10000;
-        ClearEditor();
-        levelCodeHint.text = "Level successfully loaded";
-        try
-        {
-            LoadLevelInEditor1(Decompress(Convert.FromBase64String(shareInputField.text)));
-            ChangeSize(true);
-        }
-        catch
-        {
-            levelCodeHint.text = "Invalid level code";
-            noSound.Play();
-        }
-
-        shareInputField.text = "";
-    }
-
     public void TutorialLevel()
     {
         SceneManager.LoadScene(2);
@@ -1966,6 +1997,12 @@ public class EditorHandler : MonoBehaviour
         {
             AuthWindow();
         }
+    }
+
+    public void OnlineLevelsRoom()
+    {
+        SceneManager.LoadScene(4);
+        menuMusic.Play();
     }
 
     public void Exit()
@@ -2026,11 +2063,11 @@ public class EditorHandler : MonoBehaviour
 
     public static void SaveData()
     {
-        SaveToFile(beatenLevelNumber, isnotFirstTimeEditor, isnotFirstSelectTime, isnotFirstPlaceTime, isnotFirstSokobanPlaceTime);
+        SaveToFile(beatenLevelNumber, isnotFirstTimeEditor, isnotFirstSelectTime, isnotFirstPlaceTime, isnotFirstSokobanPlaceTime, isnotFirstChangeLayerTime);
     }
 
     public static void SaveToFile(int unlockedLevelNumber, bool firstTimeEditor, bool firstTimeSelectBool,
-        bool firstTimePlaceBool, bool firstTimeSokobanPlaceBool)
+        bool firstTimePlaceBool, bool firstTimeSokobanPlaceBool, bool firstTimeChangeLayerBool)
     {
         string destination = Application.persistentDataPath + "/save.lk";
         FileStream file;
@@ -2038,7 +2075,7 @@ public class EditorHandler : MonoBehaviour
         if (File.Exists(destination)) file = File.OpenWrite(destination);
         else file = File.Create(destination);
 
-        GameData data = new GameData(unlockedLevelNumber, firstTimeEditor, firstTimeSelectBool, firstTimePlaceBool, firstTimeSokobanPlaceBool);
+        GameData data = new GameData(unlockedLevelNumber, firstTimeEditor, firstTimeSelectBool, firstTimePlaceBool, firstTimeSokobanPlaceBool, firstTimeChangeLayerBool);
         BinaryFormatter bf = new BinaryFormatter();
         bf.Serialize(file, data);
         file.Close();
@@ -2064,13 +2101,44 @@ public class EditorHandler : MonoBehaviour
         isnotFirstSelectTime = data.firstTimeSelectBool;
         isnotFirstPlaceTime = data.firstTimePlaceBool;
         isnotFirstSokobanPlaceTime = data.firstTimeSokobanPlaceBool;
+        isnotFirstChangeLayerTime = data.firstTimeChangeLayerBool;
     }
 
     public void ClearData()
     {
-        SaveToFile(0, false, false, false, false);
+        SaveToFile(0, false, false, false, false, false);
         LoadToFile();
         BackFromClearDataWindow();
+    }
+
+    public void ChangeLayer()
+    {
+        var levelEdgeA = new Vector2(-levelColumns / 2-5, -levelRows / 2-5);
+        var levelEdgeB = new Vector2(levelColumns / 2+5, levelRows / 2+5);
+        var gameobjectsToClear = Physics2D.OverlapAreaAll(levelEdgeA, levelEdgeB);
+        foreach (var i in gameobjectsToClear)
+        {
+            var selectSprite = i.GetComponent<SelectSprite>();
+            var spriteRenderer = i.GetComponent<SpriteRenderer>();
+            if (selectSprite != null)
+            {
+                if (!selectSprite.hidden)
+                {
+                    spriteRenderer.color = hiddenLayerColor;
+                    spriteRenderer.sortingOrder -= 5;
+                    selectSprite.hidden = true;
+                    selectSprite.selected = false;
+                    
+                }
+                else
+                {
+                    spriteRenderer.color = normalColor;
+                    spriteRenderer.sortingOrder += 5;
+                    selectSprite.hidden = false;
+                }
+            }
+        }
+        
     }
 
     public void ChangeTool()
@@ -2084,7 +2152,7 @@ public class EditorHandler : MonoBehaviour
             var allSprites = Physics2D.OverlapAreaAll(levelEdgeA, levelEdgeB);
             foreach (var i in allSprites)
             {
-                if (i.GetComponent<SelectSprite>() != null && i.GetComponent<SelectSprite>().selected)
+                if (i.GetComponent<SelectSprite>() != null && i.GetComponent<SelectSprite>().selected && !i.GetComponent<SelectSprite>().hidden)
                 {
                     i.GetComponent<SelectSprite>().Deselect();
                     i.GetComponent<SpriteRenderer>().color = Color.white;
@@ -2098,6 +2166,7 @@ public class EditorHandler : MonoBehaviour
             changeToolToggle.GetComponentInChildren<Image>().sprite = mouseSprite;
         }
     }
+   
 
     public void VerifyLevel()
     {

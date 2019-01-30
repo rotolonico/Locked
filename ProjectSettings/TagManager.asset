@@ -90,6 +90,10 @@ TagManager:
   - SokobanBlock
   - 35
   - 36
+  - ice
+  - 37
+  - 38
+  - 39
   layers:
   - Default
   - TransparentFX

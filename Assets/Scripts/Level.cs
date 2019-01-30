@@ -40,26 +40,28 @@ public class Level
                 {
                     if (objectColliders[j].GetComponent<SelectSprite>() != null)
                     {
-                        // Block Id
+                        var selectSprite = objectColliders[j].GetComponent<SelectSprite>();
+                        
+                        // Generic Proprieties
                         blocks[j] = new BlockProprieties
-                            {id = objectColliders[j].GetComponent<SelectSprite>().spriteGameObjectId};
+                            {id = selectSprite.spriteGameObjectId, hidden = selectSprite.hidden};
 
                         // Player
                         if (blocks[j].id == 1)
                         {
-                            blocks[j].movesLimit = objectColliders[j].GetComponent<SelectSprite>().movesLimit;
+                            blocks[j].movesLimit = selectSprite.movesLimit;
                         }
                         
                         // Limited Block
                         if (blocks[j].id == 25)
                         {
-                            blocks[j].limitedStep = objectColliders[j].GetComponent<SelectSprite>().limitedStep;
+                            blocks[j].limitedStep = selectSprite.limitedStep;
                         }
                         
                         // Random Block
                         if (blocks[j].id == 34)
                         {
-                            blocks[j].randomType = objectColliders[j].GetComponent<SelectSprite>().randomType;
+                            blocks[j].randomType = selectSprite.randomType;
                         }
                     }
                 }

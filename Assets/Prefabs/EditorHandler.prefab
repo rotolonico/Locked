@@ -430,11 +430,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 758fa93b09767497bb8971a0f8fb68a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Version: v0.6-alpha
+  Version: v0.7-alpha
   selectedObject: {fileID: 1824743360916568, guid: b656334d9269b4304a015181a0a797e6,
     type: 3}
   GridSprite: {fileID: 1449965816380582, guid: 3ca74cb4e9510489382d303d53824db5, type: 3}
   EditorMusic: {fileID: 82415827176198800}
+  hiddenLayerColor: {r: 0, g: 0, b: 0, a: 0.5019608}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
   likedSprite: {fileID: 21300000, guid: 3cf2e92656b35f4079814a407cac2c6d, type: 3}
   randomSpawnableBlocks:
   - {fileID: 1558254850754806, guid: 5df0f255e7e6442ca9755481a72013fd, type: 3}
@@ -467,6 +469,9 @@ MonoBehaviour:
   - {fileID: 1255687477583996, guid: 6896983089610288fab8f0e0be40c08d, type: 3}
   - {fileID: 1255687477583996, guid: 9b65eca1d7b30f9a4b4e94e5e38d6f72, type: 3}
   - {fileID: 1255687477583996, guid: 4b791fe0cf0942e45989d3f9d06ac9ec, type: 3}
+  - {fileID: 2355358562835629357, guid: 985114bef5de51d0aaff863016ebf14a, type: 3}
+  - {fileID: 5005499124332806199, guid: ee406149445eb4e30b677c5cb5ae79e4, type: 3}
+  - {fileID: 8905087895652090003, guid: 8cf70e8433ec4e641b324620e602b08a, type: 3}
   randomSpawnablePortals:
   - {fileID: 1824994155587476, guid: dc18a5e9ea9374130a1ac76a5ba73c61, type: 3}
   - {fileID: 1593192299473846, guid: b88e41468cccc4785b67e54763d3b63a, type: 3}
@@ -490,6 +495,9 @@ MonoBehaviour:
   - {fileID: 1520846771506000, guid: 90a1033a4ca204ddfb208a01188c8ccb, type: 3}
   - {fileID: 1021680628884530, guid: f84458f4b8e4d4b27b9a935e5b0cff9b, type: 3}
   - {fileID: 1248265138960440, guid: 23902a2f0686e43d997e29d71f7c0a00, type: 3}
+  - {fileID: 2355358562835629357, guid: 985114bef5de51d0aaff863016ebf14a, type: 3}
+  - {fileID: 5005499124332806199, guid: ee406149445eb4e30b677c5cb5ae79e4, type: 3}
+  - {fileID: 8905087895652090003, guid: 8cf70e8433ec4e641b324620e602b08a, type: 3}
   randomSpawnableLimitedBlock: {fileID: 1255687477583996, guid: 3b0e97c9c38824ac69aa35fcbd0cd368,
     type: 3}
   blocks:
@@ -530,6 +538,9 @@ MonoBehaviour:
   - {fileID: 1961738246559576, guid: 25a548eefa79a43b4a70ce87de41bc34, type: 3}
   - {fileID: 8905087895652090003, guid: 379e43b6b44480aab8e45dfb06674d83, type: 3}
   - {fileID: 7834063406265386717, guid: b7cf0492c88343cabb003ca4f7131280, type: 3}
+  - {fileID: 2355358562835629357, guid: 985114bef5de51d0aaff863016ebf14a, type: 3}
+  - {fileID: 5005499124332806199, guid: ee406149445eb4e30b677c5cb5ae79e4, type: 3}
+  - {fileID: 8905087895652090003, guid: 8cf70e8433ec4e641b324620e602b08a, type: 3}
   editorBlocks:
   - {fileID: 1824743360916568, guid: b656334d9269b4304a015181a0a797e6, type: 3}
   - {fileID: 1824743360916568, guid: 348df6e8c70a2430e904a53945742e0a, type: 3}
@@ -568,6 +579,9 @@ MonoBehaviour:
   - {fileID: 1824743360916568, guid: a353e9d5650d04036bb139349e3a1eb7, type: 3}
   - {fileID: 1824743360916568, guid: 0fa5f34a6d3a4edc3821119033afac55, type: 3}
   - {fileID: 1824743360916568, guid: cae89d70bc80205359d63432ce7fb174, type: 3}
+  - {fileID: 1824743360916568, guid: eb73ca5039a125e7d82d8fea71c89ddd, type: 3}
+  - {fileID: 1824743360916568, guid: f175acda9d1ba0c5c8333776f3eb1f17, type: 3}
+  - {fileID: 1824743360916568, guid: 8021c3d7ac3dfbc89afd64ca7dcfd7ad, type: 3}
   levelButtons:
   - {fileID: 0}
   - {fileID: 0}
