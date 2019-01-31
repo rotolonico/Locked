@@ -21,7 +21,7 @@ using Version = System.Version;
 
 public class EditorHandler : MonoBehaviour
 {
-    public string Version = "v0.7-alpha"; 
+    public string Version = "v0.7.1-alpha"; 
     
     public GameObject selectedObject;
     public GameObject GridSprite;
@@ -1444,6 +1444,12 @@ public class EditorHandler : MonoBehaviour
         menuMusic = GameObject.Find("MenuMusic").GetComponent<AudioSource>();
         menuMusic.Stop();
         playMode = false;
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+        Destroy(GameObject.FindGameObjectWithTag("EditorHandler"));
     }
 
     public void LeaveEditorScene()

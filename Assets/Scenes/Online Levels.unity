@@ -819,7 +819,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 114326968246839122, guid: 68ee39613e8e04a96b5c1723c403e339,
           type: 3}
-        m_MethodName: LeaveEditorScene
+        m_MethodName: BackToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -5,4 +5,5 @@ using UnityEngine;
 public class IceBlockController : MonoBehaviour
 {
     public bool sliding;
+    public bool muted;
 }

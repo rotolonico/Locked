@@ -44,8 +44,24 @@ public class BlockLeftController : MonoBehaviour
 
     void Update()
     {
-        if (Swipe.SwipeRight && playerTouch && playerMovement.Movable && antiBlock.CheckMovement())
+        if (Swipe.SwipeRight && playerTouch && playerMovement.Movable && antiBlock.CheckMovement() && !playerController.sliding)
         {
+            if (iceBlock)
+            {
+                var blocks = GameObject.FindGameObjectsWithTag("block");
+                var sokobanBlocks = GameObject.FindGameObjectsWithTag("SokobanBlock");
+
+                foreach (var movableBlock in blocks)
+                {
+                    movableBlock.GetComponent<IceBlockController>().muted = true;
+                }
+
+                foreach (var movableSokobanBlock in sokobanBlocks)
+                {
+                    movableSokobanBlock.GetComponent<IceBlockController>().muted = true;
+                }
+            }
+            iceBlockController.muted = false;
             player.transform.position += Vector3.right;
             Move();
             if (playerController.hasLimitedMoves)
@@ -54,7 +70,7 @@ public class BlockLeftController : MonoBehaviour
                 playerController.ReloadMoves();
             }
         }
-        else if (Swipe.SwipeRight && playerMovement.Movable && playerTouch)
+        else if (Swipe.SwipeRight && playerMovement.Movable && playerTouch && !playerController.sliding)
         {
             HitWall.Play();
         }
@@ -62,7 +78,10 @@ public class BlockLeftController : MonoBehaviour
 
     private void Move()
     {
-        MoveSound.Play();
+        if (!iceBlockController.muted)
+        {
+            MoveSound.Play();
+        }
         blocked = false;
         Swipe.SwipeRight = false;
         block.transform.position += Vector3.right;

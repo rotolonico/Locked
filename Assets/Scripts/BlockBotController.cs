@@ -39,8 +39,24 @@ public class BlockBotController : MonoBehaviour
 
     void Update()
     {
-        if (Swipe.SwipeUp && playerTouch && playerMovement.Movable && antiBlock.CheckMovement())
+        if (Swipe.SwipeUp && playerTouch && playerMovement.Movable && antiBlock.CheckMovement() && !playerController.sliding)
         {
+            if (iceBlock)
+            {
+                var blocks = GameObject.FindGameObjectsWithTag("block");
+                var sokobanBlocks = GameObject.FindGameObjectsWithTag("SokobanBlock");
+
+                foreach (var movableBlock in blocks)
+                {
+                    movableBlock.GetComponent<IceBlockController>().muted = true;
+                }
+
+                foreach (var movableSokobanBlock in sokobanBlocks)
+                {
+                    movableSokobanBlock.GetComponent<IceBlockController>().muted = true;
+                }
+            }
+            iceBlockController.muted = false;
             Move();
             player.transform.position += Vector3.up;
             if (playerController.hasLimitedMoves)
@@ -49,7 +65,7 @@ public class BlockBotController : MonoBehaviour
                 playerController.ReloadMoves();
             }
         }
-        else if (Swipe.SwipeUp && playerMovement.Movable && playerTouch)
+        else if (Swipe.SwipeUp && playerMovement.Movable && playerTouch && !playerController.sliding)
         {
             HitWall.Play();
         }
@@ -58,7 +74,10 @@ public class BlockBotController : MonoBehaviour
     private void Move()
     {
         block.transform.position += Vector3.up;
-        MoveSound.Play();
+        if (!iceBlockController.muted)
+        {
+            MoveSound.Play();
+        }
         blocked = false;
         Swipe.SwipeUp = false;
         if (iceBlock)
