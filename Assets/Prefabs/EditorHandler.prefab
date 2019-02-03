@@ -431,10 +431,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 758fa93b09767497bb8971a0f8fb68a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Version: v0.7.1-alpha
+  Version: v0.7.2-alpha
   selectedObject: {fileID: 1824743360916568, guid: b656334d9269b4304a015181a0a797e6,
     type: 3}
   GridSprite: {fileID: 1449965816380582, guid: 3ca74cb4e9510489382d303d53824db5, type: 3}
+  ChallengeLevelButton: {fileID: 844830876433153999, guid: f30d88ea292b5db418f02e06534f99ca,
+    type: 3}
   EditorMusic: {fileID: 82415827176198800}
   hiddenLayerColor: {r: 0, g: 0, b: 0, a: 0.5019608}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -608,9 +610,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0d7baff0c2bd943f3aa11bf0d33b63c0, type: 3}
   - {fileID: 21300000, guid: b731acda68ad74c948ef3945349045ea, type: 3}
   - {fileID: 21300000, guid: cc1f750b0349d440a8a7bc4a521acbf3, type: 3}
-  placeSound: {fileID: 82662612019286780}
-  noSound: {fileID: 82997544024140416}
-  yesSound: {fileID: 82638142115433940}
+  placeSound: {fileID: 0}
+  noSound: {fileID: 0}
+  yesSound: {fileID: 0}
   playSprite: {fileID: 21300000, guid: 22265899093dd41be9fd86fa65d04be6, type: 3}
   pauseSprite: {fileID: 21300000, guid: 71f515159dc0c4047b966438196dba5a, type: 3}
   lockedLevelSprite: {fileID: 21300000, guid: 8e8dc5f6e8f7a471e91be3d727c9c3cf, type: 3}

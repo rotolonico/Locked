@@ -248,6 +248,12 @@ public class PlayerController : MonoBehaviour
     
     public void EndLevel()
     {
+        if (EditorHandler.playingChallenge)
+        {
+            DatabaseHandler.PostDailyChallengeScore(EditorHandler.DailyChallengeScore.ToString());
+            DatabaseHandler.PostDailyChallengeStreak(EditorHandler.DailyChallengeStreak.ToString());
+            EditorHandler.playingChallenge = false;
+        }
         if (EditorHandler.playingOnlineLevel)
         {
             DatabaseHandler.WinLevel(EditorHandler.onlineLevelId);

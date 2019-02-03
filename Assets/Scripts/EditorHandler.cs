@@ -21,10 +21,11 @@ using Version = System.Version;
 
 public class EditorHandler : MonoBehaviour
 {
-    public string Version = "v0.7.1-alpha"; 
+    public string Version = "v0.7.2-alpha"; 
     
     public GameObject selectedObject;
     public GameObject GridSprite;
+    public GameObject ChallengeLevelButton;
     public AudioSource EditorMusic;
     private static AudioSource menuMusic;
 
@@ -67,6 +68,10 @@ public class EditorHandler : MonoBehaviour
     public static bool isBackToCheckpoint;
     public static bool playingOnlineLevel;
     public static bool loadOnlineLevel;
+    public static bool playingChallenge;
+
+    public static int DailyChallengeScore;
+    public static int DailyChallengeStreak;
 
     public Sprite[] LimitedSprites;
 
@@ -159,6 +164,7 @@ public class EditorHandler : MonoBehaviour
     private InputField password;
     private Animator authWindowAnimator;
     private Animator clearDataWindowAnimator;
+    private Animator dailyChallengeWindowAnimator;
     private Animator newsWindowAnimator;
     private Text levelNameHint;
     private InputField levelName;
@@ -177,6 +183,13 @@ public class EditorHandler : MonoBehaviour
     private Canvas levelCanvas;
     private Canvas mainCanvas;
     private Text newsText;
+    private int challengeDay;
+    private string alreadyAttemptedDailyChallengeText = "You have already attempted the challenge today!\n Come back tomorrow";
+    
+    public delegate void OnDailyChallengeDayDownloadCompleted(string day); 
+    public delegate void OnDailyChallengeLevelDownloadCompleted(Level level);
+    public delegate void OnCheckAttemptChallengeCompleted(bool canAttempt);
+    public delegate void GenericStringCallback(string gString);
 
     public static string levelNameString;
     public static string levelAuthorString;
@@ -212,6 +225,23 @@ public class EditorHandler : MonoBehaviour
             DatabaseHandler.CheckVersion(Version);
             DatabaseHandler.GetNews();
         }
+    }
+
+    private void InitializeChallengeButtons()
+    {
+        DatabaseHandler.GetDailyChallengeNumber(day =>
+        {
+            challengeDay = int.Parse(day.Substring(1, day.Length - 2));
+            Debug.Log(challengeDay);
+            
+            for (int i = 0; i < challengeDay-1; i++)
+            {
+                var challengeLevel = Instantiate(ChallengeLevelButton, GameObject.Find("ButtonChallengeListContent").transform, false);
+                var dayNumber = i+1;
+                challengeLevel.GetComponentInChildren<Text>().text = dayNumber.ToString();
+                challengeLevel.GetComponent<Button>().onClick.AddListener(() => LoadDailyChallengeLevelInLevelScene(dayNumber.ToString()));
+            }
+        });
     }
 
     public static void CheckVersionFailed()
@@ -259,12 +289,14 @@ public class EditorHandler : MonoBehaviour
         mainCanvas.GetComponent<Animator>().Play("CanvasOpacity100");
     }
 
-    public static void OnlineMode()
+    public void OnlineMode()
     {
         isOnline = true;
         GameObject.Find("NewsButton").GetComponent<Button>().interactable = true;
         GameObject.Find("Authentication").GetComponent<Button>().interactable = true;
         GameObject.Find("Online Levels").GetComponent<Button>().interactable = true;
+        GameObject.Find("Challenges").GetComponent<Button>().interactable = true;
+        InitializeChallengeButtons();
     }
     
     private void InitializeButtons()
@@ -274,6 +306,7 @@ public class EditorHandler : MonoBehaviour
         password = GameObject.Find("Password").GetComponent<InputField>();
         authWindowAnimator = GameObject.Find("AuthenticationWindow").GetComponent<Animator>();
         clearDataWindowAnimator = GameObject.Find("ClearDataWindow").GetComponent<Animator>();
+        dailyChallengeWindowAnimator = GameObject.Find("DailyChallengeWindow").GetComponent<Animator>();
         newsText = GameObject.Find("News").GetComponent<Text>();
         newsWindowAnimator = GameObject.Find("NewsWindow").GetComponent<Animator>();
         signinButton = GameObject.Find("Signin").GetComponent<Button>();
@@ -387,6 +420,40 @@ public class EditorHandler : MonoBehaviour
         clearDataWindowAnimator.Play("TopCanvasUp");
         var levelCanvas = GameObject.Find("LevelCanvas");
         levelCanvas.GetComponent<Animator>().Play("CanvasOpacity100");
+    }
+    
+    public void DailyChallengeWindow()
+    {
+        if (AuthHandler.userId != null){
+            InitializeButtons();
+            GameObject.Find("PlayDailyChallenge").GetComponent<Button>().interactable = true;
+            mainCanvas.GetComponent<Animator>().Play("CanvasOpacity0");
+            dailyChallengeWindowAnimator.Play("TopCanvasDown");
+            
+            DatabaseHandler.GetDailyChallengeScore(score =>
+            {
+                GameObject.Find("DailyScore").GetComponent<Text>().text = "Your score: " + score;
+                DailyChallengeScore = int.Parse(score)+1;
+            });
+        
+            DatabaseHandler.GetDailyChallengeStreak(streak =>
+            {
+                GameObject.Find("DailyWinStreak").GetComponent<Text>().text = "Your winstreak: " + streak;
+                DailyChallengeStreak = int.Parse(streak)+1;
+            });
+        }
+        else
+        {
+            AuthWindow();
+        }
+    }
+    
+    public void BackFromDailyChallengeWindow()
+    {
+        InitializeButtons();
+        dailyChallengeWindowAnimator.Play("TopCanvasUp");
+        var mainCanvas = GameObject.Find("MainCanvas");
+        mainCanvas.GetComponent<Animator>().Play("CanvasOpacity100");
     }
 
     private void LevelButtonsInitialize()
@@ -2025,6 +2092,44 @@ public class EditorHandler : MonoBehaviour
         menuMusic.Stop();
     }
 
+    public void LoadCurrentDailyChallengeLevel()
+    {
+        placeSound = GameObject.Find("PlaceSound").GetComponent<AudioSource>();
+        noSound = GameObject.Find("NoSound").GetComponent<AudioSource>();
+        yesSound = GameObject.Find("YesSound").GetComponent<AudioSource>();
+        GameObject.Find("PlayDailyChallenge").GetComponent<Button>().interactable = false;
+        DatabaseHandler.GetDailyChallengeNumber(day =>
+        {
+            string challengeDay = day.Substring(1, day.Length - 2);
+            DatabaseHandler.CheckAttemptChallenge(challengeDay, canAttempt =>
+            {
+                if (canAttempt)
+                {
+                    DatabaseHandler.PostDailyChallengeStreak("0");
+                    DatabaseHandler.AttemptChallenge(challengeDay);
+                    LoadDailyChallengeLevelInLevelScene(challengeDay);
+                }
+                else
+                {
+                    AlreadyAttemptedDailyChallenge();
+                }
+            });
+        });
+        
+    }
+
+    private void AlreadyAttemptedDailyChallenge()
+    {
+        GameObject.Find("DailyChallengeExplanationText").GetComponent<Text>().text = alreadyAttemptedDailyChallengeText;
+        noSound.Play();
+    }
+
+    public void LoadDailyChallengeLevelInLevelScene(string challengeNumber)
+    {
+        playingChallenge = true;
+        DatabaseHandler.GetDailyChallengeLevel(challengeNumber, LoadOnlineLevelInLevelScene);
+    }
+
     public void RestartNormalLevelInLevelScene()
     {
         if (playingOnlineLevel)
@@ -2036,7 +2141,6 @@ public class EditorHandler : MonoBehaviour
         {
             objectSavedLevel = FromJsonToLevel(Resources.Load<TextAsset>("Levels/level" + currentLevelNumber).text);
         }
-
         SceneManager.LoadScene(3);
     }
 
@@ -2045,7 +2149,14 @@ public class EditorHandler : MonoBehaviour
         objectSavedLevel = level;
         menuMusic = GameObject.Find("MenuMusic").GetComponent<AudioSource>();
         menuMusic.Stop();
-        SceneManager.LoadScene(3);
+        if (playingChallenge)
+        {
+            SceneManager.LoadScene(5);
+        }
+        else
+        {
+            SceneManager.LoadScene(3);
+        }
     }
 
     public void ShowLevels()

@@ -6,8 +6,15 @@ using Proyecto26;
 using UnityEngine;
 using UnityScript.Steps;
 
-public class DatabaseHandler
-{    
+public class DatabaseHandler : MonoBehaviour
+{
+    private static EditorHandler editorHandler;
+    
+    private void Start()
+    {
+        editorHandler = GameObject.FindGameObjectWithTag("EditorHandler").GetComponent<EditorHandler>();
+    }
+
     public static readonly fsSerializer serializer = new fsSerializer();
     public static readonly string DatabaseURL = "https://project-id.firebaseio.com/";
     
@@ -17,6 +24,93 @@ public class DatabaseHandler
         level.id = ((long) (DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds).ToString();
 
         RestClient.Put<Level>(DatabaseURL + "levels/" + level.id + ".json?auth=" + AuthHandler.idToken, level);
+    }
+    
+    public static void PostDailyChallengeLevel(Level level, string levelDay)
+    {
+        RestClient.Put<Level>(DatabaseURL + "challenges/daily/levels/" + levelDay + ".json?auth=" + AuthHandler.idToken, level);
+    }
+    
+    public static void AttemptChallenge(string day)
+    {
+        string attempt = day;
+        
+        RestClient.Put<string>(DatabaseURL + "users/" + AuthHandler.userId + "/challenges/dailychallengeday.json?auth=" + AuthHandler.idToken,
+            attempt).Catch(error =>
+        {
+            Debug.Log(error);
+        });
+    }
+    
+    public static void CheckAttemptChallenge(string day, EditorHandler.OnCheckAttemptChallengeCompleted callback)
+    {   
+        RestClient.Get(DatabaseURL + "users/" + AuthHandler.userId + "/challenges/dailychallengeday.json?auth=" + AuthHandler.idToken).Then(response =>
+        {
+            if (response.Text != day)
+            {
+                callback(true);
+            }
+            else
+            {
+                callback(false);
+            }
+        }).Catch(error =>
+        {
+            Debug.Log(error);
+        });
+    }
+
+    public static void GetDailyChallengeScore(EditorHandler.GenericStringCallback callback)
+    {
+        RestClient.Get(DatabaseURL + "users/" + AuthHandler.userId + "/challenges/dailychallengescore.json?auth=" + AuthHandler.idToken).Then(response =>
+            {
+                Debug.Log(response.Text);
+                if (response.Text != "null")
+                {
+                    callback(response.Text);
+                }
+                else
+                {
+                    callback("0");
+                }
+            }).Catch(error =>
+        {
+            Debug.Log(error);
+        });
+    }
+    
+    public static void GetDailyChallengeStreak(EditorHandler.GenericStringCallback callback)
+    {
+        RestClient.Get(DatabaseURL + "users/" + AuthHandler.userId + "/challenges/dailychallengestreak.json?auth=" + AuthHandler.idToken).Then(response =>
+        {
+            if (response.Text != "null")
+            {
+                callback(response.Text);
+            }
+            else
+            {
+                callback("0");
+            }
+        }).Catch(error =>
+        {
+            Debug.Log(error);
+        });
+    }
+
+    public static void PostDailyChallengeScore(string score)
+    {
+        RestClient.Put(DatabaseURL + "users/" + AuthHandler.userId + "/challenges/dailychallengescore.json?auth=" + AuthHandler.idToken, score).Catch(error =>
+        {
+            Debug.Log(error);
+        });
+    }
+    
+    public static void PostDailyChallengeStreak(string streak)
+    {
+        RestClient.Put(DatabaseURL + "users/" + AuthHandler.userId + "/challenges/dailychallengestreak.json?auth=" + AuthHandler.idToken, streak).Catch(error =>
+        {
+            Debug.Log(error);
+        });
     }
     
     public static void LikeLevel(string levelId)
@@ -158,6 +252,17 @@ public class DatabaseHandler
             Debug.Log(error);
         });
     }
+    
+    public static void GetDailyChallengeNumber(EditorHandler.OnDailyChallengeDayDownloadCompleted callback)
+    {
+        RestClient.Get(DatabaseURL + "challenges/daily/day.json").Then(response =>
+        {
+            callback(response.Text);
+        }).Catch(error =>
+        {
+            Debug.Log(error);
+        });
+    }
 
     public static void GetLevel(string levelId, LevelHandler.OnLevelDownloadCompleted callback)
     {
@@ -167,8 +272,21 @@ public class DatabaseHandler
         });
     }
     
+    public static void GetDailyChallengeLevel(string levelDay, EditorHandler.OnDailyChallengeLevelDownloadCompleted callback)
+    {
+        RestClient.Get<Level>(DatabaseURL + "challenges/daily/levels/" + levelDay + ".json?auth=" + AuthHandler.idToken).Then(response =>
+        {
+            callback(response);
+        }).Catch(error =>
+        {
+            Debug.Log(error);
+        });
+    }
+    
+    
     public static void CheckVersion(string version)
     {
+        editorHandler = GameObject.FindGameObjectWithTag("EditorHandler").GetComponent<EditorHandler>();
         RestClient.Get(DatabaseURL + "gamedata/version.json").Then(response =>
         {
             version = "\"" + version + "\"";
@@ -178,13 +296,14 @@ public class DatabaseHandler
             }
             else
             {
-                EditorHandler.OnlineMode();
+                editorHandler.OnlineMode();
                 GameObject.Find("MainCanvas").GetComponent<Canvas>().enabled = true;
             }
 
             EditorHandler.checkVersion = true;
         }).Catch(error =>
         {
+            Debug.Log(error);
             EditorHandler.CheckVersionFailed();
             EditorHandler.checkVersion = true;
         });
