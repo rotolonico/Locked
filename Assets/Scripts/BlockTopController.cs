@@ -6,7 +6,7 @@ using UnityEngine;
 public class BlockTopController : MonoBehaviour
 {
     private String[] unpassableBlocksTags = {"Wall", "Lock", "block", "RightOnly", "DownOnly", "LeftOnly", "LevelWall", "SokobanBlock"};
-    private readonly String[] unpassableSokobanBlocksTags = {"Wall", "Lock", "block", "UpOnly", "RightOnly", "LeftOnly", "LevelWall", "SokobanBlock", "Hole"};
+    private readonly String[] unpassableSokobanBlocksTags = {"Wall", "Lock", "block", "DownOnly", "RightOnly", "LeftOnly", "LevelWall", "SokobanBlock", "Hole"};
     public bool movable = true;
     public bool iceBlock;
     private bool blocked;

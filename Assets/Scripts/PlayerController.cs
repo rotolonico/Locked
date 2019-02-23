@@ -248,16 +248,33 @@ public class PlayerController : MonoBehaviour
     
     public void EndLevel()
     {
+        Debug.Log(EditorHandler.PublishMode);
         if (EditorHandler.playingChallenge)
         {
             DatabaseHandler.PostDailyChallengeScore(EditorHandler.DailyChallengeScore.ToString());
             DatabaseHandler.PostDailyChallengeStreak(EditorHandler.DailyChallengeStreak.ToString());
             EditorHandler.playingChallenge = false;
         }
-        if (EditorHandler.playingOnlineLevel)
+        
+        if (EditorHandler.playingOnlineLevel && !EditorHandler.onChallenge)
         {
             DatabaseHandler.WinLevel(EditorHandler.onlineLevelId);
         }
+
+        if (EditorHandler.onChallenge && !EditorHandler.playingChallenge)
+        {
+            if (EditorHandler.challengeDay > int.Parse(EditorHandler.currentChallengeNumber) + 1)
+            {
+                editorHandler.LoadDailyChallengeLevelInLevelScene(
+                    (int.Parse(EditorHandler.currentChallengeNumber) + 1).ToString(), false);
+            }
+            else
+            {
+                SceneManager.LoadScene(0);
+                Destroy(GameObject.Find("EditorHandler"));
+            }
+        }
+        
         if (EditorHandler.PublishMode)
         {
             DatabaseHandler.PostLevel(EditorHandler.objectSavedLevel);
@@ -289,11 +306,11 @@ public class PlayerController : MonoBehaviour
             {   
                 Destroy(GameObject.FindGameObjectWithTag("playerSpawn"));
                 
-                if (EditorHandler.playingOnlineLevel)
+                if (EditorHandler.playingOnlineLevel && !EditorHandler.onChallenge)
                 {
                     editorHandler.OnlineLevelsRoom();
                 }
-                else
+                else if (!EditorHandler.onChallenge)
                 {
                     SceneManager.LoadScene(0);
                     Destroy(GameObject.Find("EditorHandler"));

@@ -9,7 +9,7 @@ public class BlockLeftController : MonoBehaviour
         {"Wall", "Lock", "block", "UpOnly", "DownOnly", "RightOnly", "LevelWall", "SokobanBlock"};
 
     private readonly String[] unpassableSokobanBlocksTags =
-        {"Wall", "Lock", "block", "UpOnly", "RightOnly", "LeftOnly", "LevelWall", "SokobanBlock", "Hole"};
+        {"Wall", "Lock", "block", "UpOnly", "RightOnly", "DownOnly", "LevelWall", "SokobanBlock", "Hole"};
 
     public bool movable = true;
     public bool iceBlock;

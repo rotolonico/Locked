@@ -21,7 +21,7 @@ using Version = System.Version;
 
 public class EditorHandler : MonoBehaviour
 {
-    public string Version = "v0.7.2-alpha"; 
+    public string Version = "v0.7.3-alpha"; 
     
     public GameObject selectedObject;
     public GameObject GridSprite;
@@ -142,6 +142,8 @@ public class EditorHandler : MonoBehaviour
     public static bool checkVersion;
     public static string News;
     public static string onlineLevelId;
+    public static bool onChallenge;
+    public static string currentChallengeNumber;
 
     private Vector3 mousePosition;
     private Vector3 mouseEndPosition;
@@ -183,7 +185,7 @@ public class EditorHandler : MonoBehaviour
     private Canvas levelCanvas;
     private Canvas mainCanvas;
     private Text newsText;
-    private int challengeDay;
+    public static int challengeDay;
     private string alreadyAttemptedDailyChallengeText = "You have already attempted the challenge today!\n Come back tomorrow";
     
     public delegate void OnDailyChallengeDayDownloadCompleted(string day); 
@@ -232,14 +234,13 @@ public class EditorHandler : MonoBehaviour
         DatabaseHandler.GetDailyChallengeNumber(day =>
         {
             challengeDay = int.Parse(day.Substring(1, day.Length - 2));
-            Debug.Log(challengeDay);
             
             for (int i = 0; i < challengeDay-1; i++)
             {
                 var challengeLevel = Instantiate(ChallengeLevelButton, GameObject.Find("ButtonChallengeListContent").transform, false);
                 var dayNumber = i+1;
                 challengeLevel.GetComponentInChildren<Text>().text = dayNumber.ToString();
-                challengeLevel.GetComponent<Button>().onClick.AddListener(() => LoadDailyChallengeLevelInLevelScene(dayNumber.ToString()));
+                challengeLevel.GetComponent<Button>().onClick.AddListener(() => LoadDailyChallengeLevelInLevelScene(dayNumber.ToString(), false));
             }
         });
     }
@@ -1471,7 +1472,7 @@ public class EditorHandler : MonoBehaviour
 
     public void RestartLevelFromCp()
     {
-        if (playingOnlineLevel)
+        if (playingOnlineLevel && !onChallenge)
         {
             DatabaseHandler.RestartLevel(onlineLevelId);
         }
@@ -1495,12 +1496,19 @@ public class EditorHandler : MonoBehaviour
         }
         else
         {
-            Swipe.delay = true;
-            GameObject.Find("EditorHandler").GetComponent<Swipe>().Initiate();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            if (GameObject.FindGameObjectWithTag("playerSpawn"))
+            if (!playingChallenge)
             {
-                isBackToCheckpoint = true;
+                Swipe.delay = true;
+                GameObject.Find("EditorHandler").GetComponent<Swipe>().Initiate();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                if (GameObject.FindGameObjectWithTag("playerSpawn"))
+                {
+                    isBackToCheckpoint = true;
+                }
+            }
+            else
+            {
+                LeaveEditorScene();
             }
         }
     }
@@ -1528,12 +1536,13 @@ public class EditorHandler : MonoBehaviour
             playMode = false;
             reloadLevel = true;
             SceneManager.LoadScene(1);
-        } else if (playingOnlineLevel)
+        } else if (playingOnlineLevel && !onChallenge)
         {
             OnlineLevelsRoom();
         }
         else
         {
+            onChallenge = false;
             SceneManager.LoadScene(0);
             Destroy(GameObject.FindGameObjectWithTag("EditorHandler"));
         }
@@ -2075,6 +2084,9 @@ public class EditorHandler : MonoBehaviour
     public void OnlineLevelsRoom()
     {
         SceneManager.LoadScene(4);
+        playMode = true;
+        EditorMusic.Stop();
+        musicOn = false;
         menuMusic.Play();
     }
 
@@ -2124,17 +2136,23 @@ public class EditorHandler : MonoBehaviour
         noSound.Play();
     }
 
-    public void LoadDailyChallengeLevelInLevelScene(string challengeNumber)
+    public void LoadDailyChallengeLevelInLevelScene(string challengeNumber, bool isPlayingChallenge = true)
     {
-        playingChallenge = true;
+        playingChallenge = isPlayingChallenge;
+        playingOnlineLevel = true;
+        onChallenge = true;
+        currentChallengeNumber = challengeNumber;
         DatabaseHandler.GetDailyChallengeLevel(challengeNumber, LoadOnlineLevelInLevelScene);
     }
 
     public void RestartNormalLevelInLevelScene()
     {
-        if (playingOnlineLevel)
+        if (playingOnlineLevel && !onChallenge)
         {
             DatabaseHandler.RestartLevel(onlineLevelId);
+        } else if (onChallenge)
+        {
+            LoadDailyChallengeLevelInLevelScene(currentChallengeNumber, false);
         }
         Destroy(GameObject.FindGameObjectWithTag("playerSpawn"));
         if (!PublishMode && !playingOnlineLevel)

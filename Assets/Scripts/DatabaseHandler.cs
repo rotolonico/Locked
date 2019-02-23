@@ -16,7 +16,7 @@ public class DatabaseHandler : MonoBehaviour
     }
 
     public static readonly fsSerializer serializer = new fsSerializer();
-    public static readonly string DatabaseURL = "https://project-id.firebaseio.com/";
+    public static readonly string DatabaseURL = "https://locked-3426c.firebaseio.com/";
     
     public static void PostLevel(Level level)
     {
@@ -274,7 +274,7 @@ public class DatabaseHandler : MonoBehaviour
     
     public static void GetDailyChallengeLevel(string levelDay, EditorHandler.OnDailyChallengeLevelDownloadCompleted callback)
     {
-        RestClient.Get<Level>(DatabaseURL + "challenges/daily/levels/" + levelDay + ".json?auth=" + AuthHandler.idToken).Then(response =>
+        RestClient.Get<Level>(DatabaseURL + "challenges/daily/levels/" + levelDay + ".json").Then(response =>
         {
             callback(response);
         }).Catch(error =>
