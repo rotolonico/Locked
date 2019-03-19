@@ -37,7 +37,7 @@ public class TopController : MonoBehaviour
             CheckCollider();
         }
 
-        if (Swipe.SwipeUp && Movable && !moveBlock && !playerController.sliding)
+        if (CheckInput() && Movable && !moveBlock && !playerController.sliding)
         {
             Move();
             if (playerController.hasLimitedMoves)
@@ -46,7 +46,7 @@ public class TopController : MonoBehaviour
                 playerController.ReloadMoves();
             }
         }
-        else if (Swipe.SwipeUp && !moveBlock && !playerController.sliding)
+        else if (CheckInput() && !moveBlock && !playerController.sliding)
         {
             HitWall.Play();
         }
@@ -62,8 +62,13 @@ public class TopController : MonoBehaviour
             }
         }
     }
+    
+    private bool CheckInput()
+    {
+        return !playerController.invertedControls ? Swipe.SwipeUp : Swipe.SwipeDown;
+    }
 
-    private void Move()
+    public void Move()
     {
         Player.transform.position += Vector3.up;
         MoveSound.Play();
@@ -77,6 +82,21 @@ public class TopController : MonoBehaviour
         else
         {
             playerController.sliding = false;
+        }
+    }
+    
+    public void RemoteMove()
+    {
+        CheckCollider();
+        
+        if (Movable && !moveBlock && !playerController.sliding)
+        {
+            Move();
+            if (playerController.hasLimitedMoves)
+            {
+                playerController.movesLimit--;
+                playerController.ReloadMoves();
+            }
         }
     }
 

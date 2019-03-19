@@ -9,6 +9,8 @@ using UnityScript.Steps;
 public class DatabaseHandler : MonoBehaviour
 {
     private static EditorHandler editorHandler;
+
+    public delegate void AfterCheckDailyChallengeManager(bool manager);
     
     private void Start()
     {
@@ -16,7 +18,7 @@ public class DatabaseHandler : MonoBehaviour
     }
 
     public static readonly fsSerializer serializer = new fsSerializer();
-    public static readonly string DatabaseURL = "https://locked-3426c.firebaseio.com/";
+    public static readonly string DatabaseURL = "https://project-id.firebaseio.com/";
     
     public static void PostLevel(Level level)
     {
@@ -58,6 +60,26 @@ public class DatabaseHandler : MonoBehaviour
         {
             Debug.Log(error);
         });
+    }
+
+    public static void CheckDailyChallengeManager(AfterCheckDailyChallengeManager callback)
+    {
+        RestClient.Get(DatabaseURL + "users/" + AuthHandler.userId + "/dailyChallengeManager.json")
+            .Then(response =>
+            {
+                if (response.Text == "true")
+                {
+                    callback(true);
+                }
+                else
+                {
+                    callback(false);
+                }
+            }).Catch(error =>
+            {
+                Debug.Log(error);
+                callback(false);
+            });
     }
 
     public static void GetDailyChallengeScore(EditorHandler.GenericStringCallback callback)
@@ -262,6 +284,12 @@ public class DatabaseHandler : MonoBehaviour
         {
             Debug.Log(error);
         });
+    }
+    
+    public static void PostDailyChallengeNumber(string day)
+    {
+        var payLoad = "\"" + day + "\"";
+        RestClient.Put(DatabaseURL + "challenges/daily/day.json", payLoad);
     }
 
     public static void GetLevel(string levelId, LevelHandler.OnLevelDownloadCompleted callback)

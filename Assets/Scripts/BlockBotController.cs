@@ -39,7 +39,7 @@ public class BlockBotController : MonoBehaviour
 
     void Update()
     {
-        if (Swipe.SwipeUp && playerTouch && playerMovement.Movable && antiBlock.CheckMovement() && !playerController.sliding)
+        if (CheckInput() && playerTouch && playerMovement.Movable && antiBlock.CheckMovement() && !playerController.sliding)
         {
             if (iceBlock)
             {
@@ -65,10 +65,15 @@ public class BlockBotController : MonoBehaviour
                 playerController.ReloadMoves();
             }
         }
-        else if (Swipe.SwipeUp && playerMovement.Movable && playerTouch && !playerController.sliding)
+        else if (CheckInput() && playerMovement.Movable && playerTouch && !playerController.sliding)
         {
             HitWall.Play();
         }
+    }
+    
+    private bool CheckInput()
+    {
+        return !playerController.invertedControls ? Swipe.SwipeUp : Swipe.SwipeDown;
     }
 
     private void Move()

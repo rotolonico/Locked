@@ -27,9 +27,15 @@ public class PlayerController : MonoBehaviour
     private EditorHandler editorHandler;
     private Toggle playToggle;
     private GameObject currentPlayerSpawn;
+    
     public bool hasLimitedMoves;
     public bool isKeyListUp;
     public bool sliding;
+    public bool inWater;
+    public bool invertedControls;
+    
+    private Vector2 waterScale = new Vector2(0.01f, 0.01f);
+    private Vector2 waterScale2 = new Vector2(0.01f, 0.01f);
 
     public int movesLimit;
 
@@ -39,6 +45,12 @@ public class PlayerController : MonoBehaviour
     public int HasBlueKey;
 
     public bool Teleporting;
+    
+    private BotController botController;
+    private LeftController leftController;
+    private RightController rightController;
+    private TopController topController;
+    private SpriteRenderer sr;
 
     void Start()
     {
@@ -51,6 +63,12 @@ public class PlayerController : MonoBehaviour
         editorHandler = GameObject.FindGameObjectWithTag("EditorHandler").GetComponent<EditorHandler>();
         keyHolder = GameObject.FindGameObjectWithTag("keyList").transform;
         keyHolderAnimator = GameObject.FindGameObjectWithTag("keyInventory").GetComponent<Animator>();
+        
+        sr = gameObject.GetComponent<SpriteRenderer>();
+        botController = gameObject.GetComponentInChildren<BotController>();
+        leftController = gameObject.GetComponentInChildren<LeftController>();
+        rightController = gameObject.GetComponentInChildren<RightController>();
+        topController = gameObject.GetComponentInChildren<TopController>();
     }
 
     private IEnumerator ReloadMovesCoroutine()
@@ -145,10 +163,53 @@ public class PlayerController : MonoBehaviour
             keyHolderAnimator.Play("PopdownAnimation");
             isKeyListUp = false;
         }
+
+        if (inWater)
+        {
+            sr.size -= waterScale;
+            var srColor = sr.color;
+            srColor.a -= 0.01f;
+            sr.color = srColor;
+            if (!(sr.size.x < 0.01)) return;
+            Destroy(gameObject);
+            editorHandler.RestartLevelFromCp();
+        } else if (sr.size.x < 0.99)
+        {
+            var srColor = sr.color;
+            srColor.a += 0.01f;
+            sr.color = srColor;
+            sr.size += waterScale2;
+        } else if (sr.size.x >= 0.99)
+        {
+            var srColor = sr.color;
+            srColor.a = 1f;
+            sr.color = srColor;
+            sr.size = new Vector2(1,1);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.CompareTag("topForce"))
+        {
+            topController.RemoteMove();
+        }
+        
+        if (other.gameObject.CompareTag("botForce"))
+        {
+            botController.RemoteMove();
+        }
+        
+        if (other.gameObject.CompareTag("leftForce"))
+        {
+            leftController.RemoteMove();
+        }
+        
+        if (other.gameObject.CompareTag("rightForce"))
+        {
+            rightController.RemoteMove();
+        }
+        
         if (other.gameObject.CompareTag("key") && other.GetComponent<SpriteRenderer>().sprite != Background)
         {
             HasKey += 1;
@@ -277,12 +338,27 @@ public class PlayerController : MonoBehaviour
         
         if (EditorHandler.PublishMode)
         {
-            DatabaseHandler.PostLevel(EditorHandler.objectSavedLevel);
+            if (!EditorHandler.PublishDailyLevel)
+            {
+                DatabaseHandler.PostLevel(EditorHandler.objectSavedLevel);
+            }
+            else
+            {
+                DatabaseHandler.GetDailyChallengeNumber(day =>
+                {
+                    var challengeDay = int.Parse(day.Substring(1, day.Length - 2));
+                    DatabaseHandler.PostDailyChallengeLevel(EditorHandler.objectSavedLevel, (challengeDay + 1).ToString());
+                    EditorHandler.challengeDay = challengeDay + 1;
+                    DatabaseHandler.PostDailyChallengeNumber(EditorHandler.challengeDay.ToString());
+                });
+            }
+
             EditorHandler.PublishMode = false;
             EditorHandler.PublishMode = false;
             EditorHandler.playMode = false;
             EditorHandler.reloadLevel = true;
             SceneManager.LoadScene(4);
+            EditorHandler.PublishDailyLevel = false;
         }
         else if (EditorHandler.playMode && EditorHandler.inEditor)
         {

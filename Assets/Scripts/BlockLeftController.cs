@@ -44,7 +44,7 @@ public class BlockLeftController : MonoBehaviour
 
     void Update()
     {
-        if (Swipe.SwipeRight && playerTouch && playerMovement.Movable && antiBlock.CheckMovement() && !playerController.sliding)
+        if (CheckInput() && playerTouch && playerMovement.Movable && antiBlock.CheckMovement() && !playerController.sliding)
         {
             if (iceBlock)
             {
@@ -70,10 +70,15 @@ public class BlockLeftController : MonoBehaviour
                 playerController.ReloadMoves();
             }
         }
-        else if (Swipe.SwipeRight && playerMovement.Movable && playerTouch && !playerController.sliding)
+        else if (CheckInput() && playerMovement.Movable && playerTouch && !playerController.sliding)
         {
             HitWall.Play();
         }
+    }
+    
+    private bool CheckInput()
+    {
+        return !playerController.invertedControls ? Swipe.SwipeRight : Swipe.SwipeLeft;
     }
 
     private void Move()

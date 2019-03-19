@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 114384981711887716}
   - component: {fileID: 82861591417833436}
   - component: {fileID: 82777729984154366}
+  - component: {fileID: 2999737456306676993}
   m_Layer: 0
   m_Name: botCol
   m_TagString: Untagged
@@ -332,6 +333,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Movable: 0
+  OnIce: 0
+  colliders: []
   HitWall: {fileID: 82861591417833436}
   MoveSound: {fileID: 82777729984154366}
 --- !u!82 &82861591417833436
@@ -526,6 +529,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2999737456306676993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269649703713460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9388ae37759789188258d37cf3ef8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
 --- !u!1 &1348045983852516
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,6 +635,7 @@ GameObject:
   - component: {fileID: 114263816164347014}
   - component: {fileID: 82820227547758178}
   - component: {fileID: 82428769212650934}
+  - component: {fileID: 9124097706598282945}
   m_Layer: 0
   m_Name: rightCol
   m_TagString: Untagged
@@ -700,6 +717,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Movable: 1
+  OnIce: 0
+  colliders: []
   HitWall: {fileID: 82820227547758178}
   MoveSound: {fileID: 82428769212650934}
 --- !u!82 &82820227547758178
@@ -894,6 +913,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &9124097706598282945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509851860320242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9388ae37759789188258d37cf3ef8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
 --- !u!1 &1546606093941376
 GameObject:
   m_ObjectHideFlags: 0
@@ -1066,6 +1098,7 @@ GameObject:
   - component: {fileID: 114150111838659048}
   - component: {fileID: 82439692155545604}
   - component: {fileID: 82750884537483062}
+  - component: {fileID: 1348953458810318044}
   m_Layer: 0
   m_Name: topCol
   m_TagString: Untagged
@@ -1147,6 +1180,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Movable: 1
+  OnIce: 0
+  colliders: []
   HitWall: {fileID: 82439692155545604}
   MoveSound: {fileID: 82750884537483062}
 --- !u!82 &82439692155545604
@@ -1341,6 +1376,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1348953458810318044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1730119957031566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9388ae37759789188258d37cf3ef8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
 --- !u!1 &1774056235757380
 GameObject:
   m_ObjectHideFlags: 0
@@ -1355,6 +1403,7 @@ GameObject:
   - component: {fileID: 114546073140447486}
   - component: {fileID: 82188582683672134}
   - component: {fileID: 82573662863549362}
+  - component: {fileID: 7508914132333185424}
   m_Layer: 0
   m_Name: leftCol
   m_TagString: Untagged
@@ -1436,6 +1485,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Movable: 1
+  OnIce: 0
+  colliders: []
   HitWall: {fileID: 82188582683672134}
   MoveSound: {fileID: 82573662863549362}
 --- !u!82 &82188582683672134
@@ -1630,6 +1681,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7508914132333185424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774056235757380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9388ae37759789188258d37cf3ef8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
 --- !u!1 &1791919760994818
 GameObject:
   m_ObjectHideFlags: 0
@@ -1878,7 +1942,7 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 1
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -1926,7 +1990,7 @@ BoxCollider2D:
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
-    drawMode: 0
+    drawMode: 1
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
@@ -1961,6 +2025,8 @@ MonoBehaviour:
     type: 3}
   hasLimitedMoves: 0
   isKeyListUp: 0
+  sliding: 0
+  inWater: 0
   movesLimit: 0
   HasKey: 0
   HasRedKey: 0

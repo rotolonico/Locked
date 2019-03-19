@@ -35,7 +35,7 @@ public class RightController : MonoBehaviour
             CheckCollider();
         }
 
-        if (Swipe.SwipeRight && Movable && !moveBlock && !playerController.sliding)
+        if (CheckInput() && Movable && !moveBlock && !playerController.sliding)
         {
             Move();
             if (playerController.hasLimitedMoves)
@@ -44,7 +44,7 @@ public class RightController : MonoBehaviour
                 playerController.ReloadMoves();
             }
         }
-        else if (Swipe.SwipeRight && !moveBlock && !playerController.sliding)
+        else if (CheckInput() && !moveBlock && !playerController.sliding)
         {
             HitWall.Play();
         }
@@ -59,6 +59,11 @@ public class RightController : MonoBehaviour
                 outOfMoves = true;
             }
         }
+    }
+    
+    private bool CheckInput()
+    {
+        return !playerController.invertedControls ? Swipe.SwipeRight : Swipe.SwipeLeft;
     }
 
     IEnumerator MoveCoroutine()
@@ -75,7 +80,8 @@ public class RightController : MonoBehaviour
             playerController.sliding = false;
         }
     }
-    private void Move()
+
+    public void Move()
     {
         Player.transform.position += Vector3.right;
         MoveSound.Play();
@@ -89,6 +95,21 @@ public class RightController : MonoBehaviour
         else
         {
             playerController.sliding = false;
+        }
+    }
+    
+    public void RemoteMove()
+    {
+        CheckCollider();
+        
+        if (Movable && !moveBlock && !playerController.sliding)
+        {
+            Move();
+            if (playerController.hasLimitedMoves)
+            {
+                playerController.movesLimit--;
+                playerController.ReloadMoves();
+            }
         }
     }
 

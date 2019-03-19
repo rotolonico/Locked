@@ -94,6 +94,17 @@ TagManager:
   - 37
   - 38
   - 39
+  - rightForce
+  - leftForce
+  - topForce
+  - botForce
+  - 40
+  - 41
+  - 42
+  - 43
+  - 44
+  - invertedBlock
+  - 45
   layers:
   - Default
   - TransparentFX

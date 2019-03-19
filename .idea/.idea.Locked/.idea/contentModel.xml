@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="$APPLICATION_CONFIG_DIR$/extensions" t="IncludeRecursive" />
     <e p="$USER_HOME$/.Rider2018.3/system/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/.Rider2018.3/system/resharper-host/local/Transient/ReSharperHost/v183/SolutionCaches/_Locked.20948706.00" t="ExcludeRecursive" />
+    <e p="$USER_HOME$/.Rider2018.3/system/resharper-host/local/Transient/ReSharperHost/v183/SolutionCaches/_Locked.715988829.00" t="ExcludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
@@ -79,6 +78,7 @@
           <e p="GenericLevelController.cs" t="Include" />
           <e p="GreenLockController.cs" t="Include" />
           <e p="IceBlockController.cs" t="Include" />
+          <e p="InvertedController.cs" t="Include" />
           <e p="LayerToggle.cs" t="Include" />
           <e p="LeftController.cs" t="Include" />
           <e p="Level.cs" t="Include" />
@@ -103,6 +103,7 @@
           <e p="TopController.cs" t="Include" />
           <e p="User.cs" t="Include" />
           <e p="VoidController.cs" t="Include" />
+          <e p="WaterController.cs" t="Include" />
         </e>
         <e p="Source" t="Include">
           <e p="Aot" t="Include">

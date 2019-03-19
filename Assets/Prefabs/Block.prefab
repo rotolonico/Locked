@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movable: 1
+  iceBlock: 0
   HitWall: {fileID: 82107048974547344}
   MoveSound: {fileID: 82928772342632790}
 --- !u!82 &82107048974547344
@@ -384,6 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movable: 1
+  iceBlock: 0
   HitWall: {fileID: 82545173556901428}
   MoveSound: {fileID: 82239771256042790}
 --- !u!82 &82545173556901428
@@ -1014,6 +1016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sliding: 0
+  muted: 0
 --- !u!1 &1792275803395464
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,6 +1112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movable: 1
+  iceBlock: 0
   HitWall: {fileID: 82265281503123136}
   MoveSound: {fileID: 82055121726503714}
 --- !u!82 &82265281503123136

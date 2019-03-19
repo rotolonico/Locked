@@ -21,7 +21,7 @@ using Version = System.Version;
 
 public class EditorHandler : MonoBehaviour
 {
-    public string Version = "v0.7.3-alpha"; 
+    public string Version = "v0.8-alpha"; 
     
     public GameObject selectedObject;
     public GameObject GridSprite;
@@ -43,6 +43,7 @@ public class EditorHandler : MonoBehaviour
     private Toggle blockToggle;
     private Button backButton;
     private bool musicOn;
+    public static bool PublishDailyLevel;
 
     public static int levelRows = 30;
     public static int levelColumns = 30;
@@ -144,6 +145,7 @@ public class EditorHandler : MonoBehaviour
     public static string onlineLevelId;
     public static bool onChallenge;
     public static string currentChallengeNumber;
+    public static bool dailyManager;
 
     private Vector3 mousePosition;
     private Vector3 mouseEndPosition;
@@ -187,6 +189,7 @@ public class EditorHandler : MonoBehaviour
     private Text newsText;
     public static int challengeDay;
     private string alreadyAttemptedDailyChallengeText = "You have already attempted the challenge today!\n Come back tomorrow";
+    private bool dailyManagerCheck;
     
     public delegate void OnDailyChallengeDayDownloadCompleted(string day); 
     public delegate void OnDailyChallengeLevelDownloadCompleted(Level level);
@@ -552,6 +555,23 @@ public class EditorHandler : MonoBehaviour
             playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         }
 
+        if (dailyManagerCheck == false)
+        {
+            DatabaseHandler.CheckDailyChallengeManager(isManager =>
+            {
+                dailyManagerCheck = true;
+                if (isManager)
+                {
+                    dailyManager = true;
+                }
+            });
+        }
+
+        if (dailyManager)
+        {
+            GameObject.Find("VerifyDailyLevel").GetComponent<Image>().enabled = true;
+            GameObject.Find("VerifyDailyLevel").GetComponentInChildren<Text>().enabled = true;
+        }
         inputField.characterValidation = InputField.CharacterValidation.EmailAddress;
         levelRowsText.characterValidation = InputField.CharacterValidation.Integer;
         levelColumnsText.characterValidation = InputField.CharacterValidation.Integer;
@@ -1531,6 +1551,7 @@ public class EditorHandler : MonoBehaviour
     {
         if (PublishMode)
         {
+            EditorHandler.PublishDailyLevel = false;
             EditorInitialized = false;
             PublishMode = false;
             playMode = false;
@@ -2342,6 +2363,11 @@ public class EditorHandler : MonoBehaviour
         }
     }
 
+    public void VerifyDailyLevel()
+    {
+        PublishDailyLevel = true;
+        VerifyLevel();
+    }
     
     static int dictionary = 1 << 23; // 1 << 23;
     static bool eos = false;

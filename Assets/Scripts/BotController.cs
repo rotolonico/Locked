@@ -37,7 +37,7 @@ public class BotController : MonoBehaviour
             CheckCollider();
         }
 
-        if (Swipe.SwipeDown && Movable && !moveBlock && !playerController.sliding)
+        if (CheckInput() && Movable && !moveBlock && !playerController.sliding)
         {
             Move();
             if (playerController.hasLimitedMoves)
@@ -46,7 +46,7 @@ public class BotController : MonoBehaviour
                 playerController.ReloadMoves();
             }
         }
-        else if (Swipe.SwipeDown && !moveBlock && !playerController.sliding)
+        else if (CheckInput() && !moveBlock && !playerController.sliding)
         {
             HitWall.Play();
         }
@@ -63,7 +63,12 @@ public class BotController : MonoBehaviour
         }
     }
 
-    private void Move()
+    private bool CheckInput()
+    {
+        return !playerController.invertedControls ? Swipe.SwipeDown : Swipe.SwipeUp;
+    }
+
+    public void Move()
     {
         Player.transform.position += Vector3.down;
         MoveSound.Play();
@@ -77,6 +82,21 @@ public class BotController : MonoBehaviour
         else
         {
             playerController.sliding = false;
+        }
+    }
+
+    public void RemoteMove()
+    {
+        CheckCollider();
+        
+        if (Movable && !moveBlock && !playerController.sliding)
+        {
+            Move();
+            if (playerController.hasLimitedMoves)
+            {
+                playerController.movesLimit--;
+                playerController.ReloadMoves();
+            }
         }
     }
 
